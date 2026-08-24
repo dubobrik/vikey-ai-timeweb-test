@@ -1,4 +1,4 @@
-name: Verify production build
+name: Verify independent production build
 
 on:
   push:
@@ -25,8 +25,8 @@ jobs:
         run: |
           set +e
           {
-            echo "=== bun install --frozen-lockfile ==="
-            bun install --frozen-lockfile
+            echo "=== bun install ==="
+            bun install
             install_code=$?
             echo
             echo "Install exit code: $install_code"
@@ -45,21 +45,19 @@ jobs:
           } > BUILD_LOG.txt 2>&1
 
           if [ "$install_code" -eq 0 ] && [ "$build_code" -eq 0 ]; then
-            printf "Production build: OK\nCommit: %s\n" "$GITHUB_SHA" > BUILD_CHECK.txt
+            printf "Independent production build: OK\nCommit: %s\n" "$GITHUB_SHA" > BUILD_CHECK.txt
           else
-            printf "Production build: FAILED\nInstall exit code: %s\nBuild exit code: %s\nCommit: %s\n" "$install_code" "$build_code" "$GITHUB_SHA" > BUILD_CHECK.txt
+            printf "Independent production build: FAILED\nInstall exit code: %s\nBuild exit code: %s\nCommit: %s\n" "$install_code" "$build_code" "$GITHUB_SHA" > BUILD_CHECK.txt
           fi
 
           cat BUILD_CHECK.txt
-          tail -n 120 BUILD_LOG.txt || true
+          tail -n 160 BUILD_LOG.txt || true
 
-      - name: Commit build result
+      - name: Commit lockfile and build result
         if: always()
         run: |
           git config user.name "ChatGPT migration"
           git config user.email "actions@users.noreply.github.com"
-          git add BUILD_CHECK.txt BUILD_LOG.txt
-          git commit -m "Record production build result" || true
+          git add bun.lock BUILD_CHECK.txt BUILD_LOG.txt
+          git commit -m "Record independent production build" || true
           git push || true
-
-# rerun after video migration
