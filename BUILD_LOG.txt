@@ -1,0 +1,180 @@
+=== bun install --frozen-lockfile ===
+bun install v1.4.0 (34cbb9a40)
+
++ @eslint/js@9.39.4
++ @lovable.dev/vite-tanstack-config@2.13.1
++ @types/node@22.19.17
++ @types/react@19.2.14
++ @types/react-dom@19.2.3
++ @vitejs/plugin-react@5.2.0
++ eslint@9.39.4
++ eslint-config-prettier@10.1.8
++ eslint-plugin-prettier@5.5.5
++ eslint-plugin-react-hooks@5.2.0
++ eslint-plugin-react-refresh@0.4.26
++ globals@15.15.0
++ nitro@3.0.260603-beta
++ prettier@3.8.3
++ typescript@5.9.3
++ typescript-eslint@8.59.0
++ vite@8.0.16
++ @hookform/resolvers@5.2.2
++ @radix-ui/react-accordion@1.2.12
++ @radix-ui/react-alert-dialog@1.1.15
++ @radix-ui/react-aspect-ratio@1.1.8
++ @radix-ui/react-avatar@1.1.11
++ @radix-ui/react-checkbox@1.3.3
++ @radix-ui/react-collapsible@1.1.12
++ @radix-ui/react-context-menu@2.2.16
++ @radix-ui/react-dialog@1.1.15
++ @radix-ui/react-dropdown-menu@2.1.16
++ @radix-ui/react-hover-card@1.1.15
++ @radix-ui/react-label@2.1.8
++ @radix-ui/react-menubar@1.1.16
++ @radix-ui/react-navigation-menu@1.2.14
++ @radix-ui/react-popover@1.1.15
++ @radix-ui/react-progress@1.1.8
++ @radix-ui/react-radio-group@1.3.8
++ @radix-ui/react-scroll-area@1.2.10
++ @radix-ui/react-select@2.2.6
++ @radix-ui/react-separator@1.1.8
++ @radix-ui/react-slider@1.3.6
++ @radix-ui/react-slot@1.2.4
++ @radix-ui/react-switch@1.2.6
++ @radix-ui/react-tabs@1.1.13
++ @radix-ui/react-toggle@1.1.10
++ @radix-ui/react-toggle-group@1.1.11
++ @radix-ui/react-tooltip@1.2.8
++ @tailwindcss/vite@4.2.4
++ @tanstack/react-query@5.101.1
++ @tanstack/react-router@1.170.16
++ @tanstack/react-start@1.168.26
++ @tanstack/router-plugin@1.168.18
++ class-variance-authority@0.7.1
++ clsx@2.1.1
++ cmdk@1.1.1
++ date-fns@4.1.0
++ embla-carousel-react@8.6.0
++ input-otp@1.4.2
++ lucide-react@0.575.0
++ react@19.2.5
++ react-day-picker@9.14.0
++ react-dom@19.2.5
++ react-hook-form@7.73.1
++ react-resizable-panels@4.10.0
++ recharts@2.15.4
++ sonner@2.0.7
++ tailwind-merge@3.5.0
++ tailwindcss@4.2.4
++ tw-animate-css@1.4.0
++ vaul@1.1.2
++ vite-tsconfig-paths@6.1.1
++ zod@3.25.76
+
+422 packages installed [2.09s]
+
+Install exit code: 0
+
+=== bun run build ===
+$ vite build
+[33mThe plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the [1mresolve.tsconfigPaths[22m option. You can remove the plugin and set [1mresolve.tsconfigPaths: true[22m in your Vite config instead.[39m
+[36mvite v8.0.16 [32mbuilding client environment for production...[36m[39m
+[2Ktransforming...✓ 1904 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/public/assets/b2b-horeca-card-B7i_oiH8.webp          44.03 kB
+.output/public/assets/b2b-horeca-modal-xJEUg0n9.webp         63.41 kB
+.output/public/assets/vikey-bot-avatar-BSQOlxy-.jpg          80.12 kB
+.output/public/assets/digital-avatar-poster-BXfZTdkI.jpg    107.08 kB
+.output/public/assets/vikey-card-cover-Dyfp7MQV.jpg         126.93 kB
+.output/public/assets/savana-site-preview-BvbHL4qo.jpg      180.26 kB
+.output/public/assets/tarhankut-preview-DPSW1Lnz.jpg        202.86 kB
+.output/public/assets/vikey-hero-C434v3yE.jpg               208.16 kB
+.output/public/assets/stone-master-preview-CDhZTLfN.jpg     230.11 kB
+.output/public/assets/cert-neuromaker-CIJXsGwE.png          451.63 kB
+.output/public/assets/alley-before-after-cO8YzrZe.jpg       487.45 kB
+.output/public/assets/cert-tsu-DQeTFp8i.png                 908.98 kB
+.output/public/assets/destiny-bot-preview-DzfoEI9R.png    1,120.39 kB
+.output/public/assets/vikey-about-D45hPlRd.png            2,008.80 kB
+.output/public/assets/cert-reactor-SPk7cNNS.png           2,355.49 kB
+.output/public/assets/styles-Da-LRlji.css                    83.51 kB │ gzip:  14.18 kB
+.output/public/assets/AiConsultantWidget-D4DY0iWI.js          9.57 kB │ gzip:   3.68 kB
+.output/public/assets/privacy-DyxZDoiZ.js                    22.15 kB │ gzip:   5.67 kB
+.output/public/assets/routes-Cg1VvJah.js                     47.75 kB │ gzip:  13.27 kB
+.output/public/assets/index-BiR5LwL9.js                     346.73 kB │ gzip: 109.35 kB
+
+[32m✓ built in 1.02s[39m
+[36mvite v8.0.16 [32mbuilding ssr environment for production...[36m[39m
+[2Ktransforming...✓ 78 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.nitro/vite/services/ssr/assets/b2b-horeca-card-B7i_oiH8.webp              44.03 kB
+node_modules/.nitro/vite/services/ssr/assets/b2b-horeca-modal-xJEUg0n9.webp             63.41 kB
+node_modules/.nitro/vite/services/ssr/assets/vikey-bot-avatar-BSQOlxy-.jpg              80.12 kB
+node_modules/.nitro/vite/services/ssr/assets/digital-avatar-poster-BXfZTdkI.jpg        107.08 kB
+node_modules/.nitro/vite/services/ssr/assets/vikey-card-cover-Dyfp7MQV.jpg             126.93 kB
+node_modules/.nitro/vite/services/ssr/assets/savana-site-preview-BvbHL4qo.jpg          180.26 kB
+node_modules/.nitro/vite/services/ssr/assets/tarhankut-preview-DPSW1Lnz.jpg            202.86 kB
+node_modules/.nitro/vite/services/ssr/assets/vikey-hero-C434v3yE.jpg                   208.16 kB
+node_modules/.nitro/vite/services/ssr/assets/stone-master-preview-CDhZTLfN.jpg         230.11 kB
+node_modules/.nitro/vite/services/ssr/assets/cert-neuromaker-CIJXsGwE.png              451.63 kB
+node_modules/.nitro/vite/services/ssr/assets/alley-before-after-cO8YzrZe.jpg           487.45 kB
+node_modules/.nitro/vite/services/ssr/assets/cert-tsu-DQeTFp8i.png                     908.98 kB
+node_modules/.nitro/vite/services/ssr/assets/destiny-bot-preview-DzfoEI9R.png        1,120.39 kB
+node_modules/.nitro/vite/services/ssr/assets/vikey-about-D45hPlRd.png                2,008.80 kB
+node_modules/.nitro/vite/services/ssr/assets/cert-reactor-SPk7cNNS.png               2,355.49 kB
+node_modules/.nitro/vite/services/ssr/assets/styles-Da-LRlji.css                        83.51 kB │ gzip: 14.18 kB
+node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-D9UWiqvJ.js           0.22 kB │ gzip:  0.16 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-CM8Y03by.js      0.77 kB │ gzip:  0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/start-BwM2KhwK.js                           0.78 kB │ gzip:  0.43 kB
+node_modules/.nitro/vite/services/ssr/assets/b2b-horeca-modal-Cmv4uahq.js                2.01 kB │ gzip:  0.66 kB
+node_modules/.nitro/vite/services/ssr/assets/createStart-DwZhSttb.js                     4.01 kB │ gzip:  1.24 kB
+node_modules/.nitro/vite/services/ssr/index.js                                           4.61 kB │ gzip:  1.92 kB
+node_modules/.nitro/vite/services/ssr/assets/router-oJksiUGh.js                          8.73 kB │ gzip:  2.83 kB
+node_modules/.nitro/vite/services/ssr/assets/AiConsultantWidget-XWNsHlbp.js             13.00 kB │ gzip:  4.33 kB
+node_modules/.nitro/vite/services/ssr/assets/privacy-iM0JMI_p.js                        23.26 kB │ gzip:  5.89 kB
+node_modules/.nitro/vite/services/ssr/assets/server-Bbuf57bH.js                         56.36 kB │ gzip: 14.53 kB
+node_modules/.nitro/vite/services/ssr/assets/routes-pj1xbrHT.js                         58.60 kB │ gzip: 14.40 kB
+
+[32m✓ built in 376ms[39m
+[start] [nitro] Building [[35mNitro[39m] [2m(preset: `cloudflare-module`, compatibility: `2026-08-24`)[22m
+[success] [nitro] Generated public [36m.output/public[39m
+[36mvite v8.0.16 [32mbuilding nitro environment for production...[36m[39m
+[warn] `inlineDynamicImports` option is ignored because the `codeSplitting` option is specified.
+[2Ktransforming...✓ 1930 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/server/_ssr/empty-plugin-adapters-D9UWiqvJ.mjs    0.23 kB │ gzip:   0.16 kB
+.output/server/_chunks/ssr-renderer.mjs                   0.60 kB │ gzip:   0.36 kB
+.output/server/_tanstack-start-manifest_v-CM8Y03by.mjs    0.82 kB │ gzip:   0.38 kB
+.output/server/_ssr/start-BwM2KhwK.mjs                    0.83 kB │ gzip:   0.47 kB
+.output/server/_runtime.mjs                               1.14 kB │ gzip:   0.57 kB
+.output/server/_libs/hookable.mjs                         1.16 kB │ gzip:   0.51 kB
+.output/server/_ssr/b2b-horeca-modal-Cmv4uahq.mjs         1.60 kB │ gzip:   0.65 kB
+.output/server/_ssr/createStart-DwZhSttb.mjs              3.83 kB │ gzip:   1.23 kB
+.output/server/_ssr/ssr.mjs                               4.55 kB │ gzip:   1.92 kB
+.output/server/_libs/lucide-react.mjs                     4.85 kB │ gzip:   1.36 kB
+.output/server/_ssr/router-oJksiUGh.mjs                   9.29 kB │ gzip:   2.91 kB
+.output/server/_libs/h3-v2+srvx.mjs                       9.72 kB │ gzip:   3.01 kB
+.output/server/_libs/tanstack__history.mjs               12.09 kB │ gzip:   3.48 kB
+.output/server/index.mjs                                 13.69 kB │ gzip:   4.23 kB
+.output/server/_ssr/AiConsultantWidget-XWNsHlbp.mjs      13.96 kB │ gzip:   4.45 kB
+.output/server/_libs/h3+rou3+srvx.mjs                    14.21 kB │ gzip:   4.23 kB
+.output/server/_libs/react+tanstack__react-query.mjs     17.54 kB │ gzip:   4.64 kB
+.output/server/_ssr/privacy-iM0JMI_p.mjs                 23.82 kB │ gzip:   5.98 kB
+.output/server/_libs/tanstack__query-core.mjs            47.92 kB │ gzip:  10.65 kB
+.output/server/_ssr/server-Bbuf57bH.mjs                  54.63 kB │ gzip:  14.36 kB
+.output/server/_ssr/routes-pj1xbrHT.mjs                  63.85 kB │ gzip:  14.64 kB
+.output/server/_libs/@tanstack/router-core+[...].mjs     79.36 kB │ gzip:  19.96 kB
+.output/server/_libs/@tanstack/react-router+[...].mjs   660.60 kB │ gzip: 138.98 kB
+
+[32m✓ built in 432ms[39m
+[info] [nitro] Using auto generated worker name: `dubobrik-vikey-ai-timeweb-test`
+[info] Generated [36m.output/server/wrangler.json[39m
+[info] Generated [36m.wrangler/deploy/config.json[39m
+[info] Generated [36m.output/public/_headers[39m
+[info] Generated [36m.output/nitro.json[39m
+[success] [nitro] You can preview this build using `npx vite preview`
+[success] [nitro] You can deploy this build using `npx nitro deploy --prebuilt`
+
+Build exit code: 0
