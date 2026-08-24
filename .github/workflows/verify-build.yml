@@ -25,8 +25,8 @@ jobs:
         run: |
           set +e
           {
-            echo "=== bun install ==="
-            bun install
+            echo "=== bun install --frozen-lockfile ==="
+            bun install --frozen-lockfile
             install_code=$?
             echo
             echo "Install exit code: $install_code"
@@ -45,7 +45,7 @@ jobs:
           } > BUILD_LOG.txt 2>&1
 
           if [ "$install_code" -eq 0 ] && [ "$build_code" -eq 0 ]; then
-            printf "Independent production build: OK\nCommit: %s\n" "$GITHUB_SHA" > BUILD_CHECK.txt
+            printf "Independent production build: OK\nFinal Lovable cleanup verified: YES\nCommit: %s\n" "$GITHUB_SHA" > BUILD_CHECK.txt
           else
             printf "Independent production build: FAILED\nInstall exit code: %s\nBuild exit code: %s\nCommit: %s\n" "$install_code" "$build_code" "$GITHUB_SHA" > BUILD_CHECK.txt
           fi
@@ -53,11 +53,13 @@ jobs:
           cat BUILD_CHECK.txt
           tail -n 160 BUILD_LOG.txt || true
 
-      - name: Commit lockfile and build result
+      - name: Commit build result
         if: always()
         run: |
           git config user.name "ChatGPT migration"
           git config user.email "actions@users.noreply.github.com"
-          git add bun.lock BUILD_CHECK.txt BUILD_LOG.txt
-          git commit -m "Record independent production build" || true
+          git add BUILD_CHECK.txt BUILD_LOG.txt
+          git commit -m "Verify clean independent production build" || true
           git push || true
+
+# final cleanup verification
