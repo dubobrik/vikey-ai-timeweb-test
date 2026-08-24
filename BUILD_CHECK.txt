@@ -1,2 +1,2 @@
-Production build: OK
-Commit: b856bce884e94703a021105c9c3a35a413220519
+Independent production build: OK
+Commit: 8f85d63718e9817fceffccf00555eabd1cfe0c3c
