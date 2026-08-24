@@ -1,0 +1,113 @@
+name: Localize Lovable images
+
+on:
+  push:
+    paths:
+      - ".github/workflows/localize-lovable-images.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  localize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Lovable images and update code
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import urllib.request
+
+          root = pathlib.Path(".")
+          assets = root / "src" / "assets"
+          base = "https://vikey-ai-craft.lovable.app"
+
+          for meta_path in sorted(assets.glob("*.asset.json")):
+              if meta_path.name == "digital-avatar.mp4.asset.json":
+                  continue
+
+              meta = json.loads(meta_path.read_text(encoding="utf-8"))
+              rel = meta["url"]
+              original = meta["original_filename"]
+
+              if meta_path.name == "vikey-og.jpg.asset.json":
+                  target = root / "public" / "vikey-og.jpg"
+              elif meta_path.name == "vikey-hero.png.asset.json":
+                  target = assets / "vikey-hero.jpg"
+              else:
+                  target = assets / original
+
+              target.parent.mkdir(parents=True, exist_ok=True)
+              url = base + rel
+              print(f"Downloading {url} -> {target}")
+              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+              with urllib.request.urlopen(req, timeout=60) as response:
+                  data = response.read()
+              if len(data) < 100:
+                  raise RuntimeError(f"Downloaded file is unexpectedly small: {url}")
+              target.write_bytes(data)
+
+          def replace_file(path, pairs):
+              p = pathlib.Path(path)
+              text = p.read_text(encoding="utf-8")
+              for old, new in pairs:
+                  if old not in text:
+                      print(f"WARNING: not found in {path}: {old}")
+                  text = text.replace(old, new)
+              p.write_text(text, encoding="utf-8")
+
+          replace_file("src/routes/index.tsx", [
+              ('import heroAsset from "@/assets/vikey-hero.png.asset.json";', 'import heroAsset from "@/assets/vikey-hero.jpg";'),
+              ('import aboutAsset from "@/assets/vikey-about.png.asset.json";', 'import aboutAsset from "@/assets/vikey-about.png";'),
+              ('import destinyBotAsset from "@/assets/destiny-bot-preview.png.asset.json";', 'import destinyBotAsset from "@/assets/destiny-bot-preview.png";'),
+              ('import alleyAsset from "@/assets/alley-before-after.jpg.asset.json";', 'import alleyAsset from "@/assets/alley-before-after.jpg";'),
+              ('import cardCoverAsset from "@/assets/vikey-card-cover.jpg.asset.json";', 'import cardCoverAsset from "@/assets/vikey-card-cover.jpg";'),
+              ('import avatarPosterAsset from "@/assets/digital-avatar-poster.jpg.asset.json";', 'import avatarPosterAsset from "@/assets/digital-avatar-poster.jpg";'),
+              ('import tarhankutPreviewAsset from "@/assets/tarhankut-preview.jpg.asset.json";', 'import tarhankutPreviewAsset from "@/assets/tarhankut-preview.jpg";'),
+              ('import b2bHorecaCardAsset from "@/assets/b2b-horeca-card.webp.asset.json";', 'import b2bHorecaCardAsset from "@/assets/b2b-horeca-card.webp";'),
+              ('import b2bHorecaModalAsset from "@/assets/b2b-horeca-modal.webp.asset.json";', 'import b2bHorecaModalAsset from "@/assets/b2b-horeca-modal.webp";'),
+              ('const OG_IMAGE = "https://chelovek-neiroset.ru/__l5e/assets-v1/7c776060-21b6-403e-b1d5-688e91525fde/vikey-og.jpg";', 'const OG_IMAGE = \`\${SITE_URL}vikey-og.jpg\`;'),
+              ('image: tarhankutPreviewAsset.url,', 'image: tarhankutPreviewAsset,'),
+              ('image: b2bHorecaCardAsset.url,', 'image: b2bHorecaCardAsset,'),
+              ('cardImage: b2bHorecaCardAsset.url,', 'cardImage: b2bHorecaCardAsset,'),
+              ('modalImage: b2bHorecaModalAsset.url,', 'modalImage: b2bHorecaModalAsset,'),
+              ('image: destinyBotAsset.url,', 'image: destinyBotAsset,'),
+              ('image: alleyAsset.url,', 'image: alleyAsset,'),
+              ('image: cardCoverAsset.url,', 'image: cardCoverAsset,'),
+              ('image: avatarPosterAsset.url,', 'image: avatarPosterAsset,'),
+              ('src={heroAsset.url}', 'src={heroAsset}'),
+              ('src={aboutAsset.url}', 'src={aboutAsset}'),
+          ])
+
+          replace_file("src/components/Certificates.tsx", [
+              ('import certReactor from "@/assets/cert-reactor.png.asset.json";', 'import certReactor from "@/assets/cert-reactor.png";'),
+              ('import certNeuromaker from "@/assets/cert-neuromaker.png.asset.json";', 'import certNeuromaker from "@/assets/cert-neuromaker.png";'),
+              ('import certTsu from "@/assets/cert-tsu.png.asset.json";', 'import certTsu from "@/assets/cert-tsu.png";'),
+              ('src: certReactor.url,', 'src: certReactor,'),
+              ('src: certNeuromaker.url,', 'src: certNeuromaker,'),
+              ('src: certTsu.url,', 'src: certTsu,'),
+          ])
+
+          replace_file("src/components/AiConsultantWidget.tsx", [
+              ('import botAvatar from "@/assets/vikey-bot-avatar.jpg.asset.json";', 'import botAvatar from "@/assets/vikey-bot-avatar.jpg";'),
+              ('src={botAvatar.url}', 'src={botAvatar}'),
+          ])
+          PY
+
+          git status --short
+          git config user.name "ChatGPT migration"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/assets public src/routes/index.tsx src/components/Certificates.tsx src/components/AiConsultantWidget.tsx
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Localize Lovable images"
+            git push
+          fi
