@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import certReactor from "@/assets/cert-reactor.png.asset.json";
-import certNeuromaker from "@/assets/cert-neuromaker.png.asset.json";
-import certTsu from "@/assets/cert-tsu.png.asset.json";
+import certReactor from "@/assets/cert-reactor.png";
+import certNeuromaker from "@/assets/cert-neuromaker.png";
+import certTsu from "@/assets/cert-tsu.png";
 
 type Cert = {
   title: string;
@@ -17,14 +17,14 @@ const certificates: Cert[] = [
     title: "РЕАКТОР — вайбкодинг и AI-инструменты",
     desc: "Онлайн-курс по созданию цифровых продуктов с помощью нейросетей и AI-инструментов.",
     date: "24.03.2026",
-    src: certReactor.url,
+    src: certReactor,
     alt: "Сертификат РЕАКТОР Виктория Шелих",
   },
   {
     title: "НейроМейкер — нейросети для маркетинга, контента и автоматизации",
     desc: "Программа по работе с нейросетями для маркетинга, контента, визуала, видео и построения систем продаж с помощью ИИ.",
     date: "13.08.2026",
-    src: certNeuromaker.url,
+    src: certNeuromaker,
     alt: "Сертификат НейроМейкер Виктория Шелих",
   },
   {
@@ -32,7 +32,7 @@ const certificates: Cert[] = [
     desc: "Удостоверение о повышении квалификации по программе «Внедрение и использование нейросетей в организации».",
     extra: "72 часа",
     date: "28.04.2026",
-    src: certTsu.url,
+    src: certTsu,
     alt: "Удостоверение Томского государственного университета Виктория Шелих",
   },
 ];

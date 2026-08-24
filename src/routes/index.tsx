@@ -1,18 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, lazy, Suspense, Component, type ReactNode } from "react";
 import { Copy, Check } from "lucide-react";
-import heroAsset from "@/assets/vikey-hero.png.asset.json";
-import aboutAsset from "@/assets/vikey-about.png.asset.json";
-import destinyBotAsset from "@/assets/destiny-bot-preview.png.asset.json";
-import alleyAsset from "@/assets/alley-before-after.jpg.asset.json";
+import heroAsset from "@/assets/vikey-hero.jpg";
+import aboutAsset from "@/assets/vikey-about.png";
+import destinyBotAsset from "@/assets/destiny-bot-preview.png";
+import alleyAsset from "@/assets/alley-before-after.jpg";
 import savanaSitePreview from "@/assets/savana-site-preview.jpg";
 import stoneMasterPreview from "@/assets/stone-master-preview.jpg";
-import cardCoverAsset from "@/assets/vikey-card-cover.jpg.asset.json";
+import cardCoverAsset from "@/assets/vikey-card-cover.jpg";
 import avatarVideoAsset from "@/assets/digital-avatar.mp4.asset.json";
-import avatarPosterAsset from "@/assets/digital-avatar-poster.jpg.asset.json";
-import tarhankutPreviewAsset from "@/assets/tarhankut-preview.jpg.asset.json";
-import b2bHorecaCardAsset from "@/assets/b2b-horeca-card.webp.asset.json";
-import b2bHorecaModalAsset from "@/assets/b2b-horeca-modal.webp.asset.json";
+import avatarPosterAsset from "@/assets/digital-avatar-poster.jpg";
+import tarhankutPreviewAsset from "@/assets/tarhankut-preview.jpg";
+import b2bHorecaCardAsset from "@/assets/b2b-horeca-card.webp";
+import b2bHorecaModalAsset from "@/assets/b2b-horeca-modal.webp";
 import Certificates from "@/components/Certificates";
 
 const AiConsultantWidget = lazy(() => import("@/components/AiConsultantWidget"));
@@ -25,7 +25,7 @@ class WidgetBoundary extends Component<{ children: ReactNode }, { failed: boolea
 }
 
 const SITE_URL = "https://chelovek-neiroset.ru/";
-const OG_IMAGE = "https://chelovek-neiroset.ru/__l5e/assets-v1/7c776060-21b6-403e-b1d5-688e91525fde/vikey-og.jpg";
+const OG_IMAGE = \`\${SITE_URL}vikey-og.jpg\`;
 const SITE_TITLE = "Vikey AI — нейросети для бизнеса и контента";
 const SITE_DESC = "Помогаю внедрять AI-инструменты в сайты, визуал, чат-боты, упаковку проектов и автоматизацию рабочих процессов.";
 
@@ -102,7 +102,7 @@ const portfolio = [
     title: "Сайт для гостевых домиков в Оленевке",
     tag: "Сайт / Туризм / Гостевые домики / AI-упаковка",
     desc: "Сайт для гостевых домиков в Оленевке на Тарханкуте: презентация места, атмосферы отдыха, маршрутов, преимуществ локации и удобного перехода к бронированию.",
-    image: tarhankutPreviewAsset.url,
+    image: tarhankutPreviewAsset,
     bullets: [
       "разработана структура сайта для туристического объекта",
       "оформлен первый экран с акцентом на отдых в Оленевке и Тарханкуте",
@@ -122,9 +122,9 @@ const portfolio = [
     title: "B2B-упаковка услуги психологической поддержки для HoReCa",
     tag: "B2B-стратегия / HoReCa / AI-аналитика / Упаковка услуги",
     desc: "Комплексная упаковка B2B-услуги психолога с опытом более 20 лет для рынка HoReCa: продуктовая логика, исследование проблем сотрудников, сегментация ЛПР, презентационные материалы, карта продаж и база контактов для первичного выхода.",
-    image: b2bHorecaCardAsset.url,
-    cardImage: b2bHorecaCardAsset.url,
-    modalImage: b2bHorecaModalAsset.url,
+    image: b2bHorecaCardAsset,
+    cardImage: b2bHorecaCardAsset,
+    modalImage: b2bHorecaModalAsset,
     cardWidth: 1100,
     cardHeight: 620,
     focus: "center",
@@ -169,14 +169,14 @@ const portfolio = [
     tag: "AI Bot",
     desc: "Бот для автоматизации первичного общения с пользователями в нише персональных консультаций. Продумана логика диалога, сценарий первого контакта, варианты запросов и структура ответов. Помогает быстрее принимать обращения, снижает ручную нагрузку и создаёт понятный первый шаг взаимодействия.",
     href: "https://t.me/destiny_voice_bot",
-    image: destinyBotAsset.url,
+    image: destinyBotAsset,
   },
   {
     title: "AI / Благоустройство городской среды",
     tag: "Case",
     subtitle: "Аллея на ул. Кривопустенко, г. Новочеркасск",
     desc: "Кейс по оформлению инициативы жителей в понятный проект благоустройства с визуализациями, предварительной сметой и материалами для обсуждения.",
-    image: alleyAsset.url,
+    image: alleyAsset,
     bullets: [
       "подготовлена структура проекта",
       "собрана предварительная смета",
@@ -192,7 +192,7 @@ const portfolio = [
     title: "Логотип и визитка для личного AI-бренда",
     tag: "Айдентика / Логотип / Визитка",
     desc: "Логотип и визитка для личного AI-бренда Vikey AI: монограмма V, мраморная эстетика, лавандовые оттенки, золотые акценты и QR-код для быстрого перехода на сайт.",
-    image: cardCoverAsset.url,
+    image: cardCoverAsset,
     contain: true,
     full: "Разработка визуальной айдентики для Vikey AI: логотип, фирменная подача и визитка с QR-кодом для быстрого перехода на сайт. Задача проекта — создать аккуратный, запоминающийся и женственный образ AI-бренда, где технологичность сочетается с мягкостью, доверием и экспертностью. В основе визуала — монограмма V, светлый мраморный фон, лавандовые оттенки, золотые акценты и ощущение лёгкой цифровой искры.",
     bullets: [
@@ -210,7 +210,7 @@ const portfolio = [
     title: "Создание цифрового аватара",
     tag: "AI-видео / Цифровой аватар / Личный бренд",
     desc: "AI-видео с цифровым аватаром для личного бренда: визуальный образ, голос, подача и короткий ролик, который помогает эксперту представить себя современно, живо и технологично.",
-    image: avatarPosterAsset.url,
+    image: avatarPosterAsset,
     focus: "50% 22%",
     video: avatarVideoAsset.url,
     full: "Кейс по созданию цифрового аватара для личного бренда Vikey AI. Задача проекта — показать, как AI-инструменты помогают создать современный видеовизуал: образ эксперта, короткое приветствие, динамичную подачу и ощущение присутствия без полноценной видеосъёмки. Такой формат можно использовать для сайта, соцсетей, презентации услуг, приветственного ролика, обучающих материалов или первого касания с клиентом.",
@@ -340,7 +340,7 @@ function Hero() {
           <div className="absolute -inset-4 rounded-3xl bg-gradient-primary opacity-30 blur-2xl" />
           <div className="relative overflow-hidden rounded-3xl border border-border shadow-glow">
             <img
-              src={heroAsset.url}
+              src={heroAsset}
               alt="Vikey AI — Виктория"
               className="h-full w-full object-cover"
               loading="eager"
@@ -369,7 +369,7 @@ function About() {
         <div className="relative mx-auto w-full max-w-sm md:mx-0">
           <div className="absolute -inset-3 rounded-2xl bg-gradient-primary opacity-25 blur-xl" />
           <img
-            src={aboutAsset.url}
+            src={aboutAsset}
             alt="Виктория / Vikey AI"
             className="relative rounded-2xl border border-border object-cover shadow-card"
           />

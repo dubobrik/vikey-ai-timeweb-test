@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import botAvatar from "@/assets/vikey-bot-avatar.jpg.asset.json";
+import botAvatar from "@/assets/vikey-bot-avatar.jpg";
 
 type Msg = {
   id: number;
@@ -254,7 +254,7 @@ export default function AiConsultantWidget() {
           <span className="text-2xl leading-none text-primary-foreground">×</span>
         ) : (
           <img
-            src={botAvatar.url}
+            src={botAvatar}
             alt=""
             className="h-12 w-12 rounded-full object-cover"
             loading="lazy"
@@ -270,7 +270,7 @@ export default function AiConsultantWidget() {
         >
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-border bg-background/60 px-4 py-3">
-            <img src={botAvatar.url} alt="" className="h-10 w-10 rounded-full object-cover" />
+            <img src={botAvatar} alt="" className="h-10 w-10 rounded-full object-cover" />
             <div className="min-w-0">
               <div className="truncate text-sm font-semibold">AI-консультант Vikey</div>
               <div className="text-xs text-neon">онлайн</div>
