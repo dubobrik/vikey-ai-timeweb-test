@@ -1,0 +1,70 @@
+name: Localize avatar video
+
+on:
+  push:
+    paths:
+      - ".github/workflows/localize-avatar-video.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  localize-video:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download video and update code
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import urllib.request
+
+          root = pathlib.Path(".")
+          meta_path = root / "src" / "assets" / "digital-avatar.mp4.asset.json"
+          meta = json.loads(meta_path.read_text(encoding="utf-8"))
+
+          url = "https://vikey-ai-craft.lovable.app" + meta["url"]
+          target = root / "src" / "assets" / "digital-avatar.mp4"
+
+          print(f"Downloading {url} -> {target}")
+          req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+          with urllib.request.urlopen(req, timeout=120) as response:
+              data = response.read()
+
+          expected = int(meta.get("size", 0))
+          if len(data) < 1000:
+              raise RuntimeError(f"Downloaded video is unexpectedly small: {len(data)} bytes")
+          if expected and len(data) != expected:
+              print(f"WARNING: expected {expected} bytes, got {len(data)} bytes")
+
+          target.write_bytes(data)
+
+          index = root / "src" / "routes" / "index.tsx"
+          text = index.read_text(encoding="utf-8")
+
+          old_import = 'import avatarVideoAsset from "@/assets/digital-avatar.mp4.asset.json";'
+          new_import = 'import avatarVideoAsset from "@/assets/digital-avatar.mp4";'
+          old_usage = 'video: avatarVideoAsset.url,'
+          new_usage = 'video: avatarVideoAsset,'
+
+          if old_import not in text:
+              raise RuntimeError("Expected video import not found in index.tsx")
+          if old_usage not in text:
+              raise RuntimeError("Expected video usage not found in index.tsx")
+
+          text = text.replace(old_import, new_import).replace(old_usage, new_usage)
+          index.write_text(text, encoding="utf-8")
+          PY
+
+          git status --short
+          git config user.name "ChatGPT migration"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/assets/digital-avatar.mp4 src/routes/index.tsx
+          git commit -m "Localize avatar video"
+          git push
