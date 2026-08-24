@@ -25,7 +25,7 @@ class WidgetBoundary extends Component<{ children: ReactNode }, { failed: boolea
 }
 
 const SITE_URL = "https://chelovek-neiroset.ru/";
-const OG_IMAGE = \`\${SITE_URL}vikey-og.jpg\`;
+const OG_IMAGE = SITE_URL + "vikey-og.jpg";
 const SITE_TITLE = "Vikey AI — нейросети для бизнеса и контента";
 const SITE_DESC = "Помогаю внедрять AI-инструменты в сайты, визуал, чат-боты, упаковку проектов и автоматизацию рабочих процессов.";
 
