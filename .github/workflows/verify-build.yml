@@ -20,17 +20,44 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Production build
-        run: bun run build
-
-      - name: Record successful build
+      - name: Install and build with log capture
+        shell: bash
         run: |
-          printf "Production build: OK\nCommit: %s\n" "$GITHUB_SHA" > BUILD_CHECK.txt
+          set +e
+          {
+            echo "=== bun install --frozen-lockfile ==="
+            bun install --frozen-lockfile
+            install_code=$?
+            echo
+            echo "Install exit code: $install_code"
+
+            if [ "$install_code" -eq 0 ]; then
+              echo
+              echo "=== bun run build ==="
+              bun run build
+              build_code=$?
+            else
+              build_code=99
+            fi
+
+            echo
+            echo "Build exit code: $build_code"
+          } > BUILD_LOG.txt 2>&1
+
+          if [ "$install_code" -eq 0 ] && [ "$build_code" -eq 0 ]; then
+            printf "Production build: OK\nCommit: %s\n" "$GITHUB_SHA" > BUILD_CHECK.txt
+          else
+            printf "Production build: FAILED\nInstall exit code: %s\nBuild exit code: %s\nCommit: %s\n" "$install_code" "$build_code" "$GITHUB_SHA" > BUILD_CHECK.txt
+          fi
+
+          cat BUILD_CHECK.txt
+          tail -n 120 BUILD_LOG.txt || true
+
+      - name: Commit build result
+        if: always()
+        run: |
           git config user.name "ChatGPT migration"
           git config user.email "actions@users.noreply.github.com"
-          git add BUILD_CHECK.txt
-          git commit -m "Record successful production build"
-          git push
+          git add BUILD_CHECK.txt BUILD_LOG.txt
+          git commit -m "Record production build result" || true
+          git push || true
