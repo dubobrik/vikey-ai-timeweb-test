@@ -61,3 +61,5 @@ jobs:
           git add BUILD_CHECK.txt BUILD_LOG.txt
           git commit -m "Record production build result" || true
           git push || true
+
+# rerun after video migration
