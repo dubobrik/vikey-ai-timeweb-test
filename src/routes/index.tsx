@@ -8,7 +8,7 @@ import alleyAsset from "@/assets/alley-before-after.jpg";
 import savanaSitePreview from "@/assets/savana-site-preview.jpg";
 import stoneMasterPreview from "@/assets/stone-master-preview.jpg";
 import cardCoverAsset from "@/assets/vikey-card-cover.jpg";
-import avatarVideoAsset from "@/assets/digital-avatar.mp4.asset.json";
+import avatarVideoAsset from "@/assets/digital-avatar.mp4";
 import avatarPosterAsset from "@/assets/digital-avatar-poster.jpg";
 import tarhankutPreviewAsset from "@/assets/tarhankut-preview.jpg";
 import b2bHorecaCardAsset from "@/assets/b2b-horeca-card.webp";
@@ -212,7 +212,7 @@ const portfolio = [
     desc: "AI-видео с цифровым аватаром для личного бренда: визуальный образ, голос, подача и короткий ролик, который помогает эксперту представить себя современно, живо и технологично.",
     image: avatarPosterAsset,
     focus: "50% 22%",
-    video: avatarVideoAsset.url,
+    video: avatarVideoAsset,
     full: "Кейс по созданию цифрового аватара для личного бренда Vikey AI. Задача проекта — показать, как AI-инструменты помогают создать современный видеовизуал: образ эксперта, короткое приветствие, динамичную подачу и ощущение присутствия без полноценной видеосъёмки. Такой формат можно использовать для сайта, соцсетей, презентации услуг, приветственного ролика, обучающих материалов или первого касания с клиентом.",
     bullets: [
       "создана идея цифрового образа",
