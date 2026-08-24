@@ -71,7 +71,7 @@ bun install v1.4.0 (34cbb9a40)
 + vite-tsconfig-paths@6.1.1
 + zod@3.25.76
 
-422 packages installed [2.09s]
+422 packages installed [2.81s]
 
 Install exit code: 0
 
@@ -97,13 +97,14 @@ computing gzip size...
 .output/public/assets/destiny-bot-preview-DzfoEI9R.png    1,120.39 kB
 .output/public/assets/vikey-about-D45hPlRd.png            2,008.80 kB
 .output/public/assets/cert-reactor-SPk7cNNS.png           2,355.49 kB
+.output/public/assets/digital-avatar-BWdNImaJ.mp4         3,086.83 kB
 .output/public/assets/styles-Da-LRlji.css                    83.51 kB │ gzip:  14.18 kB
-.output/public/assets/AiConsultantWidget-D4DY0iWI.js          9.57 kB │ gzip:   3.68 kB
-.output/public/assets/privacy-DyxZDoiZ.js                    22.15 kB │ gzip:   5.67 kB
-.output/public/assets/routes-Cg1VvJah.js                     47.75 kB │ gzip:  13.27 kB
-.output/public/assets/index-BiR5LwL9.js                     346.73 kB │ gzip: 109.35 kB
+.output/public/assets/AiConsultantWidget-DrKG0nDM.js          9.57 kB │ gzip:   3.67 kB
+.output/public/assets/privacy-CA14RAzs.js                    22.15 kB │ gzip:   5.67 kB
+.output/public/assets/routes-dR94aSR6.js                     47.74 kB │ gzip:  13.27 kB
+.output/public/assets/index-CKcKudmI.js                     346.35 kB │ gzip: 109.15 kB
 
-[32m✓ built in 1.02s[39m
+[32m✓ built in 1.49s[39m
 [36mvite v8.0.16 [32mbuilding ssr environment for production...[36m[39m
 [2Ktransforming...✓ 78 modules transformed.
 rendering chunks...
@@ -123,20 +124,21 @@ node_modules/.nitro/vite/services/ssr/assets/cert-tsu-DQeTFp8i.png              
 node_modules/.nitro/vite/services/ssr/assets/destiny-bot-preview-DzfoEI9R.png        1,120.39 kB
 node_modules/.nitro/vite/services/ssr/assets/vikey-about-D45hPlRd.png                2,008.80 kB
 node_modules/.nitro/vite/services/ssr/assets/cert-reactor-SPk7cNNS.png               2,355.49 kB
+node_modules/.nitro/vite/services/ssr/assets/digital-avatar-BWdNImaJ.mp4             3,086.83 kB
 node_modules/.nitro/vite/services/ssr/assets/styles-Da-LRlji.css                        83.51 kB │ gzip: 14.18 kB
 node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-D9UWiqvJ.js           0.22 kB │ gzip:  0.16 kB
-node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-CM8Y03by.js      0.77 kB │ gzip:  0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-DCCZPeuf.js      0.77 kB │ gzip:  0.34 kB
 node_modules/.nitro/vite/services/ssr/assets/start-BwM2KhwK.js                           0.78 kB │ gzip:  0.43 kB
-node_modules/.nitro/vite/services/ssr/assets/b2b-horeca-modal-Cmv4uahq.js                2.01 kB │ gzip:  0.66 kB
+node_modules/.nitro/vite/services/ssr/assets/b2b-horeca-modal-CKkOoZ8j.js                1.65 kB │ gzip:  0.48 kB
 node_modules/.nitro/vite/services/ssr/assets/createStart-DwZhSttb.js                     4.01 kB │ gzip:  1.24 kB
 node_modules/.nitro/vite/services/ssr/index.js                                           4.61 kB │ gzip:  1.92 kB
-node_modules/.nitro/vite/services/ssr/assets/router-oJksiUGh.js                          8.73 kB │ gzip:  2.83 kB
+node_modules/.nitro/vite/services/ssr/assets/router-nJ_XbKus.js                          8.60 kB │ gzip:  2.77 kB
 node_modules/.nitro/vite/services/ssr/assets/AiConsultantWidget-XWNsHlbp.js             13.00 kB │ gzip:  4.33 kB
 node_modules/.nitro/vite/services/ssr/assets/privacy-iM0JMI_p.js                        23.26 kB │ gzip:  5.89 kB
-node_modules/.nitro/vite/services/ssr/assets/server-Bbuf57bH.js                         56.36 kB │ gzip: 14.53 kB
-node_modules/.nitro/vite/services/ssr/assets/routes-pj1xbrHT.js                         58.60 kB │ gzip: 14.40 kB
+node_modules/.nitro/vite/services/ssr/assets/server-bg-KVe_e.js                         56.36 kB │ gzip: 14.53 kB
+node_modules/.nitro/vite/services/ssr/assets/routes-C_bvy33C.js                         58.58 kB │ gzip: 14.39 kB
 
-[32m✓ built in 376ms[39m
+[32m✓ built in 570ms[39m
 [start] [nitro] Building [[35mNitro[39m] [2m(preset: `cloudflare-module`, compatibility: `2026-08-24`)[22m
 [success] [nitro] Generated public [36m.output/public[39m
 [36mvite v8.0.16 [32mbuilding nitro environment for production...[36m[39m
@@ -146,29 +148,28 @@ rendering chunks...
 computing gzip size...
 .output/server/_ssr/empty-plugin-adapters-D9UWiqvJ.mjs    0.23 kB │ gzip:   0.16 kB
 .output/server/_chunks/ssr-renderer.mjs                   0.60 kB │ gzip:   0.36 kB
-.output/server/_tanstack-start-manifest_v-CM8Y03by.mjs    0.82 kB │ gzip:   0.38 kB
+.output/server/_tanstack-start-manifest_v-DCCZPeuf.mjs    0.82 kB │ gzip:   0.38 kB
 .output/server/_ssr/start-BwM2KhwK.mjs                    0.83 kB │ gzip:   0.47 kB
 .output/server/_runtime.mjs                               1.14 kB │ gzip:   0.57 kB
 .output/server/_libs/hookable.mjs                         1.16 kB │ gzip:   0.51 kB
-.output/server/_ssr/b2b-horeca-modal-Cmv4uahq.mjs         1.60 kB │ gzip:   0.65 kB
 .output/server/_ssr/createStart-DwZhSttb.mjs              3.83 kB │ gzip:   1.23 kB
 .output/server/_ssr/ssr.mjs                               4.55 kB │ gzip:   1.92 kB
 .output/server/_libs/lucide-react.mjs                     4.85 kB │ gzip:   1.36 kB
-.output/server/_ssr/router-oJksiUGh.mjs                   9.29 kB │ gzip:   2.91 kB
+.output/server/_ssr/router-nJ_XbKus.mjs                   9.16 kB │ gzip:   2.86 kB
 .output/server/_libs/h3-v2+srvx.mjs                       9.72 kB │ gzip:   3.01 kB
 .output/server/_libs/tanstack__history.mjs               12.09 kB │ gzip:   3.48 kB
-.output/server/index.mjs                                 13.69 kB │ gzip:   4.23 kB
+.output/server/index.mjs                                 13.92 kB │ gzip:   4.31 kB
 .output/server/_ssr/AiConsultantWidget-XWNsHlbp.mjs      13.96 kB │ gzip:   4.45 kB
 .output/server/_libs/h3+rou3+srvx.mjs                    14.21 kB │ gzip:   4.23 kB
 .output/server/_libs/react+tanstack__react-query.mjs     17.54 kB │ gzip:   4.64 kB
 .output/server/_ssr/privacy-iM0JMI_p.mjs                 23.82 kB │ gzip:   5.98 kB
 .output/server/_libs/tanstack__query-core.mjs            47.92 kB │ gzip:  10.65 kB
-.output/server/_ssr/server-Bbuf57bH.mjs                  54.63 kB │ gzip:  14.36 kB
-.output/server/_ssr/routes-pj1xbrHT.mjs                  63.85 kB │ gzip:  14.64 kB
+.output/server/_ssr/server-bg-KVe_e.mjs                  54.63 kB │ gzip:  14.36 kB
+.output/server/_ssr/routes-C_bvy33C.mjs                  64.30 kB │ gzip:  14.79 kB
 .output/server/_libs/@tanstack/router-core+[...].mjs     79.36 kB │ gzip:  19.96 kB
 .output/server/_libs/@tanstack/react-router+[...].mjs   660.60 kB │ gzip: 138.98 kB
 
-[32m✓ built in 432ms[39m
+[32m✓ built in 604ms[39m
 [info] [nitro] Using auto generated worker name: `dubobrik-vikey-ai-timeweb-test`
 [info] Generated [36m.output/server/wrangler.json[39m
 [info] Generated [36m.wrangler/deploy/config.json[39m
