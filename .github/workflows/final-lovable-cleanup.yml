@@ -20,7 +20,7 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Remove old Lovable metadata and one-time migration helpers
+      - name: Remove obsolete Lovable metadata and migration helpers
         shell: bash
         run: |
           set -euo pipefail
@@ -30,7 +30,7 @@ jobs:
           rm -f .github/workflows/remove-lovable-runtime.yml
           rm -f .github/workflows/final-lovable-cleanup.yml
 
-      - name: Verify lockfile and production build
+      - name: Verify independent production build
         shell: bash
         run: |
           set -euo pipefail
@@ -41,20 +41,21 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if grep -RIniE '@lovable\.dev|/__l5e/|lovable-error-reporting|\.asset\.json' \
+          if grep -RIniE '@lovable\.dev|/__l5e/|lovable-error-reporting|\.asset\.json|__lovable' \
             --exclude-dir=.git \
             --exclude='BUILD_LOG.txt' \
             --exclude='BUILD_CHECK.txt' .; then
             echo "Technical Lovable references still remain."
             exit 1
           fi
+          printf "Lovable cleanup: OK\nIndependent build: OK\n" > CLEANUP_CHECK.txt
 
-      - name: Commit cleanup
+      - name: Commit final cleanup
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "ChatGPT migration"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git commit -m "Clean remaining Lovable metadata"
+          git commit -m "Finalize Lovable cleanup"
           git push
