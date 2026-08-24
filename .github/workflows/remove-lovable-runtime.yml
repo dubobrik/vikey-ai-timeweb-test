@@ -1,0 +1,139 @@
+name: Remove Lovable runtime dependencies
+
+on:
+  push:
+    paths:
+      - ".github/workflows/remove-lovable-runtime.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Replace Lovable-specific build configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cat > vite.config.ts <<'EOF'
+          import tailwindcss from "@tailwindcss/vite";
+          import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+          import viteReact from "@vitejs/plugin-react";
+          import { nitro } from "nitro/vite";
+          import { defineConfig } from "vite";
+          import viteTsConfigPaths from "vite-tsconfig-paths";
+
+          export default defineConfig({
+            plugins: [
+              viteTsConfigPaths(),
+              tailwindcss(),
+              tanstackStart(),
+              nitro(),
+              viteReact(),
+            ],
+          });
+          EOF
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          package_path = Path("package.json")
+          package = json.loads(package_path.read_text(encoding="utf-8"))
+          package.get("devDependencies", {}).pop("@lovable.dev/vite-tanstack-config", None)
+          package_path.write_text(json.dumps(package, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+          root_path = Path("src/routes/__root.tsx")
+          text = root_path.read_text(encoding="utf-8")
+          text = text.replace('import { useEffect, type ReactNode } from "react";', 'import { type ReactNode } from "react";')
+          text = text.replace('import { reportLovableError } from "../lib/lovable-error-reporting";\n', '')
+          text = text.replace('  useEffect(() => {\n    reportLovableError(error, { boundary: "tanstack_root_error_component" });\n  }, [error]);\n\n', '')
+          root_path.write_text(text, encoding="utf-8")
+          PY
+
+          rm -f src/lib/lovable-error-reporting.ts
+          rm -f src/assets/*.asset.json
+          rm -f .github/workflows/localize-lovable-images.yml
+          rm -f .github/workflows/localize-avatar-video.yml
+          rm -f .github/workflows/verify-build.yml
+          rm -f .github/workflows/remove-lovable-runtime.yml
+
+      - name: Install dependencies and production build
+        id: build
+        shell: bash
+        run: |
+          set +e
+          {
+            echo "=== bun install ==="
+            bun install
+            install_code=$?
+            echo "Install exit code: $install_code"
+
+            if [ "$install_code" -eq 0 ]; then
+              echo
+              echo "=== bun run build ==="
+              bun run build
+              build_code=$?
+            else
+              build_code=99
+            fi
+
+            echo "Build exit code: $build_code"
+          } > LOVABLE_REMOVAL_BUILD_LOG.txt 2>&1
+
+          echo "install_code=$install_code" >> "$GITHUB_OUTPUT"
+          echo "build_code=$build_code" >> "$GITHUB_OUTPUT"
+          tail -n 160 LOVABLE_REMOVAL_BUILD_LOG.txt || true
+          exit 0
+
+      - name: Verify no technical Lovable references remain
+        if: steps.build.outputs.install_code == '0' && steps.build.outputs.build_code == '0'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RIniE '@lovable\.dev|/__l5e/|lovable-error-reporting|\.asset\.json' \
+            --exclude-dir=.git \
+            --exclude='LOVABLE_REMOVAL_BUILD_LOG.txt' .; then
+            echo "Technical Lovable references still remain."
+            exit 1
+          fi
+
+      - name: Commit successful independent configuration
+        if: steps.build.outputs.install_code == '0' && steps.build.outputs.build_code == '0'
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f LOVABLE_REMOVAL_BUILD_LOG.txt BUILD_CHECK.txt BUILD_LOG.txt
+          git config user.name "ChatGPT migration"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Remove Lovable runtime dependencies"
+          git push
+
+      - name: Record failed migration check
+        if: steps.build.outputs.install_code != '0' || steps.build.outputs.build_code != '0'
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            echo "Lovable removal migration: FAILED"
+            echo "Install exit code: ${{ steps.build.outputs.install_code }}"
+            echo "Build exit code: ${{ steps.build.outputs.build_code }}"
+            echo
+            tail -n 160 LOVABLE_REMOVAL_BUILD_LOG.txt || true
+          } > LOVABLE_REMOVAL_CHECK.txt
+          git config user.name "ChatGPT migration"
+          git config user.email "actions@users.noreply.github.com"
+          git add LOVABLE_REMOVAL_CHECK.txt
+          git commit -m "Record Lovable removal build failure" || true
+          git push || true
