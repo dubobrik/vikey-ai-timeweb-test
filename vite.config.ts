@@ -9,7 +9,13 @@ export default defineConfig({
   plugins: [
     viteTsConfigPaths(),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+        failOnError: true,
+      },
+    }),
     nitro(),
     viteReact(),
   ],
