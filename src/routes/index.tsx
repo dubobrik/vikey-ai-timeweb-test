@@ -78,6 +78,7 @@ const help = [
   "Собрать сайт или лендинг",
   "Автоматизировать повторяющиеся задачи",
   "Внедрить AI-помощника или чат-бота",
+  "Другое",
 ];
 
 const portfolio = [
@@ -401,12 +402,17 @@ function Help() {
     <Section id="help" eyebrow="Чем помогаю" title="Практические направления для бизнеса и экспертов">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {help.map((h, i) => (
-          <div key={h} className="group rounded-xl border border-border bg-card/50 p-5 transition hover:border-neon/50">
+          <a
+            key={h}
+            href="#calc"
+            aria-label={`${h} — перейти к калькулятору`}
+            className="group rounded-xl border border-border bg-card/50 p-5 transition hover:-translate-y-0.5 hover:border-neon/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/60"
+          >
             <div className="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-gradient-primary text-sm font-bold text-primary-foreground">
               {i + 1}
             </div>
             <p className="text-sm text-foreground">{h}</p>
-          </div>
+          </a>
         ))}
       </div>
     </Section>
@@ -648,6 +654,7 @@ const CALC_SERVICES: CalcService[] = [
   { key: "print", label: "Полиграфия: визитки, буклеты", price: 2000 },
   { key: "bot", label: "Создание бота", price: 5000 },
   { key: "avatar", label: "Цифровой аватар / AI-видео", price: 5000 },
+  { key: "other", label: "Другое", price: 1000 },
 ];
 
 const TELEGRAM_URL = "https://t.me/Vikey_shel";
