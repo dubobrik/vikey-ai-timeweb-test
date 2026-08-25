@@ -26,22 +26,25 @@ jobs:
           path = Path("src/routes/index.tsx")
           text = path.read_text(encoding="utf-8")
 
-          # 1) Add “Другое” to the practical-directions block.
-          marker = '  "Внедрить AI-помощника или чат-бота",\n];'
-          replacement = '  "Внедрить AI-помощника или чат-бота",\n  "Другое",\n];'
-          if marker not in text and '  "Другое",\n];' not in text:
-              raise SystemExit("Help list marker not found")
-          if marker in text:
-              text = text.replace(marker, replacement, 1)
+          help_list = '''const help = [
+  "Разобраться, какие AI-инструменты реально нужны",
+  "Упаковать идею, услугу или проект",
+  "Создать визуальный контент",
+  "Собрать сайт или лендинг",
+  "Автоматизировать повторяющиеся задачи",
+  "Внедрить AI-помощника или чат-бота",
+  "Другое",
+];'''
+          text, count = re.subn(r'const help = \[.*?\n\];', help_list, text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit("Could not replace help list")
 
-          # 2) Make every practical-direction card an accessible link to the calculator.
-          old_card = '''          <div key={h} className="group rounded-xl border border-border bg-card/50 p-5 transition hover:border-neon/50">
-            <div className="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-gradient-primary text-sm font-bold text-primary-foreground">
-              {i + 1}
-            </div>
-            <p className="text-sm text-foreground">{h}</p>
-          </div>'''
-          new_card = '''          <a
+          help_function = '''function Help() {
+  return (
+    <Section id="help" eyebrow="Чем помогаю" title="Практические направления для бизнеса и экспертов">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {help.map((h, i) => (
+          <a
             key={h}
             href="#calc"
             aria-label={`${h} — перейти к калькулятору`}
@@ -51,19 +54,32 @@ jobs:
               {i + 1}
             </div>
             <p className="text-sm text-foreground">{h}</p>
-          </a>'''
-          if old_card in text:
-              text = text.replace(old_card, new_card, 1)
-          elif 'aria-label={`${h} — перейти к калькулятору`}' not in text:
-              raise SystemExit("Help card block not found")
+          </a>
+        ))}
+      </div>
+    </Section>
+  );
+}'''
+          text, count = re.subn(r'function Help\(\) \{.*?\n\}\n\nfunction Services', help_function + '\n\nfunction Services', text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit("Could not replace Help function")
 
-          # 3) Add “Другое” to the calculator with preliminary price from 1,000 ₽.
-          calc_marker = '  { key: "avatar", label: "Цифровой аватар / AI-видео", price: 5000 },\n];'
-          calc_replacement = '  { key: "avatar", label: "Цифровой аватар / AI-видео", price: 5000 },\n  { key: "other", label: "Другое", price: 1000 },\n];'
-          if calc_marker in text:
-              text = text.replace(calc_marker, calc_replacement, 1)
-          elif '{ key: "other", label: "Другое", price: 1000 }' not in text:
-              raise SystemExit("Calculator marker not found")
+          calc_services = '''const CALC_SERVICES: CalcService[] = [
+  { key: "landing", label: "Лендинг", price: 6000 },
+  { key: "site", label: "Многостраничный сайт", price: 10000 },
+  { key: "shop", label: "Интернет-магазин", price: 18000 },
+  { key: "logo", label: "Логотип", price: 2500 },
+  { key: "brand", label: "Фирменный стиль", price: 7000 },
+  { key: "smm", label: "SMM-пакет: 10 постов", price: 4000 },
+  { key: "stories", label: "Шаблоны stories: 5 шт", price: 2000 },
+  { key: "print", label: "Полиграфия: визитки, буклеты", price: 2000 },
+  { key: "bot", label: "Создание бота", price: 5000 },
+  { key: "avatar", label: "Цифровой аватар / AI-видео", price: 5000 },
+  { key: "other", label: "Другое", price: 1000 },
+];'''
+          text, count = re.subn(r'const CALC_SERVICES: CalcService\[\] = \[.*?\n\];', calc_services, text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit("Could not replace calculator services")
 
           path.write_text(text, encoding="utf-8")
           PY
