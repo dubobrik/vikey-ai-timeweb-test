@@ -16,7 +16,9 @@ export default defineConfig({
         failOnError: true,
       },
     }),
-    nitro(),
+    // Force the same Node build used by our verified GitHub build.
+    // Cloudflare Pages will publish only .output/public, so no Node server runs in production.
+    nitro({ preset: "node-server" }),
     viteReact(),
   ],
 });
