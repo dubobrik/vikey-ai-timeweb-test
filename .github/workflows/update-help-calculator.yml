@@ -1,0 +1,101 @@
+name: Update help cards and calculator
+
+on:
+  push:
+    paths:
+      - ".github/workflows/update-help-calculator.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update help cards and calculator
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("src/routes/index.tsx")
+          text = path.read_text(encoding="utf-8")
+
+          old_help = '''const help = [
+            "Разобраться, какие AI-инструменты реально нужны",
+            "Упаковать идею, услугу или проект",
+            "Создать визуальный контент",
+            "Собрать сайт или лендинг",
+            "Автоматизировать повторяющиеся задачи",
+            "Внедрить AI-помощника или чат-бота",
+          ];'''
+          new_help = '''const help = [
+            "Разобраться, какие AI-инструменты реально нужны",
+            "Упаковать идею, услугу или проект",
+            "Создать визуальный контент",
+            "Собрать сайт или лендинг",
+            "Автоматизировать повторяющиеся задачи",
+            "Внедрить AI-помощника или чат-бота",
+            "Другое",
+          ];'''
+
+          old_card = '''        {help.map((h, i) => (
+          <div key={h} className="group rounded-xl border border-border bg-card/50 p-5 transition hover:border-neon/50">
+            <div className="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-gradient-primary text-sm font-bold text-primary-foreground">
+              {i + 1}
+            </div>
+            <p className="text-sm text-foreground">{h}</p>
+          </div>
+        ))}'''
+          new_card = '''        {help.map((h, i) => (
+          <a
+            key={h}
+            href="#calc"
+            aria-label={`${h} — перейти к калькулятору`}
+            className="group rounded-xl border border-border bg-card/50 p-5 transition hover:-translate-y-0.5 hover:border-neon/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/60"
+          >
+            <div className="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-gradient-primary text-sm font-bold text-primary-foreground">
+              {i + 1}
+            </div>
+            <p className="text-sm text-foreground">{h}</p>
+          </a>
+        ))}'''
+
+          old_calc = '''  { key: "bot", label: "Создание бота", price: 5000 },
+            { key: "avatar", label: "Цифровой аватар / AI-видео", price: 5000 },
+          ];'''
+          new_calc = '''  { key: "bot", label: "Создание бота", price: 5000 },
+            { key: "avatar", label: "Цифровой аватар / AI-видео", price: 5000 },
+            { key: "other", label: "Другое", price: 1000 },
+          ];'''
+
+          replacements = [(old_help, new_help), (old_card, new_card), (old_calc, new_calc)]
+          for old, new in replacements:
+              if old not in text:
+                  raise SystemExit(f"Expected block not found:\n{old[:120]}")
+              text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Verify production build
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+
+      - name: Commit changes
+        run: |
+          git config user.name "ChatGPT site updates"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/routes/index.tsx
+          git commit -m "Make help cards clickable and add Other option"
+          git push
