@@ -1,3 +1,5 @@
-Independent production build: OK
+Static prerender production build: OK
+Root HTML: OK
+Privacy HTML: OK
 Final Lovable cleanup verified: YES
-Commit: 1b544031942b8c92acf7779538be918ac8c51ffd
+Commit: 6f728c5388e9d721e3d54c2ff3573bd85fc3bc49
