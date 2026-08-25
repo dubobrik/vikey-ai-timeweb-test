@@ -427,8 +427,8 @@ function Services() {
         <h2 className="max-w-3xl text-3xl font-bold sm:text-4xl md:text-5xl">Что можно заказать</h2>
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
-            <div key={s.title} className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card transition hover:-translate-y-1 hover:border-neon/50">
-              <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-gradient-primary text-lg text-primary-foreground shadow-glow">
+            <div key={s.title} className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card">
+              <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl border border-[#8B7BC8]/30 bg-[#8B7BC8]/10 text-lg text-[#8B7BC8]">
                 {s.icon}
               </div>
               <h3 className="text-lg font-semibold">{s.title}</h3>
