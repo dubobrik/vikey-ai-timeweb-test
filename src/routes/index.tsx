@@ -162,7 +162,7 @@ const portfolio = [
       "сайт адаптирован под мобильную версию",
     ],
     result: "получился визуально сильный сайт-портфолио, который передаёт характер мастера, показывает ценность ручной работы и помогает представить изделия как авторские объекты.",
-    viewHref: "https://stone-fire-water-art.lovable.app",
+    viewHref: "https://dubobrik-ruslan-stone-water-art-16db.twc1.net/",
     viewLabel: "Посмотреть сайт",
   },
   {
