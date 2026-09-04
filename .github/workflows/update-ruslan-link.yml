@@ -1,0 +1,49 @@
+name: Update Ruslan portfolio link
+
+on:
+  push:
+    paths:
+      - ".github/workflows/update-ruslan-link.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Replace Ruslan site URL
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('src/routes/index.tsx')
+          text = path.read_text(encoding='utf-8')
+          old = 'https://stone-fire-water-art.lovable.app'
+          new = 'https://dubobrik-ruslan-stone-water-art-16db.twc1.net/'
+          if old not in text:
+              raise SystemExit('Old Ruslan URL not found')
+          text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Verify production build
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+
+      - name: Commit changes and remove workflow
+        run: |
+          git config user.name "ChatGPT site updates"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/routes/index.tsx
+          git rm .github/workflows/update-ruslan-link.yml
+          git commit -m "Update Ruslan portfolio link"
+          git push
