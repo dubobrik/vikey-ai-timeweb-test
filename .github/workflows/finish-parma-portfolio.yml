@@ -1,0 +1,63 @@
+name: Finish Parma Khutor portfolio case
+
+on:
+  push:
+    paths:
+      - .github/workflows/finish-parma-portfolio.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add portfolio cover
+        run: |
+          mkdir -p public/assets
+          curl -L --fail --silent --show-error https://raw.githubusercontent.com/dubobrik/parma-khutor-timeweb/main/public/assets/grounds-hammock.webp -o public/assets/parma-khutor-portfolio.webp
+
+      - name: Add Parma Khutor case
+        run: |
+          python - <<'PY'
+          import base64, re
+          from pathlib import Path
+          workflow = Path('.github/workflows/add-parma-khutor-portfolio.yml').read_text(encoding='utf-8')
+          case_b64 = re.search(r'CASE_B64: "([^"]+)"', workflow).group(1)
+          mark_b64 = re.search(r'MARK_B64: "([^"]+)"', workflow).group(1)
+          case = base64.b64decode(case_b64).decode('utf-8')
+          marker = base64.b64decode(mark_b64).decode('utf-8')
+          path = Path('src/routes/index.tsx')
+          text = path.read_text(encoding='utf-8')
+          if '/assets/parma-khutor-portfolio.webp' not in text:
+              if marker not in text:
+                  raise SystemExit('Insertion marker not found')
+              text = text.replace(marker, marker + case, 1)
+              path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Verify production build
+        run: bun run build
+
+      - name: Commit changes and remove temporary workflows
+        run: |
+          rm -f .github/workflows/add-parma-khutor-portfolio.yml
+          rm -f .github/workflows/finish-parma-portfolio.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add Parma Khutor portfolio case"
+          git push
