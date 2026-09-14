@@ -1,0 +1,96 @@
+name: Add Parma Khutor portfolio case
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-parma-khutor-portfolio.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add portfolio cover
+        run: |
+          mkdir -p public/assets
+          curl -L --fail --silent --show-error \
+            https://raw.githubusercontent.com/dubobrik/parma-khutor-timeweb/main/public/assets/grounds-hammock.webp \
+            -o public/assets/parma-khutor-portfolio.webp
+
+      - name: Add Parma Khutor case
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('src/routes/index.tsx')
+          text = path.read_text(encoding='utf-8')
+
+          if 'title: "Сайт для гостевого комплекса «Парма Хутор»"' in text:
+              print('Case already exists')
+              raise SystemExit(0)
+
+          marker = '''    viewHref: "https://tarhankut.space/",
+    viewLabel: "Посмотреть сайт",
+  },
+'''
+
+          block = '''    viewHref: "https://tarhankut.space/",
+    viewLabel: "Посмотреть сайт",
+  },
+  {
+    title: "Сайт для гостевого комплекса «Парма Хутор»",
+    tag: "Сайт / Туризм / Гостевой бизнес / Визуальная упаковка",
+    desc: "Сайт для гостевого комплекса в Оленевке. Задача — красиво представить место, домики и атмосферу отдыха, показать преимущества локации и сделать понятный путь от первого знакомства с объектом до обращения и выбора свободных дат.",
+    image: "/assets/parma-khutor-portfolio.webp",
+    bullets: [
+      "разработана структура сайта под туристический бизнес",
+      "оформлен атмосферный первый экран с акцентом на место и отдых",
+      "представлены домики, территория и зоны отдыха",
+      "обработано и подготовлено более 100 фотографий для сайта",
+      "фотографии систематизированы и распределены по домикам и смысловым разделам",
+      "добавлены возможности активного отдыха и интересные места Тарханкута",
+      "выстроена понятная навигация от знакомства с объектом к выбору домика",
+      "добавлены контакты и переход к уточнению свободных дат",
+      "сайт адаптирован под мобильные устройства",
+      "визуальная подача собрана так, чтобы показать не просто проживание, а атмосферу и впечатление от места",
+    ],
+    full: "Кейс по созданию сайта для гостевого комплекса «Парма Хутор» в Оленевке. В проекте была собрана структура под гостевой бизнес, подготовлена визуальная подача объекта, систематизирован большой объём фотоматериалов, оформлены домики, территория, отдых и возможности локации. Задача сайта — помочь потенциальному гостю быстро почувствовать атмосферу места, увидеть варианты размещения и перейти к уточнению свободных дат.",
+    result: "Получился современный визуальный сайт для гостевого бизнеса, который помогает владельцу представить объект не просто набором фотографий, а как полноценное место для отдыха — с атмосферой, вариантами размещения, преимуществами локации и понятным следующим шагом для потенциального гостя.",
+    viewHref: "https://dubobrik-parma-khutor-timeweb-32e1.twc1.net/",
+    viewLabel: "Посмотреть сайт",
+  },
+'''
+
+          if marker not in text:
+              raise SystemExit('Insertion marker not found')
+
+          path.write_text(text.replace(marker, block, 1), encoding='utf-8')
+          print('Parma Khutor case added')
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify production build
+        run: npm run build
+
+      - name: Commit changes and remove workflow
+        run: |
+          rm .github/workflows/add-parma-khutor-portfolio.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/routes/index.tsx public/assets/parma-khutor-portfolio.webp .github/workflows/add-parma-khutor-portfolio.yml
+          git commit -m "Add Parma Khutor portfolio case"
+          git push
