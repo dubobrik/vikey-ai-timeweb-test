@@ -25,7 +25,7 @@ jobs:
             -o public/assets/parma-khutor-portfolio.webp
 
       - name: Add Parma Khutor case
-        shell: python {0}
+        shell: "python {0}"
         run: |
           from pathlib import Path
 
