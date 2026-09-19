@@ -257,7 +257,7 @@ const steps = [
 ];
 
 const contacts = [
-  { label: "Telegram", href: "https://t.me/Vikey_shel" },
+  { label: "Telegram", href: "https://t.me/vikey_shell" },
   { label: "WhatsApp", href: "https://wa.me/79081747077", detail: "89081747077", copy: "89081747077" },
   { label: "VK", href: "https://vk.com/id867298362" },
   { label: "Email", href: "mailto:dubobrik@list.ru", detail: "dubobrik@list.ru", copy: "dubobrik@list.ru" },
@@ -679,7 +679,7 @@ const CALC_SERVICES: CalcService[] = [
   { key: "other", label: "Другое", price: 1000 },
 ];
 
-const TELEGRAM_URL = "https://t.me/Vikey_shel";
+const TELEGRAM_URL = "https://t.me/vikey_shell";
 const WHATSAPP_PHONE = "79081747077";
 const MAX_URL =
   "https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA";

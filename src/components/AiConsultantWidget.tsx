@@ -44,7 +44,7 @@ const serviceReply: Record<string, string> = {
 };
 
 const contactsBlock =
-  "Telegram: https://t.me/Vikey_shel\nWhatsApp: https://wa.me/79081747077\nVK: https://vk.com/id867298362\nMAX: https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA";
+  "Telegram: https://t.me/vikey_shell\nWhatsApp: https://wa.me/79081747077\nVK: https://vk.com/id867298362\nMAX: https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA";
 
 export default function AiConsultantWidget() {
   const [open, setOpen] = useState(false);
@@ -115,7 +115,7 @@ export default function AiConsultantWidget() {
         "Заявка готова. Отправьте её Виктории удобным способом:",
         undefined,
         [
-          { label: "Отправить заявку в Telegram", href: `https://t.me/Vikey_shel?text=${text}` },
+          { label: "Отправить заявку в Telegram", href: `https://t.me/vikey_shell?text=${text}` },
           { label: "Отправить заявку в WhatsApp", href: `https://wa.me/79081747077?text=${text}` },
           { label: "Отправить заявку в MAX", href: "https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA" },
         ],
