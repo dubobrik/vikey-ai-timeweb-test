@@ -1,0 +1,45 @@
+name: Verify Yandex verification URL live
+
+on:
+  push:
+    paths:
+      - .github/workflows/verify-yandex-live.yml
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Wait for Timeweb deploy and verify live URL
+        run: |
+          set -e
+          URL="https://chelovek-neiroset.ru/yandex_6e9318c679eee646.html"
+          for i in $(seq 1 30); do
+            echo "Attempt $i"
+            if body=$(curl -fsSL --max-time 15 "$URL"); then
+              echo "$body"
+              if printf '%s' "$body" | grep -Fq "Verification: 6e9318c679eee646"; then
+                echo "Verification file is live and correct"
+                exit 0
+              fi
+            fi
+            sleep 10
+          done
+          echo "Verification URL did not become available in time"
+          exit 1
+
+      - name: Remove temporary workflow
+        run: |
+          rm .github/workflows/verify-yandex-live.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/verify-yandex-live.yml
+          git commit -m "Remove temporary Yandex live check workflow"
+          git push
