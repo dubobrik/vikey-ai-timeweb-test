@@ -26,24 +26,24 @@ class WidgetBoundary extends Component<{ children: ReactNode }, { failed: boolea
 
 const SITE_URL = "https://chelovek-neiroset.ru/";
 const OG_IMAGE = SITE_URL + "vikey-og.jpg";
-const SITE_TITLE = "Vikey AI — нейросети для бизнеса и контента";
-const SITE_DESC = "Помогаю внедрять AI-инструменты в сайты, визуал, чат-боты, упаковку проектов и автоматизацию рабочих процессов.";
+const SITE_TITLE = "Vikey AI — студия Виктории Шелих | Нейросети для бизнеса и контента";
+const SITE_DESC = "Vikey AI — студия Виктории Шелих. Создание сайтов, AI-консультантов, Telegram-ботов, визуального контента, автоматизации и цифровой упаковки проектов.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: SITE_TITLE },
       { name: "description", content: SITE_DESC },
-      { property: "og:title", content: SITE_TITLE },
-      { property: "og:description", content: SITE_DESC },
+      { property: "og:title", content: "Vikey AI — студия Виктории Шелих" },
+      { property: "og:description", content: "AI-решения для бизнеса и контента: сайты, чат-боты, AI-консультанты, автоматизация, визуальная упаковка и цифровые проекты." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
       { property: "og:image", content: OG_IMAGE },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: SITE_TITLE },
-      { name: "twitter:description", content: SITE_DESC },
+      { name: "twitter:title", content: "Vikey AI — студия Виктории Шелих" },
+      { name: "twitter:description", content: "AI-решения для бизнеса и контента: сайты, чат-боты, AI-консультанты, автоматизация, визуальная упаковка и цифровые проекты." },
       { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [{ rel: "canonical", href: SITE_URL }],
@@ -212,12 +212,12 @@ const portfolio = [
       "https://nduma.ru/news/german-zaporozhchenko-prinyal-uchastie-v-masshtabnom-ozelenenii-ulitsy-krivopustenko/",
   },
   {
-    title: "Логотип и визитка для личного AI-бренда",
+    title: "Айдентика для Vikey AI — студии Виктории Шелих",
     tag: "Айдентика / Логотип / Визитка",
-    desc: "Логотип и визитка для личного AI-бренда Vikey AI: монограмма V, мраморная эстетика, лавандовые оттенки, золотые акценты и QR-код для быстрого перехода на сайт.",
+    desc: "Логотип и визитка для Vikey AI — студии Виктории Шелих: монограмма V, мраморная эстетика, лавандовые оттенки, золотые акценты и QR-код для быстрого перехода на сайт.",
     image: cardCoverAsset,
     contain: true,
-    full: "Разработка визуальной айдентики для Vikey AI: логотип, фирменная подача и визитка с QR-кодом для быстрого перехода на сайт. Задача проекта — создать аккуратный, запоминающийся и женственный образ AI-бренда, где технологичность сочетается с мягкостью, доверием и экспертностью. В основе визуала — монограмма V, светлый мраморный фон, лавандовые оттенки, золотые акценты и ощущение лёгкой цифровой искры.",
+    full: "Разработка визуальной айдентики для Vikey AI — студии Виктории Шелих: логотип, фирменная подача и визитка с QR-кодом для быстрого перехода на сайт. Задача проекта — создать аккуратный, запоминающийся и женственный образ AI-студии, где технологичность сочетается с мягкостью, доверием и экспертностью. В основе визуала — монограмма V, светлый мраморный фон, лавандовые оттенки, золотые акценты и ощущение лёгкой цифровой искры.",
     bullets: [
       "разработана идея логотипа с монограммой V",
       "подобрана светлая мраморная эстетика",
@@ -225,26 +225,26 @@ const portfolio = [
       "оформлена лицевая и оборотная сторона визитки",
       "добавлен QR-код для перехода на сайт",
       "вынесены основные каналы связи: Instagram, Telegram, MAX",
-      "создана визуальная подача для личного AI-бренда",
+      "создана визуальная подача для студии Vikey AI",
     ],
-    result: "получилась лёгкая, премиальная и запоминающаяся визитка, которая соединяет личный бренд, AI-направление и понятный путь к контакту через QR-код.",
+    result: "получилась лёгкая, премиальная и запоминающаяся визитка, которая соединяет студию, AI-направление и понятный путь к контакту через QR-код.",
   },
   {
     title: "Создание цифрового аватара",
     tag: "AI-видео / Цифровой аватар / Личный бренд",
-    desc: "AI-видео с цифровым аватаром для личного бренда: визуальный образ, голос, подача и короткий ролик, который помогает эксперту представить себя современно, живо и технологично.",
+    desc: "AI-видео с цифровым аватаром для студии Vikey AI: визуальный образ, голос, подача и короткий ролик, который помогает представить услуги современно, живо и технологично.",
     image: avatarPosterAsset,
     focus: "50% 22%",
     video: avatarVideoAsset,
-    full: "Кейс по созданию цифрового аватара для личного бренда Vikey AI. Задача проекта — показать, как AI-инструменты помогают создать современный видеовизуал: образ эксперта, короткое приветствие, динамичную подачу и ощущение присутствия без полноценной видеосъёмки. Такой формат можно использовать для сайта, соцсетей, презентации услуг, приветственного ролика, обучающих материалов или первого касания с клиентом.",
+    full: "Кейс по созданию цифрового аватара для студии Vikey AI. Задача проекта — показать, как AI-инструменты помогают создать современный видеовизуал: образ эксперта, короткое приветствие, динамичную подачу и ощущение присутствия без полноценной видеосъёмки. Такой формат можно использовать для сайта, соцсетей, презентации услуг, приветственного ролика, обучающих материалов или первого касания с клиентом.",
     bullets: [
       "создана идея цифрового образа",
       "подготовлен визуальный стиль аватара",
       "собран короткий видеоролик",
-      "адаптирована подача под личный AI-бренд",
+      "адаптирована подача под позиционирование студии Vikey AI",
       "подготовлен формат для использования на сайте и в соцсетях",
     ],
-    result: "получился короткий AI-видеоформат, который усиливает личный бренд, делает подачу более живой и показывает возможности цифрового аватара для экспертов и бизнеса.",
+    result: "получился короткий AI-видеоформат, который усиливает образ студии, делает подачу более живой и показывает возможности цифрового аватара для экспертов и бизнеса.",
   },
 ];
 
@@ -295,7 +295,7 @@ function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <a href="#top" className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-primary text-sm font-bold text-primary-foreground">V</span>
-          <span className="font-display text-lg font-semibold">Vikey AI</span>
+          <span className="font-display text-lg font-semibold">Студия Vikey AI</span>
         </a>
         <nav className="hidden gap-6 lg:flex">
           {nav.map((n) => (
@@ -342,13 +342,13 @@ function Hero() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:py-28">
         <div className="min-w-0">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground">
-            <span className="h-1.5 w-1.5 rounded-full bg-neon" /> Vikey AI · AI-решения под задачи
+            <span className="h-1.5 w-1.5 rounded-full bg-neon" /> Vikey AI — студия Виктории Шелих
           </div>
           <h1 className="font-display text-4xl font-bold leading-[1.05] sm:text-5xl md:text-6xl">
             AI-решения для <span className="text-gradient">бизнеса, контента</span> и автоматизации
           </h1>
           <p className="mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
-            Помогаю быстро находить, упаковывать и внедрять AI-инструменты под реальные задачи: сайты, визуал, чат-боты, контент и рабочие процессы.
+            Создаю сайты, AI-консультантов, Telegram-ботов, визуальный контент и цифровую упаковку проектов — от идеи до работающего решения.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a href="#contact" className="rounded-lg bg-gradient-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95">
@@ -364,7 +364,7 @@ function Hero() {
           <div className="relative overflow-hidden rounded-3xl border border-border shadow-glow">
             <img
               src={heroAsset}
-              alt="Vikey AI — Виктория"
+              alt="Vikey AI — студия Виктории Шелих"
               className="h-full w-full object-cover"
               loading="eager"
             />
@@ -393,18 +393,18 @@ function About() {
           <div className="absolute -inset-3 rounded-2xl bg-gradient-primary opacity-25 blur-xl" />
           <img
             src={aboutAsset}
-            alt="Виктория / Vikey AI"
+            alt="Виктория Шелих — основатель студии Vikey AI"
             className="relative rounded-2xl border border-border object-cover shadow-card"
           />
         </div>
         <div className="min-w-0">
           <div className="mb-2 text-xs font-medium uppercase tracking-widest text-neon">Обо мне</div>
-          <h2 className="text-3xl font-bold sm:text-4xl">Виктория / Vikey AI</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">Виктория Шелих — основатель студии Vikey AI</h2>
           <p className="mt-5 text-muted-foreground">
-            Опыт в IT, информационной безопасности, продажах сложных решений и работе с реальными бизнес-задачами.
+            Я помогаю бизнесу, экспертам и частным проектам использовать нейросети не ради моды, а для конкретного результата: сайта, чат-бота, AI-консультанта, визуальной упаковки, автоматизации или понятной структуры проекта.
           </p>
           <p className="mt-4 text-muted-foreground">
-            Сейчас фокус — AI-инструменты, визуальный контент, автоматизация, сайты и практическое внедрение нейросетей в работу команд и экспертов.
+            В основе работы — опыт в IT, продажах сложных решений, переговорах и практическом применении AI-инструментов.
           </p>
           <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {["IT & Security", "AI-инструменты", "Автоматизация", "Сайты", "Визуал", "Внедрение"].map((t) => (
@@ -969,7 +969,7 @@ function Footer() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 text-xs text-muted-foreground sm:flex-row sm:px-6">
-        <div>© {new Date().getFullYear()} Vikey AI. Все права защищены.</div>
+        <div>© {new Date().getFullYear()} Vikey AI — студия Виктории Шелих. Все права защищены.</div>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
           <Link to="/privacy" className="transition hover:text-foreground">
             Политика обработки персональных данных
