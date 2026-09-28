@@ -295,7 +295,7 @@ function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <a href="#top" className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-primary text-sm font-bold text-primary-foreground">V</span>
-          <span className="font-display text-lg font-semibold">Vikey AI</span>
+          <span className="font-display text-lg font-semibold">Студия Vikey AI</span>
         </a>
         <nav className="hidden gap-6 lg:flex">
           {nav.map((n) => (
@@ -342,7 +342,7 @@ function Hero() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:py-28">
         <div className="min-w-0">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground">
-            <span className="h-1.5 w-1.5 rounded-full bg-neon" /> Vikey AI · AI-решения под задачи
+            <span className="h-1.5 w-1.5 rounded-full bg-neon" /> Vikey AI — студия Виктории Шелих
           </div>
           <h1 className="font-display text-4xl font-bold leading-[1.05] sm:text-5xl md:text-6xl">
             AI-решения для <span className="text-gradient">бизнеса, контента</span> и автоматизации
@@ -399,7 +399,7 @@ function About() {
         </div>
         <div className="min-w-0">
           <div className="mb-2 text-xs font-medium uppercase tracking-widest text-neon">Обо мне</div>
-          <h2 className="text-3xl font-bold sm:text-4xl">Виктория / Vikey AI</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">Виктория Шелих — основатель студии Vikey AI</h2>
           <p className="mt-5 text-muted-foreground">
             Опыт в IT, информационной безопасности, продажах сложных решений и работе с реальными бизнес-задачами.
           </p>
@@ -969,7 +969,7 @@ function Footer() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 text-xs text-muted-foreground sm:flex-row sm:px-6">
-        <div>© {new Date().getFullYear()} Vikey AI. Все права защищены.</div>
+        <div>© {new Date().getFullYear()} Vikey AI — студия Виктории Шелих. Все права защищены.</div>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
           <Link to="/privacy" className="transition hover:text-foreground">
             Политика обработки персональных данных
