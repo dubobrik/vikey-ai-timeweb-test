@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Шелих;Виктория;;;
+FN:Виктория Шелих
+ORG:Vikey AI
+TITLE:Студия AI-решений
+TEL;TYPE=CELL:+79081747077
+URL;TYPE=WORK:https://chelovek-neiroset.ru/#about
+URL;TYPE=SOCIAL:https://t.me/Vikey_shel
+X-SOCIALPROFILE;TYPE=telegram:https://t.me/Vikey_shel
+X-SOCIALPROFILE;TYPE=instagram:https://instagram.com/vikey_shel
+NOTE:Vikey AI — студия Виктории Шелих. AI-решения для бизнеса и визуала.
+END:VCARD
