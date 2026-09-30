@@ -1,0 +1,89 @@
+name: Build AI assistant SEO page branch
+
+on:
+  push:
+    paths:
+      - '.github/workflows/build-seo-ai-assistant-page.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: seo-ii-assistent-final
+          fetch-depth: 0
+
+      - name: Patch main card, sites cross-link and sitemap
+        run: |
+          set -euo pipefail
+          python <<'PY'
+          from pathlib import Path
+
+          index = Path('src/routes/index.tsx')
+          text = index.read_text(encoding='utf-8')
+          old = '  { title: "AI-консультанты и чат-боты", desc: "Умные помощники в Telegram, на сайте и в мессенджерах." , icon: "✦" },'
+          new = '  { title: "ИИ-ассистенты для бизнеса", desc: "ИИ-помощники и консультанты для сайта и рабочих задач: база знаний, ответы клиентам и сценарии под ваш бизнес.", icon: "✦", href: "/ii-assistent-dlya-biznesa/" },'
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected one service card occurrence, got {text.count(old)}')
+          index.write_text(text.replace(old, new), encoding='utf-8')
+
+          sites = Path('src/routes/sayty-dlya-biznesa.tsx')
+          text = sites.read_text(encoding='utf-8')
+          old = '''          </div>\n        </Section>\n\n        <Section eyebrow="Форматы" title="От лендинга до полноценного сайта для бизнеса">'''
+          new = '''          </div>\n          <p className="mt-5 max-w-4xl text-sm leading-relaxed text-muted-foreground">\n            Нужен ИИ-консультант на сайт? →{\" \"}\n            <a href="/ii-assistent-dlya-biznesa/" className="font-semibold text-neon transition hover:text-neon/80">ИИ-ассистенты для бизнеса</a>\n          </p>\n        </Section>\n\n        <Section eyebrow="Форматы" title="От лендинга до полноценного сайта для бизнеса">'''
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected one sites-page insertion point, got {text.count(old)}')
+          sites.write_text(text.replace(old, new), encoding='utf-8')
+
+          sitemap = Path('public/sitemap.xml')
+          text = sitemap.read_text(encoding='utf-8')
+          if 'https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/' in text:
+              raise SystemExit('AI assistant URL already present in sitemap unexpectedly')
+          old = '  <url>\n    <loc>https://chelovek-neiroset.ru/sayty-dlya-biznesa/</loc>\n  </url>\n</urlset>\n'
+          new = '  <url>\n    <loc>https://chelovek-neiroset.ru/sayty-dlya-biznesa/</loc>\n  </url>\n  <url>\n    <loc>https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/</loc>\n  </url>\n</urlset>\n'
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected one sitemap insertion point, got {text.count(old)}')
+          sitemap.write_text(text.replace(old, new), encoding='utf-8')
+          PY
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Production build
+        run: bun run build
+
+      - name: Verify build output and scope
+        run: |
+          set -euo pipefail
+          test -f .output/public/ii-assistent-dlya-biznesa/index.html
+          grep -Fq 'ИИ-ассистент для бизнеса и сайта | Vikey AI' .output/public/ii-assistent-dlya-biznesa/index.html
+          grep -Fq 'ИИ-ассистент для бизнеса под вашу задачу' .output/public/ii-assistent-dlya-biznesa/index.html
+          grep -Fq 'https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/' .output/public/ii-assistent-dlya-biznesa/index.html
+          grep -Fq 'index,follow' .output/public/ii-assistent-dlya-biznesa/index.html
+          grep -Fq 'href="/sayty-dlya-biznesa/"' .output/public/ii-assistent-dlya-biznesa/index.html
+          grep -Fq 'href="/ii-assistent-dlya-biznesa/"' .output/public/sayty-dlya-biznesa/index.html
+          grep -Fq 'href="/ii-assistent-dlya-biznesa/"' .output/public/index.html
+          test "$(grep -c '<loc>' .output/public/sitemap.xml)" -eq 4
+          grep -Fq '<loc>https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/</loc>' .output/public/sitemap.xml
+          grep -Fq 'Sitemap: https://chelovek-neiroset.ru/sitemap.xml' .output/public/robots.txt
+
+      - name: Commit generated and patched files, remove workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/routes/index.tsx src/routes/sayty-dlya-biznesa.tsx src/routeTree.gen.ts public/sitemap.xml
+          git rm .github/workflows/build-seo-ai-assistant-page.yml
+          git commit -m "Complete AI assistant SEO page integration"
+          git push origin seo-ii-assistent-final
