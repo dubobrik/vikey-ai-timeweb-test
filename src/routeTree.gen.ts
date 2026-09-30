@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TelegramBotyDlyaBiznesaRouteImport } from './routes/telegram-boty-dlya-biznesa'
 import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznesa'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as IiAssistentDlyaBiznesaRouteImport } from './routes/ii-assistent-dlya-biznesa'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TelegramBotyDlyaBiznesaRoute = TelegramBotyDlyaBiznesaRouteImport.update({
+  id: '/telegram-boty-dlya-biznesa',
+  path: '/telegram-boty-dlya-biznesa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SaytyDlyaBiznesaRoute = SaytyDlyaBiznesaRouteImport.update({
   id: '/sayty-dlya-biznesa',
   path: '/sayty-dlya-biznesa',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
+  '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
+  '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,6 +61,7 @@ export interface FileRoutesById {
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
+  '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -61,14 +70,21 @@ export interface FileRouteTypes {
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
+    | '/telegram-boty-dlya-biznesa'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ii-assistent-dlya-biznesa' | '/privacy' | '/sayty-dlya-biznesa'
+  to:
+    | '/'
+    | '/ii-assistent-dlya-biznesa'
+    | '/privacy'
+    | '/sayty-dlya-biznesa'
+    | '/telegram-boty-dlya-biznesa'
   id:
     | '__root__'
     | '/'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
+    | '/telegram-boty-dlya-biznesa'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,10 +92,18 @@ export interface RootRouteChildren {
   IiAssistentDlyaBiznesaRoute: typeof IiAssistentDlyaBiznesaRoute
   PrivacyRoute: typeof PrivacyRoute
   SaytyDlyaBiznesaRoute: typeof SaytyDlyaBiznesaRoute
+  TelegramBotyDlyaBiznesaRoute: typeof TelegramBotyDlyaBiznesaRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/telegram-boty-dlya-biznesa': {
+      id: '/telegram-boty-dlya-biznesa'
+      path: '/telegram-boty-dlya-biznesa'
+      fullPath: '/telegram-boty-dlya-biznesa'
+      preLoaderRoute: typeof TelegramBotyDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sayty-dlya-biznesa': {
       id: '/sayty-dlya-biznesa'
       path: '/sayty-dlya-biznesa'
@@ -116,6 +140,7 @@ const rootRouteChildren: RootRouteChildren = {
   IiAssistentDlyaBiznesaRoute: IiAssistentDlyaBiznesaRoute,
   PrivacyRoute: PrivacyRoute,
   SaytyDlyaBiznesaRoute: SaytyDlyaBiznesaRoute,
+  TelegramBotyDlyaBiznesaRoute: TelegramBotyDlyaBiznesaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

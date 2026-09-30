@@ -171,6 +171,10 @@ function AiAssistantBusinessPage() {
             Если проекту нужен новый сайт или отдельная посадочная страница, посмотреть услугу{" "}
             <a href="/sayty-dlya-biznesa/" className="font-semibold text-neon transition hover:text-neon/80">«Сайты для бизнеса»</a>.
           </p>
+          <p className="mt-4 max-w-4xl text-sm leading-relaxed text-muted-foreground">
+            Нужен именно Telegram-бот с меню, заявками или оплатой? →{" "}
+            <a href="/telegram-boty-dlya-biznesa/" className="font-semibold text-neon transition hover:text-neon/80">Telegram-боты для бизнеса</a>
+          </p>
         </Section>
 
         <Section eyebrow="База знаний" title="ИИ-ассистент по базе знаний компании">
