@@ -62,9 +62,9 @@ const nav = [
   { href: "#contact", label: "Контакты" },
 ];
 
-const services = [
+const services: { title: string; desc: string; icon: string; href?: string }[] = [
   { title: "AI-инструменты для бизнеса", desc: "Подбираю и внедряю нейросети под реальные задачи компании." , icon: "◆" },
-  { title: "Сайты и лендинги с AI", desc: "Быстрая разработка сайтов с использованием AI-генерации." , icon: "▲" },
+  { title: "Сайты для бизнеса", desc: "Сайты и лендинги под задачу бизнеса: структура, мобильная адаптация, визуальная упаковка и SEO-подготовка.", icon: "▲", href: "/sayty-dlya-biznesa/" },
   { title: "Визуальный контент с AI", desc: "Изображения, обложки, баннеры и промо-материалы." , icon: "●" },
   { title: "AI-консультанты и чат-боты", desc: "Умные помощники в Telegram, на сайте и в мессенджерах." , icon: "✦" },
   { title: "Автоматизация процессов", desc: "Убираю рутину: n8n, Make, Zapier + AI-агенты." , icon: "◈" },
@@ -455,6 +455,11 @@ function Services() {
               </div>
               <h3 className="text-lg font-semibold">{s.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
+              {s.href ? (
+                <a href={s.href} className="mt-4 inline-flex text-sm font-semibold text-neon transition hover:text-neon/80">
+                  Подробнее →
+                </a>
+              ) : null}
             </div>
           ))}
         </div>
