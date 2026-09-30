@@ -1,4 +1,4 @@
-name: Optimize SEO business page assets
+name: Verify optimized SEO business page
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  optimize-and-verify:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,97 +18,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Patch Telegram and convert only SEO page images
+      - name: Verify requested source changes only
         run: |
           set -euo pipefail
-          python -m pip install --quiet 'Pillow==11.3.0'
-          python <<'PY'
-          from pathlib import Path
-          from PIL import Image
+          grep -Fq 'savana-site-preview.webp' src/routes/sayty-dlya-biznesa.tsx
+          grep -Fq 'stone-master-preview.webp' src/routes/sayty-dlya-biznesa.tsx
+          grep -Fq 'tarhankut-preview.webp' src/routes/sayty-dlya-biznesa.tsx
+          grep -Fq 'https://t.me/Vikey_shel' src/routes/sayty-dlya-biznesa.tsx
+          ! grep -Fq 'https://t.me/vikey_shell' src/routes/sayty-dlya-biznesa.tsx
+          test -f src/assets/savana-site-preview.webp
+          test -f src/assets/stone-master-preview.webp
+          test -f src/assets/tarhankut-preview.webp
 
-          route = Path('src/routes/sayty-dlya-biznesa.tsx')
-          text = route.read_text(encoding='utf-8')
-
-          replacements = {
-              'import savanaSitePreview from "@/assets/savana-site-preview.jpg";': 'import savanaSitePreview from "@/assets/savana-site-preview.webp";',
-              'import stoneMasterPreview from "@/assets/stone-master-preview.jpg";': 'import stoneMasterPreview from "@/assets/stone-master-preview.webp";',
-              'import tarhankutPreviewAsset from "@/assets/tarhankut-preview.jpg";': 'import tarhankutPreviewAsset from "@/assets/tarhankut-preview.webp";',
-              'href="https://t.me/vikey_shell"': 'href="https://t.me/Vikey_shel"',
-          }
-          for old, new in replacements.items():
-              count = text.count(old)
-              if count != 1:
-                  raise SystemExit(f'Expected exactly one occurrence of {old!r}, got {count}')
-              text = text.replace(old, new)
-          route.write_text(text, encoding='utf-8')
-
-          for stem in ['savana-site-preview', 'stone-master-preview', 'tarhankut-preview']:
-              src = Path('src/assets') / f'{stem}.jpg'
-              dst = Path('src/assets') / f'{stem}.webp'
-              with Image.open(src) as im:
-                  original_size = im.size
-                  if im.mode not in ('RGB', 'RGBA'):
-                      im = im.convert('RGB')
-                  im.save(dst, 'WEBP', quality=92, method=6)
-              with Image.open(dst) as converted:
-                  if converted.size != original_size:
-                      raise SystemExit(f'Dimension mismatch for {stem}: {original_size} -> {converted.size}')
-              print(f'{stem}: {src.stat().st_size} bytes JPG -> {dst.stat().st_size} bytes WebP, dimensions {original_size}')
-          PY
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Production build
-        run: bun run build
-
-      - name: Verify local build and scope
-        run: |
-          set -euo pipefail
-          test -f .output/public/sayty-dlya-biznesa/index.html
-          grep -Fq 'https://t.me/Vikey_shel' .output/public/sayty-dlya-biznesa/index.html
-          ! grep -Fq 'https://t.me/vikey_shell' .output/public/sayty-dlya-biznesa/index.html
-          grep -Eq 'savana-site-preview[^" ]*\.webp' .output/public/sayty-dlya-biznesa/index.html
-          grep -Eq 'stone-master-preview[^" ]*\.webp' .output/public/sayty-dlya-biznesa/index.html
-          grep -Eq 'tarhankut-preview[^" ]*\.webp' .output/public/sayty-dlya-biznesa/index.html
-          git diff -- src/routes/index.tsx public/robots.txt public/sitemap.xml
-
-      - name: Commit and push the two requested changes
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/routes/sayty-dlya-biznesa.tsx \
-                  src/assets/savana-site-preview.webp \
-                  src/assets/stone-master-preview.webp \
-                  src/assets/tarhankut-preview.webp
-          git diff --cached --quiet && { echo 'No requested changes to commit'; exit 1; }
-          git commit -m "Optimize SEO business page images and Telegram link"
-          git push
-
-      - name: Wait for Timeweb deploy
+      - name: Verify live deploy
         run: |
           set -euo pipefail
           url='https://chelovek-neiroset.ru/sayty-dlya-biznesa/'
-          for i in $(seq 1 50); do
-            if curl -fsSL -H 'Accept-Encoding: identity' "$url" -o /tmp/page.html \
-              && grep -aFq 'https://t.me/Vikey_shel' /tmp/page.html \
-              && ! grep -aFq 'https://t.me/vikey_shell' /tmp/page.html \
-              && grep -aEq 'savana-site-preview[^" ]*\.webp' /tmp/page.html \
-              && grep -aEq 'stone-master-preview[^" ]*\.webp' /tmp/page.html \
-              && grep -aEq 'tarhankut-preview[^" ]*\.webp' /tmp/page.html; then
-              echo "DEPLOY_READY_AT=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-              exit 0
-            fi
-            sleep 10
-          done
-          echo 'Timed out waiting for Timeweb deployment'
-          exit 1
+          curl -fsSL -H 'Accept-Encoding: identity' "$url" -o /tmp/page.html
+          grep -aFq 'https://t.me/Vikey_shel' /tmp/page.html
+          ! grep -aFq 'https://t.me/vikey_shell' /tmp/page.html
+          grep -aEq 'savana-site-preview[^" ]*\.webp' /tmp/page.html
+          grep -aEq 'stone-master-preview[^" ]*\.webp' /tmp/page.html
+          grep -aEq 'tarhankut-preview[^" ]*\.webp' /tmp/page.html
 
       - name: Browser checks desktop and mobile
         run: |
@@ -129,19 +60,30 @@ jobs:
             const page = await context.newPage();
             const response = await page.goto(target, { waitUntil: 'networkidle' });
             if (!response || response.status() !== 200) throw new Error(`${name}: HTTP 200 failed`);
-            const telegram = page.locator('a[href="https://t.me/Vikey_shel"]');
-            if (await telegram.count() !== 1) throw new Error(`${name}: Telegram link failed`);
+            if (await page.locator('a[href="https://t.me/Vikey_shel"]').count() !== 1) throw new Error(`${name}: Telegram link failed`);
             if (await page.locator('a[href="https://t.me/vikey_shell"]').count() !== 0) throw new Error(`${name}: old Telegram link remains`);
-            await page.locator('#cases').scrollIntoViewIfNeeded();
-            await page.waitForTimeout(800);
-            const imageCheck = await page.locator('#cases img').evaluateAll((imgs) => ({
-              count: imgs.length,
-              ok: imgs.every((img) => {
-                const path = new URL(img.currentSrc || img.src, location.href).pathname;
-                return path.endsWith('.webp') && img.getAttribute('loading') === 'lazy' && img.hasAttribute('width') && img.hasAttribute('height') && !!img.getAttribute('alt') && img.complete && img.naturalWidth > 0;
-              }),
-            }));
-            if (imageCheck.count !== 4 || !imageCheck.ok) throw new Error(`${name}: case WebP/image attributes failed`);
+
+            const imgs = page.locator('#cases img');
+            if (await imgs.count() !== 4) throw new Error(`${name}: expected 4 case images`);
+            for (let i = 0; i < 4; i++) {
+              const img = imgs.nth(i);
+              const attrs = await img.evaluate((el) => ({
+                path: new URL(el.currentSrc || el.src, location.href).pathname,
+                loading: el.getAttribute('loading'),
+                width: el.getAttribute('width'),
+                height: el.getAttribute('height'),
+                alt: el.getAttribute('alt'),
+              }));
+              if (!attrs.path.endsWith('.webp') || attrs.loading !== 'lazy' || !attrs.width || !attrs.height || !attrs.alt) {
+                throw new Error(`${name}: image ${i + 1} attributes/WebP failed`);
+              }
+              await img.scrollIntoViewIfNeeded();
+              await page.waitForFunction((index) => {
+                const el = document.querySelectorAll('#cases img')[index];
+                return el instanceof HTMLImageElement && el.complete && el.naturalWidth > 0;
+              }, i, { timeout: 10000 });
+            }
+
             const dims = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth }));
             if (dims.sw > dims.cw + 1) throw new Error(`${name}: horizontal overflow ${dims.sw}/${dims.cw}`);
             console.log(`${name}: OK`);
@@ -154,7 +96,8 @@ jobs:
         if: success()
         run: |
           set -euo pipefail
-          git pull --rebase
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm .github/workflows/optimize-seo-business-page-assets.yml
-          git commit -m "Remove temporary SEO page asset optimization workflow"
+          git commit -m "Remove temporary SEO page verification workflow"
           git push
