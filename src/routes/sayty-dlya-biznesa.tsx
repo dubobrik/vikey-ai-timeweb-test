@@ -212,6 +212,10 @@ function BusinessSitesPage() {
               <div key={item} className="rounded-xl border border-border bg-card/50 p-4 text-sm font-medium">{item}</div>
             ))}
           </div>
+          <p className="mt-5 max-w-4xl text-sm leading-relaxed text-muted-foreground">
+            Нужен ИИ-консультант на сайт? →{" "}
+            <a href="/ii-assistent-dlya-biznesa/" className="font-semibold text-neon transition hover:text-neon/80">ИИ-ассистенты для бизнеса</a>
+          </p>
         </Section>
 
         <Section eyebrow="Форматы" title="От лендинга до полноценного сайта для бизнеса">
