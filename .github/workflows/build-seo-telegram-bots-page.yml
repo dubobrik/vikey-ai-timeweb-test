@@ -1,0 +1,112 @@
+name: Build Telegram bots SEO page branch
+
+on:
+  push:
+    branches:
+      - seo-telegram-boty-dlya-biznesa
+    paths:
+      - '.github/workflows/build-seo-telegram-bots-page.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch main card, AI cross-link and sitemap
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+
+          index = Path('src/routes/index.tsx')
+          text = index.read_text(encoding='utf-8')
+          old = '  { title: "AI-инструменты для бизнеса", desc: "Подбираю и внедряю нейросети под реальные задачи компании." , icon: "◆" },'
+          new = '  { title: "Telegram-боты для бизнеса", desc: "Боты для заявок, записи, оплат, уведомлений и рабочих сценариев. AI можно подключить, если он действительно нужен.", icon: "◆", href: "/telegram-boty-dlya-biznesa/" },'
+          if old not in text:
+              raise SystemExit('Main service card anchor not found')
+          text = text.replace(old, new, 1)
+          index.write_text(text, encoding='utf-8')
+
+          ai = Path('src/routes/ii-assistent-dlya-biznesa.tsx')
+          text = ai.read_text(encoding='utf-8')
+          old = '''          <p className="mt-5 max-w-4xl text-sm leading-relaxed text-muted-foreground">
+            Если проекту нужен новый сайт или отдельная посадочная страница, посмотреть услугу{" "}
+            <a href="/sayty-dlya-biznesa/" className="font-semibold text-neon transition hover:text-neon/80">«Сайты для бизнеса»</a>.
+          </p>'''
+          new = old + '''
+          <p className="mt-4 max-w-4xl text-sm leading-relaxed text-muted-foreground">
+            Нужен именно Telegram-бот с меню, заявками или оплатой? →{" "}
+            <a href="/telegram-boty-dlya-biznesa/" className="font-semibold text-neon transition hover:text-neon/80">Telegram-боты для бизнеса</a>
+          </p>'''
+          if old not in text:
+              raise SystemExit('AI assistant cross-link anchor not found')
+          text = text.replace(old, new, 1)
+          ai.write_text(text, encoding='utf-8')
+
+          sitemap = Path('public/sitemap.xml')
+          text = sitemap.read_text(encoding='utf-8')
+          if 'https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/' in text:
+              raise SystemExit('Telegram bots URL already present in sitemap')
+          anchor = '''  <url>
+    <loc>https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/</loc>
+  </url>
+</urlset>'''
+          replacement = '''  <url>
+    <loc>https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/</loc>
+  </url>
+  <url>
+    <loc>https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/</loc>
+  </url>
+</urlset>'''
+          if anchor not in text:
+              raise SystemExit('Sitemap anchor not found')
+          sitemap.write_text(text.replace(anchor, replacement, 1), encoding='utf-8')
+          PY
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Production build
+        run: bun run build
+
+      - name: Verify build output and scope
+        run: |
+          set -euo pipefail
+          test -f .output/public/telegram-boty-dlya-biznesa/index.html
+          grep -aFq 'Разработка Telegram-ботов для бизнеса под ключ | Vikey AI' .output/public/telegram-boty-dlya-biznesa/index.html
+          grep -aFq 'https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/' .output/public/telegram-boty-dlya-biznesa/index.html
+          grep -aFq 'index,follow' .output/public/telegram-boty-dlya-biznesa/index.html
+          test "$(grep -ao '<h1' .output/public/telegram-boty-dlya-biznesa/index.html | wc -l)" -eq 1
+          grep -aFq 'href="/ii-assistent-dlya-biznesa/"' .output/public/telegram-boty-dlya-biznesa/index.html
+          grep -aFq 'href="/sayty-dlya-biznesa/"' .output/public/telegram-boty-dlya-biznesa/index.html
+          grep -aFq 'https://t.me/Vikey_shel' .output/public/telegram-boty-dlya-biznesa/index.html
+          grep -aFq 'https://wa.me/79081747077' .output/public/telegram-boty-dlya-biznesa/index.html
+          grep -aFq 'https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA' .output/public/telegram-boty-dlya-biznesa/index.html
+          grep -Fq '/telegram-boty-dlya-biznesa' src/routeTree.gen.ts
+          test "$(grep -c '<loc>' public/sitemap.xml)" -eq 5
+          grep -Fq '<loc>https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/</loc>' public/sitemap.xml
+          grep -Fq 'Sitemap: https://chelovek-neiroset.ru/sitemap.xml' public/robots.txt
+          ! grep -RniE 'navigator\.serviceWorker|serviceWorker\.register|vite-plugin-pwa|workbox' src package.json vite.config.ts
+
+      - name: Commit generated and patched files, remove workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/routes/index.tsx src/routes/ii-assistent-dlya-biznesa.tsx src/routes/telegram-boty-dlya-biznesa.tsx src/routeTree.gen.ts public/sitemap.xml
+          git rm .github/workflows/build-seo-telegram-bots-page.yml
+          git commit -m "Complete Telegram bots SEO page integration"
+          git push
