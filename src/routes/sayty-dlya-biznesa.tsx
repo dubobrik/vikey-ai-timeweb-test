@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import savanaSitePreview from "@/assets/savana-site-preview.jpg";
-import stoneMasterPreview from "@/assets/stone-master-preview.jpg";
-import tarhankutPreviewAsset from "@/assets/tarhankut-preview.jpg";
+import savanaSitePreview from "@/assets/savana-site-preview.webp";
+import stoneMasterPreview from "@/assets/stone-master-preview.webp";
+import tarhankutPreviewAsset from "@/assets/tarhankut-preview.webp";
 
 const PAGE_URL = "https://chelovek-neiroset.ru/sayty-dlya-biznesa/";
 const OG_IMAGE = "https://chelovek-neiroset.ru/vikey-og.jpg";
@@ -320,7 +320,7 @@ function BusinessSitesPage() {
               Расскажите о бизнесе, услуге или проекте. Помогу определить подходящий формат сайта и понять, с чего лучше начать.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <a href="https://t.me/vikey_shell" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-gradient-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow">Telegram</a>
+              <a href="https://t.me/Vikey_shel" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-gradient-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow">Telegram</a>
               <a href="https://wa.me/79081747077" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-border bg-card px-5 py-3 text-sm font-semibold">WhatsApp</a>
               <a href="https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-border bg-card px-5 py-3 text-sm font-semibold">MAX</a>
             </div>
