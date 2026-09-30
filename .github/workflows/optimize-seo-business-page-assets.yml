@@ -1,0 +1,160 @@
+name: Optimize SEO business page assets
+
+on:
+  push:
+    paths:
+      - '.github/workflows/optimize-seo-business-page-assets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch Telegram and convert only SEO page images
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet 'Pillow==11.3.0'
+          python <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          route = Path('src/routes/sayty-dlya-biznesa.tsx')
+          text = route.read_text(encoding='utf-8')
+
+          replacements = {
+              'import savanaSitePreview from "@/assets/savana-site-preview.jpg";': 'import savanaSitePreview from "@/assets/savana-site-preview.webp";',
+              'import stoneMasterPreview from "@/assets/stone-master-preview.jpg";': 'import stoneMasterPreview from "@/assets/stone-master-preview.webp";',
+              'import tarhankutPreviewAsset from "@/assets/tarhankut-preview.jpg";': 'import tarhankutPreviewAsset from "@/assets/tarhankut-preview.webp";',
+              'href="https://t.me/vikey_shell"': 'href="https://t.me/Vikey_shel"',
+          }
+          for old, new in replacements.items():
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'Expected exactly one occurrence of {old!r}, got {count}')
+              text = text.replace(old, new)
+          route.write_text(text, encoding='utf-8')
+
+          for stem in ['savana-site-preview', 'stone-master-preview', 'tarhankut-preview']:
+              src = Path('src/assets') / f'{stem}.jpg'
+              dst = Path('src/assets') / f'{stem}.webp'
+              with Image.open(src) as im:
+                  original_size = im.size
+                  if im.mode not in ('RGB', 'RGBA'):
+                      im = im.convert('RGB')
+                  im.save(dst, 'WEBP', quality=92, method=6)
+              with Image.open(dst) as converted:
+                  if converted.size != original_size:
+                      raise SystemExit(f'Dimension mismatch for {stem}: {original_size} -> {converted.size}')
+              print(f'{stem}: {src.stat().st_size} bytes JPG -> {dst.stat().st_size} bytes WebP, dimensions {original_size}')
+          PY
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Production build
+        run: bun run build
+
+      - name: Verify local build and scope
+        run: |
+          set -euo pipefail
+          test -f .output/public/sayty-dlya-biznesa/index.html
+          grep -Fq 'https://t.me/Vikey_shel' .output/public/sayty-dlya-biznesa/index.html
+          ! grep -Fq 'https://t.me/vikey_shell' .output/public/sayty-dlya-biznesa/index.html
+          grep -Eq 'savana-site-preview[^" ]*\.webp' .output/public/sayty-dlya-biznesa/index.html
+          grep -Eq 'stone-master-preview[^" ]*\.webp' .output/public/sayty-dlya-biznesa/index.html
+          grep -Eq 'tarhankut-preview[^" ]*\.webp' .output/public/sayty-dlya-biznesa/index.html
+          git diff -- src/routes/index.tsx public/robots.txt public/sitemap.xml
+
+      - name: Commit and push the two requested changes
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/routes/sayty-dlya-biznesa.tsx \
+                  src/assets/savana-site-preview.webp \
+                  src/assets/stone-master-preview.webp \
+                  src/assets/tarhankut-preview.webp
+          git diff --cached --quiet && { echo 'No requested changes to commit'; exit 1; }
+          git commit -m "Optimize SEO business page images and Telegram link"
+          git push
+
+      - name: Wait for Timeweb deploy
+        run: |
+          set -euo pipefail
+          url='https://chelovek-neiroset.ru/sayty-dlya-biznesa/'
+          for i in $(seq 1 50); do
+            if curl -fsSL -H 'Accept-Encoding: identity' "$url" -o /tmp/page.html \
+              && grep -aFq 'https://t.me/Vikey_shel' /tmp/page.html \
+              && ! grep -aFq 'https://t.me/vikey_shell' /tmp/page.html \
+              && grep -aEq 'savana-site-preview[^" ]*\.webp' /tmp/page.html \
+              && grep -aEq 'stone-master-preview[^" ]*\.webp' /tmp/page.html \
+              && grep -aEq 'tarhankut-preview[^" ]*\.webp' /tmp/page.html; then
+              echo "DEPLOY_READY_AT=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo 'Timed out waiting for Timeweb deployment'
+          exit 1
+
+      - name: Browser checks desktop and mobile
+        run: |
+          set -euo pipefail
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install chromium
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright';
+          const browser = await chromium.launch({ headless: true });
+          const target = 'https://chelovek-neiroset.ru/sayty-dlya-biznesa/';
+          const profiles = [
+            ['iPhone', { width: 390, height: 844 }, true, 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1'],
+            ['Android', { width: 412, height: 915 }, true, 'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 Chrome/140.0.0.0 Mobile Safari/537.36'],
+            ['Desktop', { width: 1440, height: 900 }, false, 'Mozilla/5.0 Chrome/140.0.0.0 Safari/537.36'],
+          ];
+          for (const [name, viewport, isMobile, userAgent] of profiles) {
+            const context = await browser.newContext({ viewport, isMobile, hasTouch: isMobile, userAgent });
+            const page = await context.newPage();
+            const response = await page.goto(target, { waitUntil: 'networkidle' });
+            if (!response || response.status() !== 200) throw new Error(`${name}: HTTP 200 failed`);
+            const telegram = page.locator('a[href="https://t.me/Vikey_shel"]');
+            if (await telegram.count() !== 1) throw new Error(`${name}: Telegram link failed`);
+            if (await page.locator('a[href="https://t.me/vikey_shell"]').count() !== 0) throw new Error(`${name}: old Telegram link remains`);
+            await page.locator('#cases').scrollIntoViewIfNeeded();
+            await page.waitForTimeout(800);
+            const imageCheck = await page.locator('#cases img').evaluateAll((imgs) => ({
+              count: imgs.length,
+              ok: imgs.every((img) => {
+                const path = new URL(img.currentSrc || img.src, location.href).pathname;
+                return path.endsWith('.webp') && img.getAttribute('loading') === 'lazy' && img.hasAttribute('width') && img.hasAttribute('height') && !!img.getAttribute('alt') && img.complete && img.naturalWidth > 0;
+              }),
+            }));
+            if (imageCheck.count !== 4 || !imageCheck.ok) throw new Error(`${name}: case WebP/image attributes failed`);
+            const dims = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth }));
+            if (dims.sw > dims.cw + 1) throw new Error(`${name}: horizontal overflow ${dims.sw}/${dims.cw}`);
+            console.log(`${name}: OK`);
+            await context.close();
+          }
+          await browser.close();
+          NODE
+
+      - name: Remove temporary workflow
+        if: success()
+        run: |
+          set -euo pipefail
+          git pull --rebase
+          git rm .github/workflows/optimize-seo-business-page-assets.yml
+          git commit -m "Remove temporary SEO page asset optimization workflow"
+          git push
