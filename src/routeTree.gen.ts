@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznesa'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as IiAssistentDlyaBiznesaRouteImport } from './routes/ii-assistent-dlya-biznesa'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SaytyDlyaBiznesaRoute = SaytyDlyaBiznesaRouteImport.update({
@@ -23,6 +24,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IiAssistentDlyaBiznesaRoute = IiAssistentDlyaBiznesaRouteImport.update({
+  id: '/ii-assistent-dlya-biznesa',
+  path: '/ii-assistent-dlya-biznesa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,43 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy' | '/sayty-dlya-biznesa'
+  fullPaths:
+    | '/'
+    | '/ii-assistent-dlya-biznesa'
+    | '/privacy'
+    | '/sayty-dlya-biznesa'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy' | '/sayty-dlya-biznesa'
-  id: '__root__' | '/' | '/privacy' | '/sayty-dlya-biznesa'
+  to: '/' | '/ii-assistent-dlya-biznesa' | '/privacy' | '/sayty-dlya-biznesa'
+  id:
+    | '__root__'
+    | '/'
+    | '/ii-assistent-dlya-biznesa'
+    | '/privacy'
+    | '/sayty-dlya-biznesa'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  IiAssistentDlyaBiznesaRoute: typeof IiAssistentDlyaBiznesaRoute
   PrivacyRoute: typeof PrivacyRoute
   SaytyDlyaBiznesaRoute: typeof SaytyDlyaBiznesaRoute
 }
@@ -75,6 +94,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ii-assistent-dlya-biznesa': {
+      id: '/ii-assistent-dlya-biznesa'
+      path: '/ii-assistent-dlya-biznesa'
+      fullPath: '/ii-assistent-dlya-biznesa'
+      preLoaderRoute: typeof IiAssistentDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +113,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  IiAssistentDlyaBiznesaRoute: IiAssistentDlyaBiznesaRoute,
   PrivacyRoute: PrivacyRoute,
   SaytyDlyaBiznesaRoute: SaytyDlyaBiznesaRoute,
 }
