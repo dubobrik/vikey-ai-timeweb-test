@@ -219,6 +219,10 @@ function TelegramBotsBusinessPage() {
               <div key={item} className="rounded-xl border border-border bg-card/50 p-4 text-sm">{item}</div>
             ))}
           </div>
+          <p className="mt-5 max-w-4xl text-sm leading-relaxed text-muted-foreground">
+            Если бот должен быть частью более крупного процесса между CRM, сайтом и другими сервисами —{" "}
+            <a href="/avtomatizaciya-biznesa-ai/" className="font-semibold text-neon transition hover:text-neon/80">автоматизация бизнеса с AI</a>.
+          </p>
         </Section>
 
         <Section eyebrow="Платежи" title="Telegram-бот с оплатой">
