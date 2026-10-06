@@ -243,7 +243,7 @@ function AutomationBusinessPage() {
           </div>
         </Section>
 
-        <Section eyebrow="Примеры, не кейсы" title="Примеры сценариев автоматизации">
+        <Section eyebrow="Сценарии" title="Примеры сценариев автоматизации">
           <div className="grid gap-5 md:grid-cols-2">
             {scenarios.map(([title, text]) => (
               <article key={title} className="rounded-2xl border border-border bg-card p-6 shadow-card">
