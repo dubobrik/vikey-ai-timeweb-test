@@ -13,6 +13,7 @@ import { Route as TelegramBotyDlyaBiznesaRouteImport } from './routes/telegram-b
 import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznesa'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as IiAssistentDlyaBiznesaRouteImport } from './routes/ii-assistent-dlya-biznesa'
+import { Route as AvtomatizaciyaBiznesaAiRouteImport } from './routes/avtomatizaciya-biznesa-ai'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TelegramBotyDlyaBiznesaRoute = TelegramBotyDlyaBiznesaRouteImport.update({
@@ -35,6 +36,11 @@ const IiAssistentDlyaBiznesaRoute = IiAssistentDlyaBiznesaRouteImport.update({
   path: '/ii-assistent-dlya-biznesa',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AvtomatizaciyaBiznesaAiRoute = AvtomatizaciyaBiznesaAiRouteImport.update({
+  id: '/avtomatizaciya-biznesa-ai',
+  path: '/avtomatizaciya-biznesa-ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
@@ -67,6 +76,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/avtomatizaciya-biznesa-ai'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
@@ -74,6 +84,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/avtomatizaciya-biznesa-ai'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
@@ -81,6 +92,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/avtomatizaciya-biznesa-ai'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
@@ -89,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AvtomatizaciyaBiznesaAiRoute: typeof AvtomatizaciyaBiznesaAiRoute
   IiAssistentDlyaBiznesaRoute: typeof IiAssistentDlyaBiznesaRoute
   PrivacyRoute: typeof PrivacyRoute
   SaytyDlyaBiznesaRoute: typeof SaytyDlyaBiznesaRoute
@@ -125,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IiAssistentDlyaBiznesaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/avtomatizaciya-biznesa-ai': {
+      id: '/avtomatizaciya-biznesa-ai'
+      path: '/avtomatizaciya-biznesa-ai'
+      fullPath: '/avtomatizaciya-biznesa-ai'
+      preLoaderRoute: typeof AvtomatizaciyaBiznesaAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -137,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AvtomatizaciyaBiznesaAiRoute: AvtomatizaciyaBiznesaAiRoute,
   IiAssistentDlyaBiznesaRoute: IiAssistentDlyaBiznesaRoute,
   PrivacyRoute: PrivacyRoute,
   SaytyDlyaBiznesaRoute: SaytyDlyaBiznesaRoute,
