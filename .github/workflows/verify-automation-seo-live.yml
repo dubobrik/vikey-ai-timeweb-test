@@ -163,3 +163,5 @@ jobs:
           git rm .github/workflows/verify-automation-seo-live.yml
           git commit -m "Remove automation SEO live verification workflow"
           git push
+
+# trigger live verification
