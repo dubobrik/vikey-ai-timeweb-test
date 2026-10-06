@@ -1,0 +1,165 @@
+name: Verify automation SEO page live
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/verify-automation-seo-live.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Production build on main
+        run: |
+          set -euo pipefail
+          bun install --frozen-lockfile
+          bun run build
+          test -f .output/public/avtomatizaciya-biznesa-ai/index.html
+
+      - name: Wait for Timeweb deploy
+        run: |
+          set -euo pipefail
+          url='https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/'
+          for i in $(seq 1 180); do
+            if curl -fsSL -H 'Accept-Encoding: identity' "$url" -o /tmp/page.html \
+              && grep -aFq 'Автоматизация бизнес-процессов с ИИ' /tmp/page.html \
+              && grep -aFq 'https://t.me/Vikey_shel' /tmp/page.html; then
+              echo "DEPLOY_READY_AT=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo 'Timed out waiting for Timeweb deployment'
+          exit 1
+
+      - name: Verify HTTP SEO links sitemap and regressions
+        run: |
+          set -euo pipefail
+          url='https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/'
+          curl -fsSL -H 'Accept-Encoding: identity' "$url" -o /tmp/page.html
+          test "$(curl -sS -o /dev/null -w '%{http_code}' "$url")" = '200'
+          grep -aFq 'Автоматизация бизнес-процессов с ИИ | Vikey AI' /tmp/page.html
+          grep -aFq 'Автоматизирую процессы бизнеса с помощью AI, n8n, Make, API и интеграций: заявки, CRM, уведомления, данные и повторяющиеся рабочие задачи.' /tmp/page.html
+          grep -aFq 'name="robots" content="index,follow"' /tmp/page.html
+          grep -aFq 'rel="canonical" href="https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/"' /tmp/page.html
+          grep -aFq 'property="og:title"' /tmp/page.html
+          grep -aFq 'property="og:description"' /tmp/page.html
+          grep -aFq 'property="og:url" content="https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/"' /tmp/page.html
+          test "$(grep -ao '<h1' /tmp/page.html | wc -l)" -eq 1
+          grep -aFq 'Автоматизация бизнес-процессов с ИИ' /tmp/page.html
+          grep -aFq 'href="/#contact"' /tmp/page.html
+          grep -aFq 'href="#capabilities"' /tmp/page.html
+          grep -aFq 'href="/#calc"' /tmp/page.html
+          grep -aFq 'href="/ii-assistent-dlya-biznesa/"' /tmp/page.html
+          grep -aFq 'href="/telegram-boty-dlya-biznesa/"' /tmp/page.html
+          grep -aFq 'https://t.me/Vikey_shel' /tmp/page.html
+          grep -aFq 'https://wa.me/79081747077' /tmp/page.html
+          grep -aFq 'https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA' /tmp/page.html
+          test "$(grep -ao '<details' /tmp/page.html | wc -l)" -ge 6
+
+          no_slash_headers=$(curl -sS -o /dev/null -D - https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai)
+          printf '%s' "$no_slash_headers" | grep -Fq '308'
+          printf '%s' "$no_slash_headers" | grep -Eqi 'location: /avtomatizaciya-biznesa-ai/'
+          final_url=$(curl -sS -L -o /dev/null -w '%{url_effective}' https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai)
+          test "$final_url" = "$url"
+
+          curl -fsSL -H 'Accept-Encoding: identity' https://chelovek-neiroset.ru/ -o /tmp/home.html
+          grep -aFq 'href="/avtomatizaciya-biznesa-ai/"' /tmp/home.html
+          grep -aFq 'Автоматизация бизнеса с AI' /tmp/home.html
+
+          curl -fsSL -H 'Accept-Encoding: identity' https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/ -o /tmp/telegram.html
+          grep -aFq 'href="/avtomatizaciya-biznesa-ai/"' /tmp/telegram.html
+          grep -aFq 'автоматизация бизнеса с AI' /tmp/telegram.html
+
+          curl -fsSL -H 'Accept-Encoding: identity' https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/ -o /tmp/ai.html
+          grep -aFq 'href="/avtomatizaciya-biznesa-ai/"' /tmp/ai.html
+          grep -aFq 'автоматизация бизнеса с AI' /tmp/ai.html
+
+          curl -fsSL https://chelovek-neiroset.ru/sitemap.xml -o /tmp/sitemap.xml
+          test "$(grep -c '<loc>' /tmp/sitemap.xml)" -eq 6
+          grep -Fq '<loc>https://chelovek-neiroset.ru/</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/privacy</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/sayty-dlya-biznesa/</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/</loc>' /tmp/sitemap.xml
+          curl -fsSL https://chelovek-neiroset.ru/robots.txt | grep -Fq 'Sitemap: https://chelovek-neiroset.ru/sitemap.xml'
+
+          for existing in \
+            'https://chelovek-neiroset.ru/' \
+            'https://chelovek-neiroset.ru/privacy' \
+            'https://chelovek-neiroset.ru/sayty-dlya-biznesa/' \
+            'https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/' \
+            'https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/'; do
+            test "$(curl -sS -L -o /dev/null -w '%{http_code}' "$existing")" = '200'
+          done
+
+          ! grep -RniE 'navigator\.serviceWorker|serviceWorker\.register|vite-plugin-pwa|workbox' src package.json vite.config.ts
+
+      - name: Browser checks desktop and mobile
+        run: |
+          set -euo pipefail
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install chromium
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright';
+          const browser = await chromium.launch({ headless: true });
+          const target = 'https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/';
+          const profiles = [
+            ['iPhone', { width: 390, height: 844 }, true, 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1'],
+            ['Android', { width: 412, height: 915 }, true, 'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 Chrome/140.0.0.0 Mobile Safari/537.36'],
+            ['Desktop', { width: 1440, height: 900 }, false, 'Mozilla/5.0 Chrome/140.0.0.0 Safari/537.36'],
+          ];
+          for (const [name, viewport, isMobile, userAgent] of profiles) {
+            const context = await browser.newContext({ viewport, isMobile, hasTouch: isMobile, userAgent });
+            const page = await context.newPage();
+            let response = await page.goto(target, { waitUntil: 'networkidle' });
+            if (!response || response.status() !== 200) throw new Error(`${name}: HTTP 200 failed`);
+            response = await page.reload({ waitUntil: 'networkidle' });
+            if (!response || response.status() !== 200) throw new Error(`${name}: refresh failed`);
+            const h1s = await page.locator('h1').allTextContents();
+            if (h1s.length !== 1 || h1s[0].trim() !== 'Автоматизация бизнес-процессов с ИИ') throw new Error(`${name}: H1 failed`);
+            const dims = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth }));
+            if (dims.sw > dims.cw + 1) throw new Error(`${name}: horizontal overflow ${dims.sw}/${dims.cw}`);
+            if (await page.locator('details').count() < 6) throw new Error(`${name}: FAQ missing`);
+            if (await page.locator('footer').count() !== 1) throw new Error(`${name}: footer missing`);
+            const headerPosition = await page.locator('header').evaluate((el) => getComputedStyle(el).position);
+            if (headerPosition !== 'sticky') throw new Error(`${name}: sticky header failed`);
+            const requiredLinks = [
+              '/#contact', '#capabilities', '/ii-assistent-dlya-biznesa/', '/telegram-boty-dlya-biznesa/', '/#calc',
+              'https://t.me/Vikey_shel', 'https://wa.me/79081747077',
+              'https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA',
+            ];
+            for (const href of requiredLinks) {
+              if (await page.locator(`a[href="${href}"]`).count() < 1) throw new Error(`${name}: missing CTA/link ${href}`);
+            }
+            console.log(`${name}: OK`);
+            await context.close();
+          }
+          await browser.close();
+          NODE
+
+      - name: Remove temporary workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/verify-automation-seo-live.yml
+          git commit -m "Remove automation SEO live verification workflow"
+          git push
