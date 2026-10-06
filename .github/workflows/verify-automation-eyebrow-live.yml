@@ -1,0 +1,62 @@
+name: Verify automation eyebrow live
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/verify-automation-eyebrow-live.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Production build
+        run: |
+          set -euo pipefail
+          bun install --frozen-lockfile
+          bun run build
+          page='.output/public/avtomatizaciya-biznesa-ai/index.html'
+          test -f "$page"
+          grep -aFq 'Сценарии' "$page"
+          grep -aFq 'Примеры сценариев автоматизации' "$page"
+          ! grep -aFq 'Примеры, не кейсы' "$page"
+
+      - name: Wait for live deploy and verify
+        run: |
+          set -euo pipefail
+          url='https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/'
+          for i in $(seq 1 120); do
+            if curl -fsSL -H 'Accept-Encoding: identity' "$url" -o /tmp/page.html \
+              && grep -aFq 'Сценарии' /tmp/page.html \
+              && grep -aFq 'Примеры сценариев автоматизации' /tmp/page.html \
+              && ! grep -aFq 'Примеры, не кейсы' /tmp/page.html; then
+              echo "DEPLOY_READY_AT=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo 'Timed out waiting for Timeweb deployment'
+          exit 1
+
+      - name: Remove temporary workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/verify-automation-eyebrow-live.yml
+          git commit -m "Remove automation eyebrow live verification workflow"
+          git push
