@@ -1,0 +1,65 @@
+name: Build AI video SEO branch
+
+on:
+  push:
+    branches:
+      - seo-ai-video-dlya-biznesa
+    paths:
+      - '.github/workflows/build-ai-video-seo-branch.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Production build and source checks
+        run: |
+          set -euo pipefail
+          bun install --frozen-lockfile
+          bun run build
+          page='.output/public/ai-video-dlya-biznesa/index.html'
+          test -f "$page"
+          grep -aFq 'Создание AI-видео для бизнеса и цифровых аватаров | Vikey AI' "$page"
+          grep -aFq 'Создаю AI-видео для бизнеса, рекламы и контента: сценарий, нейросетевые сцены, цифровые аватары, озвучка и сборка ролика под задачу проекта.' "$page"
+          grep -aFq 'name="robots" content="index,follow"' "$page"
+          grep -aFq 'rel="canonical" href="https://chelovek-neiroset.ru/ai-video-dlya-biznesa/"' "$page"
+          grep -aFq 'property="og:url" content="https://chelovek-neiroset.ru/ai-video-dlya-biznesa/"' "$page"
+          test "$(grep -ao '<h1' "$page" | wc -l)" -eq 1
+          grep -aFq 'Создание AI-видео для бизнеса' "$page"
+          grep -aFq 'Цифровой аватар Vikey AI' "$page"
+          grep -aFq 'Посмотреть видео' "$page"
+          grep -aFq 'href="/sayty-dlya-biznesa/"' "$page"
+          grep -aFq 'href="/#calc"' "$page"
+          grep -aFq 'https://t.me/Vikey_shel' "$page"
+          grep -aFq 'https://wa.me/79081747077' "$page"
+          grep -aFq 'https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA' "$page"
+          test "$(grep -ao '<details' "$page" | wc -l)" -eq 6
+          test -f src/assets/digital-avatar-poster.webp
+          echo "POSTER_WEBP_BYTES=$(stat -c%s src/assets/digital-avatar-poster.webp)"
+          echo "VIDEO_MP4_BYTES=$(stat -c%s src/assets/digital-avatar.mp4)"
+          test "$(grep -c '<loc>' public/sitemap.xml)" -eq 7
+          grep -Fq '<loc>https://chelovek-neiroset.ru/ai-video-dlya-biznesa/</loc>' public/sitemap.xml
+          grep -Fq 'Sitemap: https://chelovek-neiroset.ru/sitemap.xml' public/robots.txt
+          ! grep -RniE 'navigator\.serviceWorker|serviceWorker\.register|vite-plugin-pwa|workbox' src package.json vite.config.ts
+
+      - name: Commit generated route tree and remove workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/routeTree.gen.ts
+          git rm .github/workflows/build-ai-video-seo-branch.yml
+          git commit -m "Generate AI video route tree and finish branch verification"
+          git push
