@@ -220,6 +220,10 @@ function BusinessSitesPage() {
             Для сайта также можно подготовить AI-видео или цифрового аватара →{" "}
             <a href="/ai-video-dlya-biznesa/" className="font-semibold text-neon transition hover:text-neon/80">AI-видео для бизнеса</a>
           </p>
+          <p className="mt-4 max-w-4xl text-sm leading-relaxed text-muted-foreground">
+            Если сначала нужно сформулировать предложение и структуру проекта —{" "}
+            <a href="/upakovka-proekta/" className="font-semibold text-neon transition hover:text-neon/80">Упаковка проекта</a>.
+          </p>
         </Section>
 
         <Section eyebrow="Форматы" title="От лендинга до полноценного сайта для бизнеса">
