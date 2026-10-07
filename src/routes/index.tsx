@@ -116,8 +116,9 @@ const portfolio = [
     ],
     full: "Кейс по созданию сайта для гостевых домиков в Оленевке. Задача проекта — не просто показать жильё, а упаковать место как полноценный отдых на Тарханкуте: море, пляжи, природные маршруты, атмосферу Крыма, достопримечательности и гостеприимство владельца. Сайт помогает посетителю быстро понять, где он будет жить, что рядом посмотреть, как добраться и как связаться для бронирования.",
     result: "Получился сайт-витрина для гостевых домиков, который продаёт не только проживание, но и впечатление от места: море, природу, маршруты, атмосферу Тарханкута и понятный путь к бронированию.",
+    caseHref: "/case-sayt-gostevye-domiki/",
     viewHref: "https://tarhankut.space/",
-    viewLabel: "Посмотреть сайт",
+    viewLabel: "Живой сайт",
   },
   {
     title: "Сайт для гостевого комплекса «Парма Хутор»",
@@ -480,6 +481,7 @@ type PortfolioItem = (typeof portfolio)[number] & {
   bullets?: string[];
   result?: string;
   newsHref?: string;
+  caseHref?: string;
   viewHref?: string;
   viewLabel?: string;
   full?: string;
@@ -557,7 +559,7 @@ function PortfolioCard({ p, i }: { p: PortfolioItem; i: number }) {
             ) : null}
           </div>
         ) : null}
-        {p.bullets || p.newsHref || p.viewHref || p.video ? (
+        {p.bullets || p.newsHref || p.caseHref || p.viewHref || p.video ? (
           <div className="mt-4 flex flex-wrap gap-2">
             {p.video ? (
               <button
@@ -574,8 +576,16 @@ function PortfolioCard({ p, i }: { p: PortfolioItem; i: number }) {
                 onClick={() => setOpen((v) => !v)}
                 className="min-h-11 rounded-lg border border-border bg-card/60 px-4 py-2.5 text-sm font-semibold text-foreground transition hover:bg-card"
               >
-                {open ? "Свернуть" : "Подробнее о кейсе"}
+                {open ? "Свернуть" : p.caseHref ? "Что сделано" : "Подробнее о кейсе"}
               </button>
+            ) : null}
+            {p.caseHref ? (
+              <a
+                href={p.caseHref}
+                className="min-h-11 rounded-lg border border-neon/40 bg-neon/10 px-4 py-2.5 text-sm font-semibold text-neon transition hover:bg-neon/20"
+              >
+                Подробнее о кейсе →
+              </a>
             ) : null}
             {p.viewHref ? (
               <a
