@@ -29,7 +29,8 @@ jobs:
           const browser = await chromium.launch({ headless: true });
           const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
           const response = await page.goto('https://tarhankut.space/', { waitUntil: 'domcontentloaded', timeout: 45000 });
-          await page.waitForTimeout(5000);\n          console.log('HTTP_STATUS='+response?.status());
+          await page.waitForTimeout(5000);
+          console.log('HTTP_STATUS='+response?.status());
           console.log('FINAL_URL='+page.url());
           console.log('TITLE='+await page.title());
 
