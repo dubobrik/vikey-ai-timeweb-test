@@ -1,0 +1,210 @@
+name: Verify AI video SEO page live
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/verify-ai-video-seo-live.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Production build on main
+        run: |
+          set -euo pipefail
+          bun install --frozen-lockfile
+          bun run build
+          test -f .output/public/ai-video-dlya-biznesa/index.html
+
+      - name: Wait for Timeweb deploy
+        run: |
+          set -euo pipefail
+          url='https://chelovek-neiroset.ru/ai-video-dlya-biznesa/'
+          for i in $(seq 1 180); do
+            if curl -fsSL -H 'Accept-Encoding: identity' "$url" -o /tmp/page.html \
+              && grep -aFq 'Создание AI-видео для бизнеса' /tmp/page.html \
+              && grep -aFq 'Цифровой аватар Vikey AI' /tmp/page.html \
+              && grep -aFq 'https://t.me/Vikey_shel' /tmp/page.html; then
+              echo "DEPLOY_READY_AT=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo 'Timed out waiting for Timeweb deployment'
+          exit 1
+
+      - name: Verify HTTP SEO links sitemap media and regressions
+        run: |
+          set -euo pipefail
+          url='https://chelovek-neiroset.ru/ai-video-dlya-biznesa/'
+          curl -fsSL -H 'Accept-Encoding: identity' "$url" -o /tmp/page.html
+          test "$(curl -sS -o /dev/null -w '%{http_code}' "$url")" = '200'
+          grep -aFq 'Создание AI-видео для бизнеса и цифровых аватаров | Vikey AI' /tmp/page.html
+          grep -aFq 'Создаю AI-видео для бизнеса, рекламы и контента: сценарий, нейросетевые сцены, цифровые аватары, озвучка и сборка ролика под задачу проекта.' /tmp/page.html
+          grep -aFq 'name="robots" content="index,follow"' /tmp/page.html
+          grep -aFq 'rel="canonical" href="https://chelovek-neiroset.ru/ai-video-dlya-biznesa/"' /tmp/page.html
+          grep -aFq 'property="og:url" content="https://chelovek-neiroset.ru/ai-video-dlya-biznesa/"' /tmp/page.html
+          test "$(grep -ao '<h1' /tmp/page.html | wc -l)" -eq 1
+          grep -aFq 'Создание AI-видео для бизнеса' /tmp/page.html
+          grep -aFq 'href="/#contact"' /tmp/page.html
+          grep -aFq 'href="#formats"' /tmp/page.html
+          grep -aFq 'href="/#calc"' /tmp/page.html
+          grep -aFq 'href="/sayty-dlya-biznesa/"' /tmp/page.html
+          grep -aFq 'https://t.me/Vikey_shel' /tmp/page.html
+          grep -aFq 'https://wa.me/79081747077' /tmp/page.html
+          grep -aFq 'https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA' /tmp/page.html
+          test "$(grep -ao '<details' /tmp/page.html | wc -l)" -eq 6
+          grep -aFq 'Цифровой аватар Vikey AI' /tmp/page.html
+          grep -aFq 'Пример цифрового аватара Vikey AI для AI-видео' /tmp/page.html
+          grep -aFq 'width="720"' /tmp/page.html
+          grep -aFq 'height="1280"' /tmp/page.html
+          grep -aFq 'loading="lazy"' /tmp/page.html
+          grep -aFq 'decoding="async"' /tmp/page.html
+
+          no_slash_headers=$(curl -sS -o /dev/null -D - https://chelovek-neiroset.ru/ai-video-dlya-biznesa)
+          printf '%s' "$no_slash_headers" | grep -Fq '308'
+          printf '%s' "$no_slash_headers" | grep -Eqi 'location: /ai-video-dlya-biznesa/'
+          final_url=$(curl -sS -L -o /dev/null -w '%{url_effective}' https://chelovek-neiroset.ru/ai-video-dlya-biznesa)
+          test "$final_url" = "$url"
+
+          curl -fsSL -H 'Accept-Encoding: identity' https://chelovek-neiroset.ru/ -o /tmp/home.html
+          grep -aFq 'AI-видео и цифровые аватары' /tmp/home.html
+          grep -aFq 'href="/ai-video-dlya-biznesa/"' /tmp/home.html
+
+          curl -fsSL -H 'Accept-Encoding: identity' https://chelovek-neiroset.ru/sayty-dlya-biznesa/ -o /tmp/sites.html
+          grep -aFq 'href="/ai-video-dlya-biznesa/"' /tmp/sites.html
+          grep -aFq 'AI-видео для бизнеса' /tmp/sites.html
+
+          curl -fsSL https://chelovek-neiroset.ru/sitemap.xml -o /tmp/sitemap.xml
+          test "$(grep -c '<loc>' /tmp/sitemap.xml)" -eq 7
+          grep -Fq '<loc>https://chelovek-neiroset.ru/</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/privacy</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/sayty-dlya-biznesa/</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/</loc>' /tmp/sitemap.xml
+          grep -Fq '<loc>https://chelovek-neiroset.ru/ai-video-dlya-biznesa/</loc>' /tmp/sitemap.xml
+          curl -fsSL https://chelovek-neiroset.ru/robots.txt | grep -Fq 'Sitemap: https://chelovek-neiroset.ru/sitemap.xml'
+
+          for existing in \
+            'https://chelovek-neiroset.ru/' \
+            'https://chelovek-neiroset.ru/privacy' \
+            'https://chelovek-neiroset.ru/sayty-dlya-biznesa/' \
+            'https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/' \
+            'https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/' \
+            'https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/'; do
+            test "$(curl -sS -L -o /dev/null -w '%{http_code}' "$existing")" = '200'
+          done
+
+          poster_url=$(grep -aoE 'src="[^"]*digital-avatar-poster[^"]*\.webp"' /tmp/page.html | head -1 | cut -d'"' -f2)
+          test -n "$poster_url"
+          case "$poster_url" in
+            http*) poster_full="$poster_url" ;;
+            /*) poster_full="https://chelovek-neiroset.ru$poster_url" ;;
+            *) poster_full="https://chelovek-neiroset.ru/$poster_url" ;;
+          esac
+          poster_headers=$(curl -sSI "$poster_full")
+          printf '%s' "$poster_headers" | grep -Eqi '^content-type: image/webp'
+          echo "LIVE_POSTER_URL=$poster_full"
+          echo "LIVE_POSTER_BYTES=$(curl -fsSL "$poster_full" | wc -c)"
+          echo "SOURCE_VIDEO_BYTES=$(stat -c%s src/assets/digital-avatar.mp4)"
+
+          ! grep -RniE 'navigator\.serviceWorker|serviceWorker\.register|vite-plugin-pwa|workbox' src package.json vite.config.ts
+
+      - name: Browser checks desktop and mobile
+        run: |
+          set -euo pipefail
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install chromium
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright';
+          const browser = await chromium.launch({ headless: true });
+          const target = 'https://chelovek-neiroset.ru/ai-video-dlya-biznesa/';
+          const profiles = [
+            ['iPhone', { width: 390, height: 844 }, true, 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1'],
+            ['Android', { width: 412, height: 915 }, true, 'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 Chrome/140.0.0.0 Mobile Safari/537.36'],
+            ['Desktop', { width: 1440, height: 900 }, false, 'Mozilla/5.0 Chrome/140.0.0.0 Safari/537.36'],
+          ];
+          for (const [name, viewport, isMobile, userAgent] of profiles) {
+            const context = await browser.newContext({ viewport, isMobile, hasTouch: isMobile, userAgent });
+            const page = await context.newPage();
+            const requested = [];
+            page.on('request', req => requested.push(req.url()));
+            await page.addInitScript(() => {
+              window.__clsValue = 0;
+              try {
+                new PerformanceObserver((list) => {
+                  for (const entry of list.getEntries()) {
+                    if (!entry.hadRecentInput) window.__clsValue += entry.value;
+                  }
+                }).observe({ type: 'layout-shift', buffered: true });
+              } catch {}
+            });
+            let response = await page.goto(target, { waitUntil: 'networkidle' });
+            if (!response || response.status() !== 200) throw new Error(`${name}: HTTP 200 failed`);
+            response = await page.reload({ waitUntil: 'networkidle' });
+            if (!response || response.status() !== 200) throw new Error(`${name}: refresh failed`);
+            const secondPage = await context.newPage();
+            const secondResponse = await secondPage.goto(target, { waitUntil: 'domcontentloaded' });
+            if (!secondResponse || secondResponse.status() !== 200) throw new Error(`${name}: new tab failed`);
+            await secondPage.close();
+
+            const h1s = await page.locator('h1').allTextContents();
+            if (h1s.length !== 1 || h1s[0].trim() !== 'Создание AI-видео для бизнеса') throw new Error(`${name}: H1 failed`);
+            const dims = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth }));
+            if (dims.sw > dims.cw + 1) throw new Error(`${name}: horizontal overflow ${dims.sw}/${dims.cw}`);
+            const cls = await page.evaluate(() => window.__clsValue || 0);
+            if (cls > 0.1) throw new Error(`${name}: excessive layout shift ${cls}`);
+            if (await page.locator('details').count() !== 6) throw new Error(`${name}: FAQ missing`);
+            if (await page.locator('footer').count() !== 1) throw new Error(`${name}: footer missing`);
+            const headerPosition = await page.locator('header').evaluate((el) => getComputedStyle(el).position);
+            if (headerPosition !== 'sticky') throw new Error(`${name}: sticky header failed`);
+            const poster = page.locator('img[alt="Пример цифрового аватара Vikey AI для AI-видео"]');
+            if (await poster.count() !== 1) throw new Error(`${name}: poster missing`);
+            const posterBox = await poster.boundingBox();
+            if (!posterBox || posterBox.width <= 0 || posterBox.height <= 0) throw new Error(`${name}: poster layout failed`);
+
+            const requiredLinks = [
+              '/#contact', '#formats', '/sayty-dlya-biznesa/', '/#calc',
+              'https://t.me/Vikey_shel', 'https://wa.me/79081747077',
+              'https://max.ru/u/f9LHodD0cOKqFcs6UZJNI7fMntxJ8xCv4X4bwued0XRebPD3LFvJ6CgS3cA',
+            ];
+            for (const href of requiredLinks) {
+              if (await page.locator(`a[href="${href}"]`).count() < 1) throw new Error(`${name}: missing CTA/link ${href}`);
+            }
+
+            const mp4Before = requested.filter(u => u.includes('digital-avatar') && u.includes('.mp4')).length;
+            if (mp4Before !== 0) throw new Error(`${name}: video loaded before interaction`);
+            await page.getByRole('button', { name: 'Посмотреть видео' }).click();
+            await page.waitForSelector('video');
+            const videoSrc = await page.locator('video').getAttribute('src');
+            if (!videoSrc || !videoSrc.includes('digital-avatar')) throw new Error(`${name}: video src missing after click`);
+            console.log(`${name}: OK CLS=${cls}`);
+            await context.close();
+          }
+          await browser.close();
+          NODE
+
+      - name: Remove temporary workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/verify-ai-video-seo-live.yml
+          git commit -m "Remove AI video SEO live verification workflow"
+          git push
