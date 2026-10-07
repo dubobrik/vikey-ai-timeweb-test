@@ -91,6 +91,7 @@ const cases = [
     text: "Сайт для туристического бизнеса: размещение, атмосфера отдыха, особенности локации, маршруты и понятный переход к бронированию.",
     image: tarhankutPreviewAsset,
     alt: "Сайт гостевых домиков в Оленевке на Тарханкуте",
+    caseHref: "/case-sayt-gostevye-domiki/",
     href: "https://tarhankut.space/",
   },
   {
@@ -283,9 +284,16 @@ function BusinessSitesPage() {
                 <div className="p-5 sm:p-6">
                   <h3 className="text-xl font-semibold">{item.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
-                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex min-h-11 items-center rounded-lg border border-neon/40 bg-neon/10 px-4 py-2.5 text-sm font-semibold text-neon transition hover:bg-neon/20">
-                    Посмотреть сайт
-                  </a>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {item.caseHref ? (
+                      <a href={item.caseHref} className="inline-flex min-h-11 items-center rounded-lg bg-gradient-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95">
+                        Подробнее о кейсе →
+                      </a>
+                    ) : null}
+                    <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center rounded-lg border border-neon/40 bg-neon/10 px-4 py-2.5 text-sm font-semibold text-neon transition hover:bg-neon/20">
+                      Посмотреть сайт
+                    </a>
+                  </div>
                 </div>
               </article>
             ))}
