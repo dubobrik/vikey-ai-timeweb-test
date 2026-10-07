@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UpakovkaProektaRouteImport } from './routes/upakovka-proekta'
 import { Route as TelegramBotyDlyaBiznesaRouteImport } from './routes/telegram-boty-dlya-biznesa'
 import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznesa'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -17,6 +18,11 @@ import { Route as AvtomatizaciyaBiznesaAiRouteImport } from './routes/avtomatiza
 import { Route as AiVideoDlyaBiznesaRouteImport } from './routes/ai-video-dlya-biznesa'
 import { Route as IndexRouteImport } from './routes/index'
 
+const UpakovkaProektaRoute = UpakovkaProektaRouteImport.update({
+  id: '/upakovka-proekta',
+  path: '/upakovka-proekta',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TelegramBotyDlyaBiznesaRoute = TelegramBotyDlyaBiznesaRouteImport.update({
   id: '/telegram-boty-dlya-biznesa',
   path: '/telegram-boty-dlya-biznesa',
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
+  '/upakovka-proekta': typeof UpakovkaProektaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
+  '/upakovka-proekta': typeof UpakovkaProektaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
+  '/upakovka-proekta': typeof UpakovkaProektaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/sayty-dlya-biznesa'
     | '/telegram-boty-dlya-biznesa'
+    | '/upakovka-proekta'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/sayty-dlya-biznesa'
     | '/telegram-boty-dlya-biznesa'
+    | '/upakovka-proekta'
   id:
     | '__root__'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/sayty-dlya-biznesa'
     | '/telegram-boty-dlya-biznesa'
+    | '/upakovka-proekta'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,10 +131,18 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   SaytyDlyaBiznesaRoute: typeof SaytyDlyaBiznesaRoute
   TelegramBotyDlyaBiznesaRoute: typeof TelegramBotyDlyaBiznesaRoute
+  UpakovkaProektaRoute: typeof UpakovkaProektaRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/upakovka-proekta': {
+      id: '/upakovka-proekta'
+      path: '/upakovka-proekta'
+      fullPath: '/upakovka-proekta'
+      preLoaderRoute: typeof UpakovkaProektaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/telegram-boty-dlya-biznesa': {
       id: '/telegram-boty-dlya-biznesa'
       path: '/telegram-boty-dlya-biznesa'
@@ -183,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   SaytyDlyaBiznesaRoute: SaytyDlyaBiznesaRoute,
   TelegramBotyDlyaBiznesaRoute: TelegramBotyDlyaBiznesaRoute,
+  UpakovkaProektaRoute: UpakovkaProektaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
