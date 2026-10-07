@@ -1,0 +1,45 @@
+name: Prepare AI video poster
+
+on:
+  push:
+    branches:
+      - seo-ai-video-dlya-biznesa
+    paths:
+      - '.github/workflows/prepare-ai-video-poster.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Convert existing poster to WebP
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet pillow
+          python3 - <<'PY'
+          from PIL import Image
+          src='src/assets/digital-avatar-poster.jpg'
+          dst='src/assets/digital-avatar-poster.webp'
+          with Image.open(src) as im:
+              print(f'POSTER_DIMENSIONS={im.width}x{im.height}')
+              im.save(dst, 'WEBP', quality=90, method=6)
+          import os
+          print(f'WEBP_SIZE_BYTES={os.path.getsize(dst)}')
+          PY
+
+      - name: Commit poster and remove workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/assets/digital-avatar-poster.webp
+          git rm .github/workflows/prepare-ai-video-poster.yml
+          git commit -m "Add optimized digital avatar poster"
+          git push
