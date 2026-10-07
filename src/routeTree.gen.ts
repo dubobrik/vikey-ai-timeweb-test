@@ -14,6 +14,7 @@ import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznes
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as IiAssistentDlyaBiznesaRouteImport } from './routes/ii-assistent-dlya-biznesa'
 import { Route as AvtomatizaciyaBiznesaAiRouteImport } from './routes/avtomatizaciya-biznesa-ai'
+import { Route as AiVideoDlyaBiznesaRouteImport } from './routes/ai-video-dlya-biznesa'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TelegramBotyDlyaBiznesaRoute = TelegramBotyDlyaBiznesaRouteImport.update({
@@ -41,6 +42,11 @@ const AvtomatizaciyaBiznesaAiRoute = AvtomatizaciyaBiznesaAiRouteImport.update({
   path: '/avtomatizaciya-biznesa-ai',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiVideoDlyaBiznesaRoute = AiVideoDlyaBiznesaRouteImport.update({
+  id: '/ai-video-dlya-biznesa',
+  path: '/ai-video-dlya-biznesa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -49,6 +55,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiVideoDlyaBiznesaRoute: typeof AiVideoDlyaBiznesaRoute
   AvtomatizaciyaBiznesaAiRoute: typeof AvtomatizaciyaBiznesaAiRoute
   IiAssistentDlyaBiznesaRoute: typeof IiAssistentDlyaBiznesaRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AvtomatizaciyaBiznesaAiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-video-dlya-biznesa': {
+      id: '/ai-video-dlya-biznesa'
+      path: '/ai-video-dlya-biznesa'
+      fullPath: '/ai-video-dlya-biznesa'
+      preLoaderRoute: typeof AiVideoDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -157,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiVideoDlyaBiznesaRoute: AiVideoDlyaBiznesaRoute,
   AvtomatizaciyaBiznesaAiRoute: AvtomatizaciyaBiznesaAiRoute,
   IiAssistentDlyaBiznesaRoute: IiAssistentDlyaBiznesaRoute,
   PrivacyRoute: PrivacyRoute,
