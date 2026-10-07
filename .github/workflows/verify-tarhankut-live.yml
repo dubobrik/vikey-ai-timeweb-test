@@ -1,0 +1,89 @@
+name: Verify Tarhankut live
+on:
+  push:
+    branches:
+      - seo-case-sayt-gostevye-domiki
+    paths:
+      - '.github/workflows/verify-tarhankut-live.yml'
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Wait and verify production
+        run: |
+          set -euo pipefail
+          url='https://chelovek-neiroset.ru/case-sayt-gostevye-domiki/'
+          for i in $(seq 1 180); do
+            if curl -fsSL -H 'Accept-Encoding: identity' "$url" -o /tmp/page.html && grep -aFq 'Создание сайта для гостевых домиков в Оленевке' /tmp/page.html; then
+              echo "DEPLOY_READY_AT=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              break
+            fi
+            sleep 10
+          done
+          grep -aFq 'Создание сайта для гостевого дома — кейс Vikey AI' /tmp/page.html
+          grep -aFq 'name="robots" content="index,follow"' /tmp/page.html
+          grep -aFq 'rel="canonical" href="https://chelovek-neiroset.ru/case-sayt-gostevye-domiki/"' /tmp/page.html
+          grep -aFq 'property="og:url" content="https://chelovek-neiroset.ru/case-sayt-gostevye-domiki/"' /tmp/page.html
+          test "$(grep -ao '<h1' /tmp/page.html | wc -l)" -eq 1
+          test "$(curl -sS -o /dev/null -w '%{http_code}' "$url")" = '200'
+          headers=$(curl -sS -o /dev/null -D - https://chelovek-neiroset.ru/case-sayt-gostevye-domiki)
+          printf '%s' "$headers" | grep -Fq '308'
+          printf '%s' "$headers" | grep -Eqi 'location: /case-sayt-gostevye-domiki/'
+          curl -fsSL https://chelovek-neiroset.ru/sitemap.xml -o /tmp/sitemap.xml
+          test "$(grep -c '<loc>' /tmp/sitemap.xml)" -eq 9
+          grep -Fq '<loc>https://chelovek-neiroset.ru/case-sayt-gostevye-domiki/</loc>' /tmp/sitemap.xml
+          curl -fsSL -H 'Accept-Encoding: identity' https://chelovek-neiroset.ru/ -o /tmp/home.html
+          grep -aFq 'href="/case-sayt-gostevye-domiki/"' /tmp/home.html
+          curl -fsSL -H 'Accept-Encoding: identity' https://chelovek-neiroset.ru/sayty-dlya-biznesa/ -o /tmp/sites.html
+          grep -aFq 'href="/case-sayt-gostevye-domiki/"' /tmp/sites.html
+          grep -aFq 'https://tarhankut.space/' /tmp/sites.html
+          echo "LIVE_CHECKS=OK"
+      - name: Browser checks
+        run: |
+          set -euo pipefail
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install chromium
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright';
+          const browser=await chromium.launch({headless:true});
+          const target='https://chelovek-neiroset.ru/case-sayt-gostevye-domiki/';
+          for (const [name,viewport,isMobile] of [
+            ['iPhone',{width:390,height:844},true],
+            ['Android',{width:412,height:915},true],
+            ['Desktop',{width:1440,height:900},false],
+          ]) {
+            const ctx=await browser.newContext({viewport,isMobile,hasTouch:isMobile});
+            const p=await ctx.newPage();
+            await p.addInitScript(()=>{
+              window.__clsValue=0;
+              try {new PerformanceObserver(l=>{for(const e of l.getEntries()) if(!e.hadRecentInput) window.__clsValue+=e.value;}).observe({type:'layout-shift',buffered:true});} catch{}
+            });
+            let r=await p.goto(target,{waitUntil:'networkidle'});
+            if(!r||r.status()!==200) throw new Error(name+' HTTP');
+            r=await p.reload({waitUntil:'networkidle'});
+            if(!r||r.status()!==200) throw new Error(name+' refresh');
+            const h1=await p.locator('h1').allTextContents();
+            if(h1.length!==1||h1[0].trim()!=='Создание сайта для гостевых домиков в Оленевке') throw new Error(name+' H1');
+            const dims=await p.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth}));
+            if(dims.sw>dims.cw+1) throw new Error(name+' overflow');
+            const cls=await p.evaluate(()=>window.__clsValue||0);
+            if(cls>0.1) throw new Error(name+' CLS');
+            if(await p.locator('details').count()!==6) throw new Error(name+' FAQ');
+            if(await p.locator('header').evaluate(el=>getComputedStyle(el).position)!=='sticky') throw new Error(name+' header');
+            console.log(name+': OK CLS='+cls);
+            await ctx.close();
+          }
+          await browser.close();
+          NODE
+      - name: Cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/verify-tarhankut-live.yml
+          git commit -m "Remove temporary Tarhankut live verification"
+          git push
