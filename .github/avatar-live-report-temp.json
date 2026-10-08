@@ -1,0 +1,70 @@
+{
+  "http": {
+    "/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/"
+    },
+    "/privacy": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/privacy/"
+    },
+    "/sayty-dlya-biznesa/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/sayty-dlya-biznesa/"
+    },
+    "/ii-assistent-dlya-biznesa/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/"
+    },
+    "/telegram-boty-dlya-biznesa/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/"
+    },
+    "/avtomatizaciya-biznesa-ai/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/"
+    },
+    "/ai-video-dlya-biznesa/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/ai-video-dlya-biznesa/"
+    },
+    "/upakovka-proekta/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/upakovka-proekta/"
+    },
+    "/case-sayt-gostevye-domiki/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/case-sayt-gostevye-domiki/"
+    },
+    "/case-b2b-horeca/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/case-b2b-horeca/"
+    },
+    "/case-ai-telegram-bot/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/case-ai-telegram-bot/"
+    },
+    "/case-cifrovoy-avatar/": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/case-cifrovoy-avatar/"
+    },
+    "/sitemap.xml": {
+      "status": 200,
+      "url": "https://chelovek-neiroset.ru/sitemap.xml"
+    }
+  },
+  "checks": {
+    "title": false,
+    "description": false,
+    "robots": false,
+    "canonical": false,
+    "h1": false,
+    "home_link": false,
+    "service_link": false,
+    "case_to_service": true,
+    "sitemap_count": false,
+    "sitemap_case": false
+  },
+  "errors": [],
+  "pass": false
+}
