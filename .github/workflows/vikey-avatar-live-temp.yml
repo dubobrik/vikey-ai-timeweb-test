@@ -1,0 +1,66 @@
+name: Temporary avatar live smoke test
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/vikey-avatar-live-temp.yml'
+permissions:
+  contents: write
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check HTTP SEO and links on live site
+        continue-on-error: true
+        run: |
+          python3 - <<'PY'
+          import json,urllib.request,urllib.error,re
+          root='https://chelovek-neiroset.ru'
+          urls=['/','/privacy','/sayty-dlya-biznesa/','/ii-assistent-dlya-biznesa/','/telegram-boty-dlya-biznesa/','/avtomatizaciya-biznesa-ai/','/ai-video-dlya-biznesa/','/upakovka-proekta/','/case-sayt-gostevye-domiki/','/case-b2b-horeca/','/case-ai-telegram-bot/','/case-cifrovoy-avatar/']
+          out={'http':{},'checks':{},'errors':[]}
+          htmls={}
+          for path in urls+['/sitemap.xml']:
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(root+path,headers={'User-Agent':'Mozilla/5.0'}),timeout=20) as r:
+                      body=r.read().decode('utf-8','replace')
+                      out['http'][path]={'status':r.status,'url':r.url}
+                      htmls[path]=body
+              except Exception as e:out['http'][path]={'error':str(e)};out['errors'].append(path+': '+str(e))
+          p=htmls.get('/case-cifrovoy-avatar/','')
+          tests={
+            'title':'Создание цифрового аватара для личного бренда — кейс Vikey AI' in p,
+            'description':'Кейс Vikey AI: создание цифрового аватара для личного бренда — идея образа, визуальный стиль, голос, AI-видео и подготовка ролика для сайта и контента.' in p,
+            'robots':'index,follow' in p,
+            'canonical':'https://chelovek-neiroset.ru/case-cifrovoy-avatar/' in p,
+            'h1':len(re.findall(r'<h1\\b',p,re.I))==1,
+            'home_link':'/case-cifrovoy-avatar/' in htmls.get('/',''),
+            'service_link':'/case-cifrovoy-avatar/' in htmls.get('/ai-video-dlya-biznesa/',''),
+            'case_to_service':'/ai-video-dlya-biznesa/' in p,
+            'sitemap_count':len(re.findall(r'<loc>',htmls.get('/sitemap.xml','')))==12,
+            'sitemap_case':'https://chelovek-neiroset.ru/case-cifrovoy-avatar/' in htmls.get('/sitemap.xml',''),
+          }
+          out['checks']=tests
+          try:
+              class NoRedirect(urllib.request.HTTPRedirectHandler):
+                  def redirect_request(self,req,fp,code,msg,hdrs,url):return None
+              opener=urllib.request.build_opener(NoRedirect)
+              try:opener.open(root+'/case-cifrovoy-avatar',timeout=20)
+              except urllib.error.HTTPError as e:out['redirect']={'status':e.code,'location':e.headers.get('Location')}
+          except Exception as e:out['errors'].append('redirect: '+str(e))
+          out['pass']=not out['errors'] and all(x.get('status')==200 for x in out['http'].values()) and all(tests.values()) and out.get('redirect',{}).get('status') in (301,302,307,308)
+          with open('.github/avatar-live-report-temp.json','w') as f:json.dump(out,f,ensure_ascii=False,indent=2)
+          print(json.dumps(out,ensure_ascii=False,indent=2))
+          PY
+      - name: Save report
+        if: always()
+        run: |
+          if [ ! -f .github/avatar-live-report-temp.json ]; then
+            echo '{"pass":false,"errors":["Smoke test did not produce report"]}' > .github/avatar-live-report-temp.json
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/avatar-live-report-temp.json
+          git commit -m "Temporary avatar live verification results"
+          git push origin HEAD:main
