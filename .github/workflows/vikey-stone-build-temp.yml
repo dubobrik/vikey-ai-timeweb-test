@@ -1,0 +1,29 @@
+name: Temporary stone case production build
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/vikey-stone-build-temp.yml']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - name: Build and verify route
+        run: |
+          bun run build
+          grep -Fq '/case-sayt-chastnogo-specialista' src/routeTree.gen.ts
+          test "$(grep -c '<loc>' public/sitemap.xml)" -eq 13
+      - name: Commit only generated file
+        run: |
+          if ! git diff --quiet -- src/routeTree.gen.ts; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/routeTree.gen.ts
+            git commit -m "Generate TanStack route tree for private specialist case"
+            git push origin HEAD:main
+          fi
