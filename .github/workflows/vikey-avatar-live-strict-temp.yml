@@ -1,0 +1,49 @@
+name: Temporary strict live audit digital avatar
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/vikey-avatar-live-strict-temp.yml'
+permissions:
+  contents: write
+jobs:
+  live-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright for audit only
+        id: install
+        continue-on-error: true
+        run: |
+          npm install --prefix /tmp/vikey-browser-test --no-save playwright
+          /tmp/vikey-browser-test/node_modules/.bin/playwright install --with-deps chromium
+      - name: Run strict published-page browser checks
+        id: audit
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        env:
+          NODE_PATH: /tmp/vikey-browser-test/node_modules
+        run: node .github/vikey-avatar-live-audit-temp.cjs
+      - name: Preserve temporary results in repository
+        if: always()
+        run: |
+          if [ ! -f .github/vikey-avatar-live-audit-report-temp.json ]; then
+            printf '{"passed":false,"errors":["Browser audit failed before producing report"],"checks":{},"devices":{}}\n' > .github/vikey-avatar-live-audit-report-temp.json
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/vikey-avatar-live-audit-report-temp.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Temporary report: digital avatar live audit"
+            git push origin HEAD:main
+          fi
+      - name: Strict failure if any check failed
+        if: always()
+        run: |
+          node -e "const r=require('./.github/vikey-avatar-live-audit-report-temp.json');if(!r.passed)process.exit(1)"
+          test "${{ steps.install.outcome }}" = "success"
+          test "${{ steps.audit.outcome }}" = "success"
