@@ -73,48 +73,48 @@
       "pass": true
     },
     "WebP poster": {
-      "pass": false
+      "pass": true
     },
     "No PWA manifest": {
       "pass": true
     },
     "Device iPhone": {
-      "pass": false,
+      "pass": true,
       "width": 390,
       "height": 844,
       "status": 200,
       "refresh": 200,
       "overflow": false,
       "cls": 0,
-      "imageLoaded": false,
+      "imageLoaded": true,
       "h1Fits": true,
       "sw": 0,
       "header": true,
       "footer": true
     },
     "Device Android": {
-      "pass": false,
+      "pass": true,
       "width": 412,
       "height": 915,
       "status": 200,
       "refresh": 200,
       "overflow": false,
       "cls": 0,
-      "imageLoaded": false,
+      "imageLoaded": true,
       "h1Fits": true,
       "sw": 0,
       "header": true,
       "footer": true
     },
     "Device Desktop": {
-      "pass": false,
+      "pass": true,
       "width": 1440,
       "height": 900,
       "status": 200,
       "refresh": 200,
       "overflow": false,
-      "cls": 0.00029648571459190673,
-      "imageLoaded": false,
+      "cls": 0.0010587221498842593,
+      "imageLoaded": true,
       "h1Fits": true,
       "sw": 0,
       "header": true,
@@ -123,42 +123,42 @@
   },
   "devices": {
     "iPhone": {
-      "pass": false,
+      "pass": true,
       "width": 390,
       "height": 844,
       "status": 200,
       "refresh": 200,
       "overflow": false,
       "cls": 0,
-      "imageLoaded": false,
+      "imageLoaded": true,
       "h1Fits": true,
       "sw": 0,
       "header": true,
       "footer": true
     },
     "Android": {
-      "pass": false,
+      "pass": true,
       "width": 412,
       "height": 915,
       "status": 200,
       "refresh": 200,
       "overflow": false,
       "cls": 0,
-      "imageLoaded": false,
+      "imageLoaded": true,
       "h1Fits": true,
       "sw": 0,
       "header": true,
       "footer": true
     },
     "Desktop": {
-      "pass": false,
+      "pass": true,
       "width": 1440,
       "height": 900,
       "status": 200,
       "refresh": 200,
       "overflow": false,
-      "cls": 0.00029648571459190673,
-      "imageLoaded": false,
+      "cls": 0.0010587221498842593,
+      "imageLoaded": true,
       "h1Fits": true,
       "sw": 0,
       "header": true,
@@ -166,5 +166,5 @@
     }
   },
   "errors": [],
-  "passed": false
+  "passed": true
 }
