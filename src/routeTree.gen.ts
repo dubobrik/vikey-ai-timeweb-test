@@ -22,6 +22,7 @@ import { Route as CaseB2bHorecaRouteImport } from './routes/case-b2b-horeca'
 import { Route as CaseAiTelegramBotRouteImport } from './routes/case-ai-telegram-bot'
 import { Route as AvtomatizaciyaBiznesaAiRouteImport } from './routes/avtomatizaciya-biznesa-ai'
 import { Route as AiVideoDlyaBiznesaRouteImport } from './routes/ai-video-dlya-biznesa'
+import { Route as AiKreativyDlyaBiznesaRouteImport } from './routes/ai-kreativy-dlya-biznesa'
 import { Route as IndexRouteImport } from './routes/index'
 
 const UpakovkaProektaRoute = UpakovkaProektaRouteImport.update({
@@ -90,6 +91,11 @@ const AiVideoDlyaBiznesaRoute = AiVideoDlyaBiznesaRouteImport.update({
   path: '/ai-video-dlya-biznesa',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiKreativyDlyaBiznesaRoute = AiKreativyDlyaBiznesaRouteImport.update({
+  id: '/ai-kreativy-dlya-biznesa',
+  path: '/ai-kreativy-dlya-biznesa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -98,6 +104,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-kreativy-dlya-biznesa': typeof AiKreativyDlyaBiznesaRoute
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/case-ai-telegram-bot': typeof CaseAiTelegramBotRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-kreativy-dlya-biznesa': typeof AiKreativyDlyaBiznesaRoute
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/case-ai-telegram-bot': typeof CaseAiTelegramBotRoute
@@ -131,6 +139,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-kreativy-dlya-biznesa': typeof AiKreativyDlyaBiznesaRoute
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/case-ai-telegram-bot': typeof CaseAiTelegramBotRoute
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-kreativy-dlya-biznesa'
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
     | '/case-ai-telegram-bot'
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-kreativy-dlya-biznesa'
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
     | '/case-ai-telegram-bot'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai-kreativy-dlya-biznesa'
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
     | '/case-ai-telegram-bot'
@@ -198,6 +210,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiKreativyDlyaBiznesaRoute: typeof AiKreativyDlyaBiznesaRoute
   AiVideoDlyaBiznesaRoute: typeof AiVideoDlyaBiznesaRoute
   AvtomatizaciyaBiznesaAiRoute: typeof AvtomatizaciyaBiznesaAiRoute
   CaseAiTelegramBotRoute: typeof CaseAiTelegramBotRoute
@@ -306,6 +319,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AiVideoDlyaBiznesaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-kreativy-dlya-biznesa': {
+      id: '/ai-kreativy-dlya-biznesa'
+      path: '/ai-kreativy-dlya-biznesa'
+      fullPath: '/ai-kreativy-dlya-biznesa'
+      preLoaderRoute: typeof AiKreativyDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -318,6 +338,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiKreativyDlyaBiznesaRoute: AiKreativyDlyaBiznesaRoute,
   AiVideoDlyaBiznesaRoute: AiVideoDlyaBiznesaRoute,
   AvtomatizaciyaBiznesaAiRoute: AvtomatizaciyaBiznesaAiRoute,
   CaseAiTelegramBotRoute: CaseAiTelegramBotRoute,
