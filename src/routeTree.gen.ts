@@ -16,6 +16,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as IiAssistentDlyaBiznesaRouteImport } from './routes/ii-assistent-dlya-biznesa'
 import { Route as CaseSaytGostevyeDomikiRouteImport } from './routes/case-sayt-gostevye-domiki'
 import { Route as CaseB2bHorecaRouteImport } from './routes/case-b2b-horeca'
+import { Route as CaseAiTelegramBotRouteImport } from './routes/case-ai-telegram-bot'
 import { Route as AvtomatizaciyaBiznesaAiRouteImport } from './routes/avtomatizaciya-biznesa-ai'
 import { Route as AiVideoDlyaBiznesaRouteImport } from './routes/ai-video-dlya-biznesa'
 import { Route as IndexRouteImport } from './routes/index'
@@ -55,6 +56,11 @@ const CaseB2bHorecaRoute = CaseB2bHorecaRouteImport.update({
   path: '/case-b2b-horeca',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CaseAiTelegramBotRoute = CaseAiTelegramBotRouteImport.update({
+  id: '/case-ai-telegram-bot',
+  path: '/case-ai-telegram-bot',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AvtomatizaciyaBiznesaAiRoute = AvtomatizaciyaBiznesaAiRouteImport.update({
   id: '/avtomatizaciya-biznesa-ai',
   path: '/avtomatizaciya-biznesa-ai',
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
+  '/case-ai-telegram-bot': typeof CaseAiTelegramBotRoute
   '/case-b2b-horeca': typeof CaseB2bHorecaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
@@ -87,6 +94,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
+  '/case-ai-telegram-bot': typeof CaseAiTelegramBotRoute
   '/case-b2b-horeca': typeof CaseB2bHorecaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
@@ -100,6 +108,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
+  '/case-ai-telegram-bot': typeof CaseAiTelegramBotRoute
   '/case-b2b-horeca': typeof CaseB2bHorecaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
@@ -114,6 +123,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
+    | '/case-ai-telegram-bot'
     | '/case-b2b-horeca'
     | '/case-sayt-gostevye-domiki'
     | '/ii-assistent-dlya-biznesa'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
+    | '/case-ai-telegram-bot'
     | '/case-b2b-horeca'
     | '/case-sayt-gostevye-domiki'
     | '/ii-assistent-dlya-biznesa'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
+    | '/case-ai-telegram-bot'
     | '/case-b2b-horeca'
     | '/case-sayt-gostevye-domiki'
     | '/ii-assistent-dlya-biznesa'
@@ -151,6 +163,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiVideoDlyaBiznesaRoute: typeof AiVideoDlyaBiznesaRoute
   AvtomatizaciyaBiznesaAiRoute: typeof AvtomatizaciyaBiznesaAiRoute
+  CaseAiTelegramBotRoute: typeof CaseAiTelegramBotRoute
   CaseB2bHorecaRoute: typeof CaseB2bHorecaRoute
   CaseSaytGostevyeDomikiRoute: typeof CaseSaytGostevyeDomikiRoute
   IiAssistentDlyaBiznesaRoute: typeof IiAssistentDlyaBiznesaRoute
@@ -211,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseB2bHorecaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/case-ai-telegram-bot': {
+      id: '/case-ai-telegram-bot'
+      path: '/case-ai-telegram-bot'
+      fullPath: '/case-ai-telegram-bot'
+      preLoaderRoute: typeof CaseAiTelegramBotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/avtomatizaciya-biznesa-ai': {
       id: '/avtomatizaciya-biznesa-ai'
       path: '/avtomatizaciya-biznesa-ai'
@@ -239,6 +259,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiVideoDlyaBiznesaRoute: AiVideoDlyaBiznesaRoute,
   AvtomatizaciyaBiznesaAiRoute: AvtomatizaciyaBiznesaAiRoute,
+  CaseAiTelegramBotRoute: CaseAiTelegramBotRoute,
   CaseB2bHorecaRoute: CaseB2bHorecaRoute,
   CaseSaytGostevyeDomikiRoute: CaseSaytGostevyeDomikiRoute,
   IiAssistentDlyaBiznesaRoute: IiAssistentDlyaBiznesaRoute,
