@@ -14,6 +14,7 @@ import { Route as TelegramBotyDlyaBiznesaRouteImport } from './routes/telegram-b
 import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznesa'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as IiAssistentDlyaBiznesaRouteImport } from './routes/ii-assistent-dlya-biznesa'
+import { Route as CaseSaytLichnogoBrendaRouteImport } from './routes/case-sayt-lichnogo-brenda'
 import { Route as CaseSaytGostevyeDomikiRouteImport } from './routes/case-sayt-gostevye-domiki'
 import { Route as CaseSaytChastnogoSpecialistaRouteImport } from './routes/case-sayt-chastnogo-specialista'
 import { Route as CaseCifrovoyAvatarRouteImport } from './routes/case-cifrovoy-avatar'
@@ -46,6 +47,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const IiAssistentDlyaBiznesaRoute = IiAssistentDlyaBiznesaRouteImport.update({
   id: '/ii-assistent-dlya-biznesa',
   path: '/ii-assistent-dlya-biznesa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseSaytLichnogoBrendaRoute = CaseSaytLichnogoBrendaRouteImport.update({
+  id: '/case-sayt-lichnogo-brenda',
+  path: '/case-sayt-lichnogo-brenda',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CaseSaytGostevyeDomikiRoute = CaseSaytGostevyeDomikiRouteImport.update({
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/case-cifrovoy-avatar': typeof CaseCifrovoyAvatarRoute
   '/case-sayt-chastnogo-specialista': typeof CaseSaytChastnogoSpecialistaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
+  '/case-sayt-lichnogo-brenda': typeof CaseSaytLichnogoBrendaRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/case-cifrovoy-avatar': typeof CaseCifrovoyAvatarRoute
   '/case-sayt-chastnogo-specialista': typeof CaseSaytChastnogoSpecialistaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
+  '/case-sayt-lichnogo-brenda': typeof CaseSaytLichnogoBrendaRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/case-cifrovoy-avatar': typeof CaseCifrovoyAvatarRoute
   '/case-sayt-chastnogo-specialista': typeof CaseSaytChastnogoSpecialistaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
+  '/case-sayt-lichnogo-brenda': typeof CaseSaytLichnogoBrendaRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/case-cifrovoy-avatar'
     | '/case-sayt-chastnogo-specialista'
     | '/case-sayt-gostevye-domiki'
+    | '/case-sayt-lichnogo-brenda'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/case-cifrovoy-avatar'
     | '/case-sayt-chastnogo-specialista'
     | '/case-sayt-gostevye-domiki'
+    | '/case-sayt-lichnogo-brenda'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/case-cifrovoy-avatar'
     | '/case-sayt-chastnogo-specialista'
     | '/case-sayt-gostevye-domiki'
+    | '/case-sayt-lichnogo-brenda'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
@@ -193,6 +205,7 @@ export interface RootRouteChildren {
   CaseCifrovoyAvatarRoute: typeof CaseCifrovoyAvatarRoute
   CaseSaytChastnogoSpecialistaRoute: typeof CaseSaytChastnogoSpecialistaRoute
   CaseSaytGostevyeDomikiRoute: typeof CaseSaytGostevyeDomikiRoute
+  CaseSaytLichnogoBrendaRoute: typeof CaseSaytLichnogoBrendaRoute
   IiAssistentDlyaBiznesaRoute: typeof IiAssistentDlyaBiznesaRoute
   PrivacyRoute: typeof PrivacyRoute
   SaytyDlyaBiznesaRoute: typeof SaytyDlyaBiznesaRoute
@@ -235,6 +248,13 @@ declare module '@tanstack/react-router' {
       path: '/ii-assistent-dlya-biznesa'
       fullPath: '/ii-assistent-dlya-biznesa'
       preLoaderRoute: typeof IiAssistentDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-sayt-lichnogo-brenda': {
+      id: '/case-sayt-lichnogo-brenda'
+      path: '/case-sayt-lichnogo-brenda'
+      fullPath: '/case-sayt-lichnogo-brenda'
+      preLoaderRoute: typeof CaseSaytLichnogoBrendaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/case-sayt-gostevye-domiki': {
@@ -305,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   CaseCifrovoyAvatarRoute: CaseCifrovoyAvatarRoute,
   CaseSaytChastnogoSpecialistaRoute: CaseSaytChastnogoSpecialistaRoute,
   CaseSaytGostevyeDomikiRoute: CaseSaytGostevyeDomikiRoute,
+  CaseSaytLichnogoBrendaRoute: CaseSaytLichnogoBrendaRoute,
   IiAssistentDlyaBiznesaRoute: IiAssistentDlyaBiznesaRoute,
   PrivacyRoute: PrivacyRoute,
   SaytyDlyaBiznesaRoute: SaytyDlyaBiznesaRoute,
