@@ -70,7 +70,7 @@ jobs:
           grep -aFq 'Сегментация ЛПР' /tmp/page.html
           grep -aFq 'Презентационные материалы' /tmp/page.html
           grep -aFq 'Карта продаж и логика первого контакта' /tmp/page.html
-          grep -aFq 'Собрана база потенциальных компаний и контактов для первичного выхода' /tmp/page.html
+          grep -aFq 'В рамках проекта была собрана база потенциальных компаний и контактов для первичного выхода.' /tmp/page.html
           ! grep -aFqi 'ROI' /tmp/page.html
           ! grep -aFqi 'снизили текучесть' /tmp/page.html
           ! grep -aFqi 'снизили выгорание' /tmp/page.html
