@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-10-08T09:17:11.419969+00:00",
+  "checks": {
+    "HTTP 200": {
+      "passed": true,
+      "actual": 200,
+      "expected": 200
+    },
+    "Title": {
+      "passed": true,
+      "actual": "Создание сайта для личного бренда — кейс Vikey AI",
+      "expected": "Создание сайта для личного бренда — кейс Vikey AI"
+    },
+    "Description": {
+      "passed": true,
+      "actual": "Кейс Vikey AI: создание сайта для личного бренда на примере проекта личных консультаций. Структура, атмосферная визуальная подача, услуги, мобильная версия и контакты.",
+      "expected": "Кейс Vikey AI: создание сайта для личного бренда на примере проекта личных консультаций. Структура, атмосферная визуальная подача, услуги, мобильная версия и контакты."
+    },
+    "robots": {
+      "passed": true,
+      "actual": "index,follow",
+      "expected": "index,follow"
+    },
+    "canonical": {
+      "passed": true,
+      "actual": "https://chelovek-neiroset.ru/case-sayt-lichnogo-brenda/",
+      "expected": "https://chelovek-neiroset.ru/case-sayt-lichnogo-brenda/"
+    },
+    "og:url": {
+      "passed": true,
+      "actual": "https://chelovek-neiroset.ru/case-sayt-lichnogo-brenda/",
+      "expected": "https://chelovek-neiroset.ru/case-sayt-lichnogo-brenda/"
+    },
+    "H1 count": {
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    "H1 text": {
+      "passed": true,
+      "actual": "Создание сайта для личного бренда",
+      "expected": "Создание сайта для личного бренда"
+    },
+    "sitemap HTTP": {
+      "passed": true,
+      "actual": 200,
+      "expected": 200
+    },
+    "sitemap URL count": {
+      "passed": true,
+      "actual": 14,
+      "expected": 14
+    },
+    "sitemap contains new case": {
+      "passed": true,
+      "actual": true,
+      "expected": true
+    }
+  },
+  "errors": [],
+  "passed": true
+}
