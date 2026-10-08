@@ -5,7 +5,7 @@ import heroAsset from "@/assets/vikey-hero.jpg";
 import aboutAsset from "@/assets/vikey-about.png";
 import destinyBotAsset from "@/assets/destiny-bot-preview.png";
 import alleyAsset from "@/assets/alley-before-after.jpg";
-import savanaSitePreview from "@/assets/savana-site-preview.jpg";
+import savanaSitePreview from "@/assets/savana-site-preview.webp";
 import stoneMasterPreview from "@/assets/stone-master-preview.jpg";
 import cardCoverAsset from "@/assets/vikey-card-cover.jpg";
 import avatarVideoAsset from "@/assets/digital-avatar.mp4";
@@ -84,6 +84,7 @@ const help = [
 const portfolio = [
   {
     title: "Мистический сайт для таролога и личных консультаций",
+    caseHref: "/case-sayt-lichnogo-brenda/",
     tag: "Сайт / Личный бренд / Мистический проект",
     desc: "Атмосферный сайт в мягком мистическом стиле: про интуицию, внутренние ответы и бережную работу с личными запросами. Проект помогает показать эксперта, раскрыть услуги и создать доверительное первое касание с посетителем.",
     image: savanaSitePreview,
