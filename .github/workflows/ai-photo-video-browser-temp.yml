@@ -1,0 +1,53 @@
+name: Temporary strict AI photo-video browser audit
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/ai-photo-video-browser-temp.yml']
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Playwright and browser
+        id: install
+        continue-on-error: true
+        run: |
+          npm install --prefix /tmp/vikey-case-browser --no-save playwright
+          /tmp/vikey-case-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Check audit syntax
+        id: syntax
+        continue-on-error: true
+        run: node --check .github/ai-photo-video-browser-temp.cjs
+      - name: Run strict browser audit
+        id: audit
+        if: steps.install.outcome == 'success' && steps.syntax.outcome == 'success'
+        continue-on-error: true
+        env:
+          NODE_PATH: /tmp/vikey-case-browser/node_modules
+        run: node .github/ai-photo-video-browser-temp.cjs
+      - name: Save report to inspect then remove
+        if: always()
+        run: |
+          if [ ! -f .github/ai-photo-video-browser-report-temp.json ]; then
+            echo '{"passed":false,"errors":["Audit did not create report"],"checks":{},"devices":{}}' > .github/ai-photo-video-browser-report-temp.json
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/ai-photo-video-browser-report-temp.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Temporary AI photo-to-video browser audit report"
+            git push origin HEAD:main
+          fi
+      - name: Enforce strict result
+        if: always()
+        run: |
+          test "${{ steps.install.outcome }}" = "success"
+          test "${{ steps.syntax.outcome }}" = "success"
+          test "${{ steps.audit.outcome }}" = "success"
+          node -e "const r=require('./.github/ai-photo-video-browser-report-temp.json');if(!r.passed)process.exit(1)"
