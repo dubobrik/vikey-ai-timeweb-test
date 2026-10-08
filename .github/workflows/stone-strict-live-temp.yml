@@ -1,4 +1,5 @@
 name: Temporary strict stone live audit
+# Rerun after validating hashed image filenames
 on:
   push:
     branches: [main]
