@@ -292,6 +292,7 @@ function AiVideoBusinessPage() {
             <div>
               <div className="text-xs font-medium uppercase tracking-widest text-neon">AI-видео / Цифровой аватар / Личный бренд</div>
               <h3 className="mt-2 text-2xl font-semibold">Цифровой аватар Vikey AI</h3>
+              <a href="/case-cifrovoy-avatar/" className="mt-4 inline-flex min-h-11 items-center font-semibold text-neon">Подробнее о кейсе →</a>
               <p className="mt-4 leading-relaxed text-muted-foreground">
                 Реальный кейс по созданию цифрового аватара для личного бренда Vikey AI. В проекте была разработана идея цифрового образа, подготовлен визуальный стиль аватара и собран короткий AI-видеоролик.
               </p>
