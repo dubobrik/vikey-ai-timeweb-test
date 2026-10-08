@@ -240,6 +240,13 @@ function TelegramBotsBusinessPage() {
           </p>
         </Section>
 
+        <Section eyebrow="Подробный кейс" title="AI Telegram-бот с базой знаний">
+          <article className="max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8">
+            <p className="leading-relaxed text-muted-foreground">Сложный Telegram-проект под ключ: база знаний, пользовательская архитектура, AI, изображения, платежи, сервер и передача готового решения заказчику.</p>
+            <a href="/case-ai-telegram-bot/" className="mt-5 inline-flex min-h-11 items-center rounded-lg border border-neon/40 bg-neon/10 px-4 py-2.5 text-sm font-semibold text-neon transition hover:bg-neon/20">Подробнее о кейсе →</a>
+          </article>
+        </Section>
+
         <Section eyebrow="Реальный проект" title="Пример Telegram-бота">
           <article className="max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8">
             <div className="text-xs font-medium uppercase tracking-widest text-neon">AI Bot</div>
