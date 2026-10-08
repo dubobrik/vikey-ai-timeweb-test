@@ -1,0 +1,54 @@
+name: Temporary strict stone live audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/stone-strict-live-temp.yml'
+permissions:
+  contents: write
+jobs:
+  strict-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install temporary Chromium
+        id: install
+        continue-on-error: true
+        run: |
+          npm install --prefix /tmp/stone-audit --no-save playwright
+          /tmp/stone-audit/node_modules/.bin/playwright install --with-deps chromium
+      - name: Validate JS syntax
+        id: syntax
+        continue-on-error: true
+        run: node --check .github/stone-strict-live-temp.cjs
+      - name: Run strict audit
+        id: audit
+        if: steps.install.outcome == 'success' && steps.syntax.outcome == 'success'
+        continue-on-error: true
+        env:
+          NODE_PATH: /tmp/stone-audit/node_modules
+        run: node .github/stone-strict-live-temp.cjs
+      - name: Save temporary report
+        if: always()
+        run: |
+          if [ ! -f .github/stone-strict-live-report-temp.json ]; then
+            printf '{"passed":false,"errors":["Audit did not produce a report"],"checks":{},"devices":{}}\n' > .github/stone-strict-live-report-temp.json
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/stone-strict-live-report-temp.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Temporary strict stone live audit results"
+            git push origin HEAD:main
+          fi
+      - name: Fail workflow unless every mandatory test passes
+        if: always()
+        run: |
+          test "${{ steps.install.outcome }}" = "success"
+          test "${{ steps.syntax.outcome }}" = "success"
+          test "${{ steps.audit.outcome }}" = "success"
+          node -e "const r=require('./.github/stone-strict-live-report-temp.json');if(!r.passed)process.exit(1)"
