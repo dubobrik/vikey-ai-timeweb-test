@@ -15,6 +15,7 @@ import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznes
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as IiAssistentDlyaBiznesaRouteImport } from './routes/ii-assistent-dlya-biznesa'
 import { Route as CaseSaytGostevyeDomikiRouteImport } from './routes/case-sayt-gostevye-domiki'
+import { Route as CaseB2bHorecaRouteImport } from './routes/case-b2b-horeca'
 import { Route as AvtomatizaciyaBiznesaAiRouteImport } from './routes/avtomatizaciya-biznesa-ai'
 import { Route as AiVideoDlyaBiznesaRouteImport } from './routes/ai-video-dlya-biznesa'
 import { Route as IndexRouteImport } from './routes/index'
@@ -49,6 +50,11 @@ const CaseSaytGostevyeDomikiRoute = CaseSaytGostevyeDomikiRouteImport.update({
   path: '/case-sayt-gostevye-domiki',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CaseB2bHorecaRoute = CaseB2bHorecaRouteImport.update({
+  id: '/case-b2b-horeca',
+  path: '/case-b2b-horeca',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AvtomatizaciyaBiznesaAiRoute = AvtomatizaciyaBiznesaAiRouteImport.update({
   id: '/avtomatizaciya-biznesa-ai',
   path: '/avtomatizaciya-biznesa-ai',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
+  '/case-b2b-horeca': typeof CaseB2bHorecaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
+  '/case-b2b-horeca': typeof CaseB2bHorecaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
+  '/case-b2b-horeca': typeof CaseB2bHorecaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
+    | '/case-b2b-horeca'
     | '/case-sayt-gostevye-domiki'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
+    | '/case-b2b-horeca'
     | '/case-sayt-gostevye-domiki'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
+    | '/case-b2b-horeca'
     | '/case-sayt-gostevye-domiki'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiVideoDlyaBiznesaRoute: typeof AiVideoDlyaBiznesaRoute
   AvtomatizaciyaBiznesaAiRoute: typeof AvtomatizaciyaBiznesaAiRoute
+  CaseB2bHorecaRoute: typeof CaseB2bHorecaRoute
   CaseSaytGostevyeDomikiRoute: typeof CaseSaytGostevyeDomikiRoute
   IiAssistentDlyaBiznesaRoute: typeof IiAssistentDlyaBiznesaRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseSaytGostevyeDomikiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/case-b2b-horeca': {
+      id: '/case-b2b-horeca'
+      path: '/case-b2b-horeca'
+      fullPath: '/case-b2b-horeca'
+      preLoaderRoute: typeof CaseB2bHorecaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/avtomatizaciya-biznesa-ai': {
       id: '/avtomatizaciya-biznesa-ai'
       path: '/avtomatizaciya-biznesa-ai'
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiVideoDlyaBiznesaRoute: AiVideoDlyaBiznesaRoute,
   AvtomatizaciyaBiznesaAiRoute: AvtomatizaciyaBiznesaAiRoute,
+  CaseB2bHorecaRoute: CaseB2bHorecaRoute,
   CaseSaytGostevyeDomikiRoute: CaseSaytGostevyeDomikiRoute,
   IiAssistentDlyaBiznesaRoute: IiAssistentDlyaBiznesaRoute,
   PrivacyRoute: PrivacyRoute,
