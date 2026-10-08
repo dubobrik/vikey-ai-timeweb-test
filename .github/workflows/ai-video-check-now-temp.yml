@@ -1,0 +1,103 @@
+name: Temporary live check AI video from photos
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/ai-video-check-now-temp.yml']
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit live published page
+        id: audit
+        continue-on-error: true
+        run: |
+          python3 - <<'PY'
+          import urllib.request,urllib.error,json,re
+          from html.parser import HTMLParser
+          from datetime import datetime,timezone
+          base='https://chelovek-neiroset.ru'
+          slug='/case-ai-video-iz-foto/'
+          url=base+slug
+          report={'checked':datetime.now(timezone.utc).isoformat(),'checks':{},'errors':[]}
+          def chk(name,value,expected):report['checks'][name]={'pass':value==expected,'actual':value}
+          def fetch(u,method='GET'):
+           req=urllib.request.Request(u,method=method,headers={'User-Agent':'Mozilla/5.0 VikeyLiveAudit','Cache-Control':'no-cache'})
+           with urllib.request.urlopen(req,timeout=30) as r:return r.status,r.geturl(),dict(r.headers),r.read() if method=='GET' else b''
+          class Parser(HTMLParser):
+           def __init__(self):super().__init__();self.title='';self.in_title=False;self.in_h1=False;self.current='';self.h1=[];self.meta={};self.canonical='';self.hrefs=[];self.images=[]
+           def handle_starttag(self,tag,attrs):
+            a=dict(attrs)
+            if tag=='title':self.in_title=True
+            if tag=='h1':self.in_h1=True;self.current=''
+            if tag=='meta':self.meta[a.get('name') or a.get('property')]=a.get('content','')
+            if tag=='link' and a.get('rel')=='canonical':self.canonical=a.get('href','')
+            if tag=='a':self.hrefs.append(a.get('href',''))
+            if tag=='img':self.images.append(a.get('src',''))
+           def handle_data(self,t):
+            if self.in_title:self.title+=t
+            if self.in_h1:self.current+=t
+           def handle_endtag(self,tag):
+            if tag=='title':self.in_title=False
+            if tag=='h1':self.in_h1=False;self.h1.append(' '.join(self.current.split()))
+          try:
+           status,_,_,body=fetch(url);p=Parser();p.feed(body.decode('utf-8','replace'))
+           chk('HTTP',status,200)
+           chk('Title',p.title,'Создание видео из фото с помощью ИИ — кейс Vikey AI')
+           chk('Description',p.meta.get('description'),'Кейс Vikey AI: создание двух AI-видео из исходных фотографий. Показываю формат «исходник → результат» и возможности нейросетей для динамичной подачи визуального материала.')
+           chk('robots',p.meta.get('robots'),'index,follow')
+           chk('canonical',p.canonical,url)
+           chk('og:url',p.meta.get('og:url'),url)
+           chk('H1 count',len(p.h1),1)
+           chk('H1 text',p.h1[0] if p.h1 else '', 'Создание видео из фото с помощью ИИ')
+           chk('FAQ marker',body.decode('utf-8','replace').count('<details'),6)
+           chk('CTA', '/#calc' in p.hrefs,True)
+           chk('case -> video', '/ai-video-dlya-biznesa/' in p.hrefs,True)
+           chk('case -> creatives','/ai-kreativy-dlya-biznesa/' in p.hrefs,True)
+           for x in ['ai-video-source-01','ai-video-source-02','ai-video-result-01-poster','ai-video-result-02-poster']:chk('image '+x,any(x in s for s in p.images),True)
+          except Exception as e:report['errors'].append('page: '+str(e))
+          try:
+           status,_,_,xml=fetch(base+'/sitemap.xml')
+           urls=re.findall(r'<loc>\s*([^<]+)\s*</loc>',xml.decode('utf-8','replace'))
+           chk('sitemap HTTP',status,200);chk('sitemap count',len(urls),16);chk('sitemap case',url in [x.strip() for x in urls],True)
+          except Exception as e:report['errors'].append('sitemap: '+str(e))
+          for source,name in [('/','home'),('/ai-video-dlya-biznesa/','AI-video'),('/ai-kreativy-dlya-biznesa/','creatives')]:
+           try:
+            status,_,_,body=fetch(base+source)
+            chk(name+' HTTP',status,200)
+            chk(name+' -> case',slug in body.decode('utf-8','replace'),True)
+           except Exception as e:report['errors'].append(name+': '+str(e))
+          for n in ['01','02']:
+           try:
+            status,_,headers,_=fetch(base+'/assets/ai-video-result-'+n+'.mp4','HEAD')
+            chk('MP4 '+n+' HTTP',status,200)
+            chk('MP4 '+n+' content-type','video/mp4' in headers.get('Content-Type',''),True)
+            report['checks']['MP4 '+n+' bytes']={'pass':int(headers.get('Content-Length','0'))>100000,'actual':headers.get('Content-Length')}
+           except Exception as e:report['errors'].append('MP4 '+n+': '+str(e))
+          report['passed']=len(report['checks'])>=25 and all(v['pass'] for v in report['checks'].values()) and not report['errors']
+          with open('.github/ai-video-check-now-temp.json','w') as f:json.dump(report,f,ensure_ascii=False,indent=2)
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          if not report['passed']:raise SystemExit(1)
+          
+          PY
+      - name: Save temporary report
+        if: always()
+        run: |
+          if [ ! -f .github/ai-video-check-now-temp.json ]; then
+            echo '{"passed":false,"errors":["Report missing"]}' > .github/ai-video-check-now-temp.json
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/ai-video-check-now-temp.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Temporary live status report for AI video from photos"
+            git push origin HEAD:main
+          fi
+      - name: Enforce failure on any error
+        if: always()
+        run: |
+          test "${{ steps.audit.outcome }}" = "success"
+          python3 -c "import json,sys;sys.exit(0 if json.load(open('.github/ai-video-check-now-temp.json')).get('passed') else 1)"
