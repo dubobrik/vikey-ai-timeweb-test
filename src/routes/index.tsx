@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, lazy, Suspense, Component, type ReactNode } from "react";
 import { Copy, Check } from "lucide-react";
 import heroAsset from "@/assets/vikey-hero.jpg";
+import aiVideoPhotoCaseImage from "@/assets/ai-video-result-01-poster.webp";
 import aboutAsset from "@/assets/vikey-about.png";
 import destinyBotAsset from "@/assets/destiny-bot-preview.png";
 import alleyAsset from "@/assets/alley-before-after.jpg";
@@ -83,6 +84,13 @@ const help = [
 ];
 
 const portfolio = [
+  {
+    title: "AI-видео из исходных фотографий",
+    tag: "AI-видео / Исходник → результат",
+    desc: "Два реальных исходных изображения превращены в короткие AI-ролики. Кейс показывает формат «исходник → результат».",
+    image: aiVideoPhotoCaseImage,
+    caseHref: "/case-ai-video-iz-foto/",
+  },
   {
     title: "Мистический сайт для таролога и личных консультаций",
     caseHref: "/case-sayt-lichnogo-brenda/",

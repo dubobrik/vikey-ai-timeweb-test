@@ -19,6 +19,7 @@ import { Route as CaseSaytGostevyeDomikiRouteImport } from './routes/case-sayt-g
 import { Route as CaseSaytChastnogoSpecialistaRouteImport } from './routes/case-sayt-chastnogo-specialista'
 import { Route as CaseCifrovoyAvatarRouteImport } from './routes/case-cifrovoy-avatar'
 import { Route as CaseB2bHorecaRouteImport } from './routes/case-b2b-horeca'
+import { Route as CaseAiVideoIzFotoRouteImport } from './routes/case-ai-video-iz-foto'
 import { Route as CaseAiTelegramBotRouteImport } from './routes/case-ai-telegram-bot'
 import { Route as AvtomatizaciyaBiznesaAiRouteImport } from './routes/avtomatizaciya-biznesa-ai'
 import { Route as AiVideoDlyaBiznesaRouteImport } from './routes/ai-video-dlya-biznesa'
@@ -76,6 +77,11 @@ const CaseB2bHorecaRoute = CaseB2bHorecaRouteImport.update({
   path: '/case-b2b-horeca',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CaseAiVideoIzFotoRoute = CaseAiVideoIzFotoRouteImport.update({
+  id: '/case-ai-video-iz-foto',
+  path: '/case-ai-video-iz-foto',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CaseAiTelegramBotRoute = CaseAiTelegramBotRouteImport.update({
   id: '/case-ai-telegram-bot',
   path: '/case-ai-telegram-bot',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/case-ai-telegram-bot': typeof CaseAiTelegramBotRoute
+  '/case-ai-video-iz-foto': typeof CaseAiVideoIzFotoRoute
   '/case-b2b-horeca': typeof CaseB2bHorecaRoute
   '/case-cifrovoy-avatar': typeof CaseCifrovoyAvatarRoute
   '/case-sayt-chastnogo-specialista': typeof CaseSaytChastnogoSpecialistaRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/case-ai-telegram-bot': typeof CaseAiTelegramBotRoute
+  '/case-ai-video-iz-foto': typeof CaseAiVideoIzFotoRoute
   '/case-b2b-horeca': typeof CaseB2bHorecaRoute
   '/case-cifrovoy-avatar': typeof CaseCifrovoyAvatarRoute
   '/case-sayt-chastnogo-specialista': typeof CaseSaytChastnogoSpecialistaRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/ai-video-dlya-biznesa': typeof AiVideoDlyaBiznesaRoute
   '/avtomatizaciya-biznesa-ai': typeof AvtomatizaciyaBiznesaAiRoute
   '/case-ai-telegram-bot': typeof CaseAiTelegramBotRoute
+  '/case-ai-video-iz-foto': typeof CaseAiVideoIzFotoRoute
   '/case-b2b-horeca': typeof CaseB2bHorecaRoute
   '/case-cifrovoy-avatar': typeof CaseCifrovoyAvatarRoute
   '/case-sayt-chastnogo-specialista': typeof CaseSaytChastnogoSpecialistaRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
     | '/case-ai-telegram-bot'
+    | '/case-ai-video-iz-foto'
     | '/case-b2b-horeca'
     | '/case-cifrovoy-avatar'
     | '/case-sayt-chastnogo-specialista'
@@ -179,6 +189,7 @@ export interface FileRouteTypes {
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
     | '/case-ai-telegram-bot'
+    | '/case-ai-video-iz-foto'
     | '/case-b2b-horeca'
     | '/case-cifrovoy-avatar'
     | '/case-sayt-chastnogo-specialista'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/ai-video-dlya-biznesa'
     | '/avtomatizaciya-biznesa-ai'
     | '/case-ai-telegram-bot'
+    | '/case-ai-video-iz-foto'
     | '/case-b2b-horeca'
     | '/case-cifrovoy-avatar'
     | '/case-sayt-chastnogo-specialista'
@@ -214,6 +226,7 @@ export interface RootRouteChildren {
   AiVideoDlyaBiznesaRoute: typeof AiVideoDlyaBiznesaRoute
   AvtomatizaciyaBiznesaAiRoute: typeof AvtomatizaciyaBiznesaAiRoute
   CaseAiTelegramBotRoute: typeof CaseAiTelegramBotRoute
+  CaseAiVideoIzFotoRoute: typeof CaseAiVideoIzFotoRoute
   CaseB2bHorecaRoute: typeof CaseB2bHorecaRoute
   CaseCifrovoyAvatarRoute: typeof CaseCifrovoyAvatarRoute
   CaseSaytChastnogoSpecialistaRoute: typeof CaseSaytChastnogoSpecialistaRoute
@@ -298,6 +311,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseB2bHorecaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/case-ai-video-iz-foto': {
+      id: '/case-ai-video-iz-foto'
+      path: '/case-ai-video-iz-foto'
+      fullPath: '/case-ai-video-iz-foto'
+      preLoaderRoute: typeof CaseAiVideoIzFotoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/case-ai-telegram-bot': {
       id: '/case-ai-telegram-bot'
       path: '/case-ai-telegram-bot'
@@ -342,6 +362,7 @@ const rootRouteChildren: RootRouteChildren = {
   AiVideoDlyaBiznesaRoute: AiVideoDlyaBiznesaRoute,
   AvtomatizaciyaBiznesaAiRoute: AvtomatizaciyaBiznesaAiRoute,
   CaseAiTelegramBotRoute: CaseAiTelegramBotRoute,
+  CaseAiVideoIzFotoRoute: CaseAiVideoIzFotoRoute,
   CaseB2bHorecaRoute: CaseB2bHorecaRoute,
   CaseCifrovoyAvatarRoute: CaseCifrovoyAvatarRoute,
   CaseSaytChastnogoSpecialistaRoute: CaseSaytChastnogoSpecialistaRoute,

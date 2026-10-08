@@ -177,6 +177,10 @@ function AiVideoBusinessPage() {
 
         <Section eyebrow="Другие форматы" title="Нужны статичные AI-креативы?"><p className="max-w-4xl leading-relaxed text-muted-foreground">Если нужны не ролики, а изображения для рекламы, сайта, социальных сетей или презентации, это отдельное направление работы.</p><a href="/ai-kreativy-dlya-biznesa/" className="mt-5 inline-flex min-h-11 items-center font-semibold text-neon">AI-креативы для бизнеса →</a></Section>
 
+        <Section eyebrow="Реальный кейс" title="AI-видео из фотографии">
+          <p className="max-w-4xl leading-relaxed text-muted-foreground">Два примера превращения статичных исходных фотографий в короткие AI-ролики. Сравните оригиналы с результатами.</p>
+          <a href="/case-ai-video-iz-foto/" className="mt-5 inline-flex min-h-11 items-center font-semibold text-neon">Посмотреть кейс →</a>
+        </Section>
         <Section id="formats" eyebrow="Форматы" title="Какие AI-видео можно создать для бизнеса">
           <p className="max-w-4xl leading-relaxed text-muted-foreground">
             Формат зависит от задачи, площадки и исходных материалов. Нейросети можно использовать как для отдельных сцен, так и для создания большей части визуального ряда.
