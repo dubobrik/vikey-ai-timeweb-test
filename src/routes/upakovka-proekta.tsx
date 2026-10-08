@@ -300,6 +300,9 @@ function ProjectPackagingPage() {
               <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
                 Задача упаковки — сделать профессиональную услугу понятной для B2B-коммуникации и подготовить материалы для первичного выхода на компании. Дальнейший результат зависит от самого предложения, продаж и работы с клиентами.
               </p>
+              <a href="/case-b2b-horeca/" className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-neon transition hover:text-neon/80">
+                Подробнее о кейсе →
+              </a>
             </div>
           </div>
         </Section>
