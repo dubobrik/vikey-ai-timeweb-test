@@ -356,6 +356,8 @@ function Header() {
   );
 }
 
+const InteractiveVLogo = lazy(() => import("@/components/InteractiveVLogo"));
+
 function Hero() {
   return (
     <section id="top" className="relative overflow-hidden bg-hero">
@@ -374,6 +376,9 @@ function Hero() {
             <a href="#contact" className="rounded-lg bg-gradient-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95">
               Обсудить задачу
             </a>
+            <Suspense fallback={<div className="h-28 w-28 shrink-0" aria-hidden="true" />}>
+              <InteractiveVLogo />
+            </Suspense>
             <a href="#portfolio" className="rounded-lg border border-border bg-card/40 px-5 py-3 text-sm font-semibold text-foreground transition hover:bg-card">
               Посмотреть портфолио
             </a>
