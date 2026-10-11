@@ -1,4 +1,4 @@
-name: Temporary Vikey 3D logo browser audit
+name: Temporary Vikey 3D logo browser audit retest
 on:
   push:
     branches: [main]
