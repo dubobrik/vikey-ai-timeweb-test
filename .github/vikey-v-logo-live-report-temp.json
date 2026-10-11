@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-11T19:27:38.392Z",
+  "checkedAt": "2026-10-11T19:31:59.005Z",
   "checks": {
     "iPhone": {
       "pass": false,
@@ -7,8 +7,8 @@
       "refresh": 200,
       "initialGLB": 0,
       "ready": false,
-      "canvas": 0,
-      "GLBRequestedAfterClick": false,
+      "canvas": 1,
+      "GLBRequestedAfterClick": true,
       "overflow": false,
       "cls": 0,
       "errors": []
@@ -31,10 +31,10 @@
       "refresh": 200,
       "initialGLB": 0,
       "ready": false,
-      "canvas": 1,
-      "GLBRequestedAfterClick": true,
+      "canvas": 0,
+      "GLBRequestedAfterClick": false,
       "overflow": false,
-      "cls": 0.18178056411219884,
+      "cls": 0.1814834181462459,
       "errors": []
     }
   },
@@ -54,9 +54,25 @@
       },
       "load": {
         "ready": false,
-        "canvasCount": 0,
-        "canvas": null,
-        "assetRequest": false
+        "canvasCount": 1,
+        "canvas": {
+          "width": 188,
+          "height": 188,
+          "rect": {
+            "width": 94,
+            "height": 94
+          }
+        },
+        "assetRequest": true,
+        "logs": [],
+        "glbResponses": [
+          {
+            "status": 200,
+            "contentType": "model/gltf-binary",
+            "length": "8226128"
+          }
+        ],
+        "ui": "normal"
       },
       "after": {
         "overflow": false,
@@ -81,7 +97,10 @@
         "ready": false,
         "canvasCount": 0,
         "canvas": null,
-        "assetRequest": false
+        "assetRequest": false,
+        "logs": [],
+        "glbResponses": [],
+        "ui": "normal"
       },
       "after": {
         "overflow": false,
@@ -97,27 +116,23 @@
         "requests": 0,
         "layout": {
           "overflow": false,
-          "cls": 0.18178056411219884,
+          "cls": 0.1814834181462459,
           "cta": true,
           "portfolio": true
         }
       },
       "load": {
         "ready": false,
-        "canvasCount": 1,
-        "canvas": {
-          "width": 110,
-          "height": 110,
-          "rect": {
-            "width": 110,
-            "height": 110
-          }
-        },
-        "assetRequest": true
+        "canvasCount": 0,
+        "canvas": null,
+        "assetRequest": false,
+        "logs": [],
+        "glbResponses": [],
+        "ui": "normal"
       },
       "after": {
         "overflow": false,
-        "cls": 0.18178056411219884
+        "cls": 0.1814834181462459
       },
       "errors": []
     }
