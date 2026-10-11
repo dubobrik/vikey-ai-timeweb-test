@@ -1,0 +1,127 @@
+{
+  "checkedAt": "2026-10-11T19:27:38.392Z",
+  "checks": {
+    "iPhone": {
+      "pass": false,
+      "status": 200,
+      "refresh": 200,
+      "initialGLB": 0,
+      "ready": false,
+      "canvas": 0,
+      "GLBRequestedAfterClick": false,
+      "overflow": false,
+      "cls": 0,
+      "errors": []
+    },
+    "Android": {
+      "pass": false,
+      "status": 200,
+      "refresh": 200,
+      "initialGLB": 0,
+      "ready": false,
+      "canvas": 0,
+      "GLBRequestedAfterClick": false,
+      "overflow": false,
+      "cls": 0,
+      "errors": []
+    },
+    "Desktop": {
+      "pass": false,
+      "status": 200,
+      "refresh": 200,
+      "initialGLB": 0,
+      "ready": false,
+      "canvas": 1,
+      "GLBRequestedAfterClick": true,
+      "overflow": false,
+      "cls": 0.18178056411219884,
+      "errors": []
+    }
+  },
+  "screens": {
+    "iPhone": {
+      "status": 200,
+      "refresh": 200,
+      "before": {
+        "count": 1,
+        "requests": 0,
+        "layout": {
+          "overflow": false,
+          "cls": 0,
+          "cta": true,
+          "portfolio": true
+        }
+      },
+      "load": {
+        "ready": false,
+        "canvasCount": 0,
+        "canvas": null,
+        "assetRequest": false
+      },
+      "after": {
+        "overflow": false,
+        "cls": 0
+      },
+      "errors": []
+    },
+    "Android": {
+      "status": 200,
+      "refresh": 200,
+      "before": {
+        "count": 1,
+        "requests": 0,
+        "layout": {
+          "overflow": false,
+          "cls": 0,
+          "cta": true,
+          "portfolio": true
+        }
+      },
+      "load": {
+        "ready": false,
+        "canvasCount": 0,
+        "canvas": null,
+        "assetRequest": false
+      },
+      "after": {
+        "overflow": false,
+        "cls": 0
+      },
+      "errors": []
+    },
+    "Desktop": {
+      "status": 200,
+      "refresh": 200,
+      "before": {
+        "count": 1,
+        "requests": 0,
+        "layout": {
+          "overflow": false,
+          "cls": 0.18178056411219884,
+          "cta": true,
+          "portfolio": true
+        }
+      },
+      "load": {
+        "ready": false,
+        "canvasCount": 1,
+        "canvas": {
+          "width": 110,
+          "height": 110,
+          "rect": {
+            "width": 110,
+            "height": 110
+          }
+        },
+        "assetRequest": true
+      },
+      "after": {
+        "overflow": false,
+        "cls": 0.18178056411219884
+      },
+      "errors": []
+    }
+  },
+  "errors": [],
+  "passed": false
+}
