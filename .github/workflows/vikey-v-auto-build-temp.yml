@@ -1,0 +1,23 @@
+name: Temporary 3D V auto-rotation build
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/vikey-v-auto-build-temp.yml']
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Production build with frozen lockfile
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+          grep -Fq 'autoRotateSpeed = 5' src/components/InteractiveVLogo.tsx
+          grep -Fq 'IntersectionObserver' src/components/InteractiveVLogo.tsx
+          test -s public/models/vikey-v-logo.glb
+          test "$(grep -c '<loc>' public/sitemap.xml)" -eq 16
+          ! grep -q -E 'vite-plugin-pwa|workbox' package.json
