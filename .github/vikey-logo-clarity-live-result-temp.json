@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-10-12T04:53:09.757Z",
+  "passed": false,
+  "screens": {
+    "iPhone": {
+      "pass": false,
+      "status": 200,
+      "ctaOK": true,
+      "portfolioOK": true,
+      "logoCount": 1,
+      "visible": {
+        "overflow": false,
+        "cls": 0.005406534599920867,
+        "ready": true,
+        "oldButton": false,
+        "pixelWidth": 96,
+        "canvas": true,
+        "error": false
+      },
+      "modelRequests": 1,
+      "modelResponses": [
+        {
+          "status": 200,
+          "size": "8226128"
+        }
+      ],
+      "jsErrors": [],
+      "modelResponseOk": true
+    },
+    "Android": {
+      "pass": false,
+      "status": 200,
+      "ctaOK": true,
+      "portfolioOK": true,
+      "logoCount": 1,
+      "visible": {
+        "overflow": false,
+        "cls": 0.006545331360797504,
+        "ready": true,
+        "oldButton": false,
+        "pixelWidth": 96,
+        "canvas": true,
+        "error": false
+      },
+      "modelRequests": 1,
+      "modelResponses": [
+        {
+          "status": 200,
+          "size": "8226128"
+        }
+      ],
+      "jsErrors": [],
+      "modelResponseOk": true
+    },
+    "Desktop": {
+      "pass": false,
+      "status": 200,
+      "ctaOK": true,
+      "portfolioOK": true,
+      "logoCount": 1,
+      "visible": {
+        "overflow": false,
+        "cls": 0.18573840671952693,
+        "ready": true,
+        "oldButton": false,
+        "pixelWidth": 112,
+        "canvas": true,
+        "error": false
+      },
+      "modelRequests": 1,
+      "modelResponses": [
+        {
+          "status": 200,
+          "size": "8226128"
+        }
+      ],
+      "jsErrors": [],
+      "modelResponseOk": true
+    }
+  },
+  "errors": []
+}
