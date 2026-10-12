@@ -4,7 +4,7 @@ on:
     branches: [main]
     paths: ['.github/workflows/vikey-v-auto-build-temp.yml']
 permissions:
-  contents: read
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,6 +13,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - name: Production build with frozen lockfile
+        id: build
+        continue-on-error: true
         run: |
           bun install --frozen-lockfile
           bun run build
@@ -21,3 +23,22 @@ jobs:
           test -s public/models/vikey-v-logo.glb
           test "$(grep -c '<loc>' public/sitemap.xml)" -eq 16
           ! grep -q -E 'vite-plugin-pwa|workbox' package.json
+      - name: Save temporary build status
+        if: always()
+        run: |
+          if [ "${{ steps.build.outcome }}" = "success" ]; then
+            echo '{"passed":true,"productionBuild":"success"}' > .github/vikey-v-auto-build-result-temp.json
+          else
+            echo '{"passed":false,"productionBuild":"failure"}' > .github/vikey-v-auto-build-result-temp.json
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/vikey-v-auto-build-result-temp.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Temporary 3D logo rotation build status"
+            git push origin HEAD:main
+          fi
+      - name: Strict build result
+        if: always()
+        run: |
+          test "${{ steps.build.outcome }}" = "success"
