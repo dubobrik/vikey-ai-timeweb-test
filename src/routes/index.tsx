@@ -376,16 +376,14 @@ function Hero() {
             <a href="#contact" className="rounded-lg bg-gradient-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95">
               Обсудить задачу
             </a>
-            <Suspense fallback={<div className="h-28 w-28 shrink-0" aria-hidden="true" />}>
-              <InteractiveVLogo />
-            </Suspense>
             <a href="#portfolio" className="rounded-lg border border-border bg-card/40 px-5 py-3 text-sm font-semibold text-foreground transition hover:bg-card">
               Посмотреть портфолио
             </a>
           </div>
         </div>
-        <div className="relative mx-auto w-full max-w-md">
-          <div className="absolute -inset-4 rounded-3xl bg-gradient-primary opacity-30 blur-2xl" />
+        <div className="relative mx-auto flex w-full max-w-md flex-col items-center gap-5">
+          <div className="relative w-full">
+            <div className="absolute -inset-4 rounded-3xl bg-gradient-primary opacity-30 blur-2xl" />
           <div className="relative overflow-hidden rounded-3xl border border-border shadow-glow">
             <img
               src={heroAsset}
@@ -394,6 +392,10 @@ function Hero() {
               loading="eager"
             />
           </div>
+          </div>
+          <Suspense fallback={<div className="h-44 w-44 shrink-0 sm:h-52 sm:w-52" aria-hidden="true" />}>
+            <InteractiveVLogo />
+          </Suspense>
         </div>
       </div>
     </section>
