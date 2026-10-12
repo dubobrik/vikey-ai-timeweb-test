@@ -41,21 +41,21 @@ export default function InteractiveVLogo() {
       const renderer = new THREE.WebGLRenderer({
         alpha: true, antialias: true, powerPreference: "low-power",
       });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.3;
+      renderer.toneMapping = THREE.NoToneMapping;
+      renderer.toneMappingExposure = 1;
       renderer.setClearColor(0x000000, 0);
       renderer.domElement.style.cssText =
-        "width:100%;height:100%;display:block;touch-action:none;cursor:grab";
+        "width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none";
       mount.appendChild(renderer.domElement);
 
       const scene = new THREE.Scene();
-      scene.add(new THREE.HemisphereLight(0xffffff, 0x65538d, 2.7));
-      const key = new THREE.DirectionalLight(0xffffff, 3.2);
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x65538d, 1.6));
+      const key = new THREE.DirectionalLight(0xffffff, 2.0);
       key.position.set(1, 2, 4);
       scene.add(key);
-      const fill = new THREE.DirectionalLight(0xcbb3ff, 1.5);
+      const fill = new THREE.DirectionalLight(0xcbb3ff, 0.8);
       fill.position.set(-2, 1, -2);
       scene.add(fill);
 
@@ -144,7 +144,7 @@ export default function InteractiveVLogo() {
           const center = bounds.getCenter(new THREE.Vector3());
           model.position.sub(center);
           const largest = Math.max(...bounds.getSize(new THREE.Vector3()).toArray());
-          if (largest > 0) model.scale.setScalar(0.22 / largest);
+          if (largest > 0) model.scale.setScalar(0.295 / largest);
           scene.add(model);
           controls.target.set(0, 0, 0);
           camera.lookAt(0, 0, 0);
@@ -164,8 +164,8 @@ export default function InteractiveVLogo() {
   }, [activated, retry]);
 
   return (
-    <div ref={wrapperRef} className="flex w-28 shrink-0 flex-col items-center gap-1 sm:w-32" aria-label="Автоматически вращающийся 3D-логотип Vikey AI">
-      <div className="relative h-24 w-24 overflow-hidden rounded-full border border-[#8B7BC8]/40 bg-card/40 shadow-glow sm:h-28 sm:w-28">
+    <div ref={wrapperRef} className="flex w-full max-w-56 shrink-0 flex-col items-center gap-2" aria-label="Автоматически вращающийся 3D-логотип Vikey AI">
+      <div className="relative h-44 w-44 overflow-hidden rounded-full border border-[#8B7BC8]/30 bg-card/20 shadow-glow sm:h-52 sm:w-52">
         {activated && <div ref={mountRef} className="h-full w-full" aria-label="Поворачивайте логотип мышью или пальцем" />}
         {status !== "ready" && status !== "error" && (
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-card/40 text-neon">
