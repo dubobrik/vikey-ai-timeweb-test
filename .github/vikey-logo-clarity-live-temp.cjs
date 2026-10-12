@@ -1,0 +1,15 @@
+const {chromium}=require('playwright'),fs=require('node:fs');
+const report={timestamp:new Date().toISOString(),passed:false,screens:{},errors:[]};
+(async()=>{let browser;try{browser=await chromium.launch({headless:true,args:['--no-sandbox','--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});for(const [name,width,height,mobile] of [['iPhone',390,844,true],['Android',412,915,true],['Desktop',1440,900,false]]){const ctx=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:mobile?3:1});const page=await ctx.newPage();const modelRequests=[];const modelResponses=[];const jsErrors=[];
+page.on('request',r=>{if(r.url().includes('vikey-v-logo.glb'))modelRequests.push(r.url())});page.on('response',r=>{if(r.url().includes('vikey-v-logo.glb'))modelResponses.push({status:r.status(),size:r.headers()['content-length']})});page.on('pageerror',e=>jsErrors.push(e.message));
+try{await page.addInitScript(()=>{window.__cls=0;try{new PerformanceObserver(list=>{for(const e of list.getEntries())if(!e.hadRecentInput)window.__cls+=e.value}).observe({type:'layout-shift',buffered:true})}catch(e){}});
+const response=await page.goto('https://chelovek-neiroset.ru/',{waitUntil:'domcontentloaded',timeout:40000});
+const cta=page.getByRole('link',{name:'Обсудить задачу'}).first(),portfolio=page.getByRole('link',{name:'Посмотреть портфолио'}).first();const logo=page.getByLabel('Автоматически вращающийся 3D-логотип Vikey AI');
+const exists=await logo.count(),ctaOK=await cta.count()===1,portfolioOK=await portfolio.count()===1;
+if(exists)await logo.scrollIntoViewIfNeeded();await page.waitForTimeout(2200);
+const visible=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,cls:window.__cls||0,ready:document.body.innerText.includes('Вращается · можно повернуть'),oldButton:document.body.innerText.includes('Открыть 3D'),pixelWidth:document.querySelector('[aria-label="Автоматически вращающийся 3D-логотип Vikey AI"]')?.querySelector('.rounded-full')?.getBoundingClientRect().width??0,canvas:document.querySelector('[aria-label="Автоматически вращающийся 3D-логотип Vikey AI"] canvas')!==null,error:document.body.innerText.includes('Не удалось загрузить 3D. Повторить')}));
+const modelResponseOk=modelResponses.some(r=>r.status===200);
+const pass=response?.status()===200&&ctaOK&&portfolioOK&&exists===1&&visible.pixelWidth>=170&&!visible.overflow&&!visible.oldButton&&jsErrors.length===0&&visible.cls<=0.1;
+report.screens[name]={pass,status:response?.status(),ctaOK,portfolioOK,logoCount:exists,visible,modelRequests:modelRequests.length,modelResponses,jsErrors,modelResponseOk};
+}finally{await ctx.close()}}
+}catch(e){report.errors.push(String(e.stack||e))}finally{if(browser)await browser.close();report.passed=Object.keys(report.screens).length===3&&Object.values(report.screens).every(x=>x.pass)&&report.errors.length===0;fs.writeFileSync('.github/vikey-logo-clarity-live-result-temp.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));process.exitCode=report.passed?0:1}})();
