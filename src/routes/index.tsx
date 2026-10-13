@@ -6,7 +6,7 @@ import aiVideoPhotoCaseImage from "@/assets/ai-video-result-01-poster.webp";
 import aboutAsset from "@/assets/vikey-about.png";
 import destinyBotAsset from "@/assets/destiny-bot-preview.png";
 import alleyAsset from "@/assets/alley-before-after.jpg";
-import savanaSitePreview from "@/assets/savana-site-preview.webp";
+import savanaSitePreview from "@/assets/savana-site-preview-2026.webp";
 import stoneMasterPreview from "@/assets/stone-master-preview.jpg";
 import cardCoverAsset from "@/assets/vikey-card-cover.jpg";
 import avatarVideoAsset from "@/assets/digital-avatar.mp4";
