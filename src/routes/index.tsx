@@ -712,8 +712,6 @@ const CALC_SERVICES: CalcService[] = [
   { key: "shop", label: "Интернет-магазин", price: 18000 },
   { key: "logo", label: "Логотип", price: 2500 },
   { key: "brand", label: "Фирменный стиль", price: 7000 },
-  { key: "smm", label: "SMM-пакет: 10 постов", price: 4000 },
-  { key: "stories", label: "Шаблоны stories: 5 шт", price: 2000 },
   { key: "print", label: "Полиграфия: визитки, буклеты", price: 2000 },
   { key: "bot", label: "Создание бота", price: 5000 },
   { key: "avatar", label: "Цифровой аватар / AI-видео", price: 5000 },
