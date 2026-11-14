@@ -6,10 +6,36 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useLocation,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 
 import appCss from "../styles.css?url";
+
+const YM_ID = 114248499;
+
+const YM_SNIPPET = `(function(m,e,t,r,i,k,a){
+    m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=${YM_ID}', 'ym');
+ym(${YM_ID}, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});`;
+
+// Сайт переходит между страницами без перезагрузки, поэтому просмотр
+// каждой следующей страницы отправляем в Метрику сами (первый уходит из init)
+function useMetrikaPageHits() {
+  const location = useLocation();
+  const prevUrl = useRef<string | null>(null);
+  useEffect(() => {
+    const url = window.location.href;
+    if (prevUrl.current !== null && prevUrl.current !== url) {
+      const ym = (window as unknown as { ym?: (...args: unknown[]) => void }).ym;
+      ym?.(YM_ID, "hit", url, { referer: prevUrl.current, title: document.title });
+    }
+    prevUrl.current = url;
+  }, [location.href]);
+}
 
 function NotFoundComponent() {
   return (
@@ -89,8 +115,19 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="ru">
       <head>
         <HeadContent />
+        {/* Yandex.Metrika counter */}
+        <script dangerouslySetInnerHTML={{ __html: YM_SNIPPET }} />
       </head>
       <body>
+        <noscript>
+          <div>
+            <img
+              src={`https://mc.yandex.ru/watch/${YM_ID}`}
+              style={{ position: "absolute", left: "-9999px" }}
+              alt=""
+            />
+          </div>
+        </noscript>
         {children}
         <Scripts />
       </body>
@@ -100,6 +137,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useMetrikaPageHits();
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
