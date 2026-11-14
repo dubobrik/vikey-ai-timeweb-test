@@ -707,6 +707,7 @@ function Vibe() {
 type CalcService = { key: string; label: string; price: number };
 
 const CALC_SERVICES: CalcService[] = [
+  { key: "agent", label: "ИИ-агент или ассистент под ключ", price: 20000 },
   { key: "landing", label: "Лендинг", price: 6000 },
   { key: "site", label: "Многостраничный сайт", price: 10000 },
   { key: "shop", label: "Интернет-магазин", price: 18000 },
