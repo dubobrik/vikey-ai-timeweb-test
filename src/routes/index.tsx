@@ -60,6 +60,7 @@ const nav = [
   { href: "#process", label: "Работа" },
   { href: "#vibe", label: "Vibe Coding" },
   { href: "#calc", label: "Калькулятор" },
+  { href: "/gaidy/", label: "Гайды" },
   { href: "#contact", label: "Контакты" },
 ];
 
@@ -1107,6 +1108,9 @@ function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 text-xs text-muted-foreground sm:flex-row sm:px-6">
         <div>© {new Date().getFullYear()} Vikey AI — студия Виктории Шелих. Все права защищены.</div>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+          <a href="/gaidy/" className="transition hover:text-foreground">
+            Гайды
+          </a>
           <Link to="/privacy" className="transition hover:text-foreground">
             Политика обработки персональных данных
           </Link>

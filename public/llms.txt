@@ -12,6 +12,9 @@
 - [AI-креативы для бизнеса](https://chelovek-neiroset.ru/ai-kreativy-dlya-biznesa/)
 - [Упаковка проекта](https://chelovek-neiroset.ru/upakovka-proekta/)
 
+## Гайды
+- [Внедрение ИИ в бизнес: с какой задачи начать](https://chelovek-neiroset.ru/gaidy/vnedrenie-ii-v-biznes/): таблица повторяющихся дел (раз в месяц × минут на раз ÷ 60), первой берётся задача с большим числом часов и дешёвой ошибкой, данные клиентов по 152-ФЗ (ст. 18 ч. 5, ст. 12), готовые запросы для GigaChat и Алисы
+
 ## Связь
 - Telegram-канал: https://t.me/vikey_ai
 - Личные сообщения: https://t.me/Vikey_shel

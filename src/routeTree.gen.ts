@@ -9,56 +9,64 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UpakovkaProektaRouteImport } from './routes/upakovka-proekta'
-import { Route as TelegramBotyDlyaBiznesaRouteImport } from './routes/telegram-boty-dlya-biznesa'
-import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznesa'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as IiAssistentDlyaBiznesaRouteImport } from './routes/ii-assistent-dlya-biznesa'
-import { Route as CaseSaytLichnogoBrendaRouteImport } from './routes/case-sayt-lichnogo-brenda'
-import { Route as CaseSaytGostevyeDomikiRouteImport } from './routes/case-sayt-gostevye-domiki'
-import { Route as CaseSaytChastnogoSpecialistaRouteImport } from './routes/case-sayt-chastnogo-specialista'
-import { Route as CaseCifrovoyAvatarRouteImport } from './routes/case-cifrovoy-avatar'
-import { Route as CaseB2bHorecaRouteImport } from './routes/case-b2b-horeca'
-import { Route as CaseAiVideoIzFotoRouteImport } from './routes/case-ai-video-iz-foto'
-import { Route as CaseAiTelegramBotRouteImport } from './routes/case-ai-telegram-bot'
-import { Route as AvtomatizaciyaBiznesaAiRouteImport } from './routes/avtomatizaciya-biznesa-ai'
-import { Route as AiVideoDlyaBiznesaRouteImport } from './routes/ai-video-dlya-biznesa'
-import { Route as AiKreativyDlyaBiznesaRouteImport } from './routes/ai-kreativy-dlya-biznesa'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiKreativyDlyaBiznesaRouteImport } from './routes/ai-kreativy-dlya-biznesa'
+import { Route as AiVideoDlyaBiznesaRouteImport } from './routes/ai-video-dlya-biznesa'
+import { Route as AvtomatizaciyaBiznesaAiRouteImport } from './routes/avtomatizaciya-biznesa-ai'
+import { Route as CaseAiTelegramBotRouteImport } from './routes/case-ai-telegram-bot'
+import { Route as CaseAiVideoIzFotoRouteImport } from './routes/case-ai-video-iz-foto'
+import { Route as CaseB2bHorecaRouteImport } from './routes/case-b2b-horeca'
+import { Route as CaseCifrovoyAvatarRouteImport } from './routes/case-cifrovoy-avatar'
+import { Route as CaseSaytChastnogoSpecialistaRouteImport } from './routes/case-sayt-chastnogo-specialista'
+import { Route as CaseSaytGostevyeDomikiRouteImport } from './routes/case-sayt-gostevye-domiki'
+import { Route as CaseSaytLichnogoBrendaRouteImport } from './routes/case-sayt-lichnogo-brenda'
+import { Route as IiAgentyDlyaBiznesaRouteImport } from './routes/ii-agenty-dlya-biznesa'
+import { Route as IiAssistentDlyaBiznesaRouteImport } from './routes/ii-assistent-dlya-biznesa'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznesa'
+import { Route as TelegramBotyDlyaBiznesaRouteImport } from './routes/telegram-boty-dlya-biznesa'
+import { Route as UpakovkaProektaRouteImport } from './routes/upakovka-proekta'
+import { Route as GaidyIndexRouteImport } from './routes/gaidy/index'
+import { Route as GaidyVnedrenieIiVBiznesRouteImport } from './routes/gaidy/vnedrenie-ii-v-biznes'
 
-const UpakovkaProektaRoute = UpakovkaProektaRouteImport.update({
-  id: '/upakovka-proekta',
-  path: '/upakovka-proekta',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TelegramBotyDlyaBiznesaRoute = TelegramBotyDlyaBiznesaRouteImport.update({
-  id: '/telegram-boty-dlya-biznesa',
-  path: '/telegram-boty-dlya-biznesa',
+const AiKreativyDlyaBiznesaRoute = AiKreativyDlyaBiznesaRouteImport.update({
+  id: '/ai-kreativy-dlya-biznesa',
+  path: '/ai-kreativy-dlya-biznesa',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SaytyDlyaBiznesaRoute = SaytyDlyaBiznesaRouteImport.update({
-  id: '/sayty-dlya-biznesa',
-  path: '/sayty-dlya-biznesa',
+const AiVideoDlyaBiznesaRoute = AiVideoDlyaBiznesaRouteImport.update({
+  id: '/ai-video-dlya-biznesa',
+  path: '/ai-video-dlya-biznesa',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
+const AvtomatizaciyaBiznesaAiRoute = AvtomatizaciyaBiznesaAiRouteImport.update({
+  id: '/avtomatizaciya-biznesa-ai',
+  path: '/avtomatizaciya-biznesa-ai',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IiAssistentDlyaBiznesaRoute = IiAssistentDlyaBiznesaRouteImport.update({
-  id: '/ii-assistent-dlya-biznesa',
-  path: '/ii-assistent-dlya-biznesa',
+const CaseAiTelegramBotRoute = CaseAiTelegramBotRouteImport.update({
+  id: '/case-ai-telegram-bot',
+  path: '/case-ai-telegram-bot',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseSaytLichnogoBrendaRoute = CaseSaytLichnogoBrendaRouteImport.update({
-  id: '/case-sayt-lichnogo-brenda',
-  path: '/case-sayt-lichnogo-brenda',
+const CaseAiVideoIzFotoRoute = CaseAiVideoIzFotoRouteImport.update({
+  id: '/case-ai-video-iz-foto',
+  path: '/case-ai-video-iz-foto',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseSaytGostevyeDomikiRoute = CaseSaytGostevyeDomikiRouteImport.update({
-  id: '/case-sayt-gostevye-domiki',
-  path: '/case-sayt-gostevye-domiki',
+const CaseB2bHorecaRoute = CaseB2bHorecaRouteImport.update({
+  id: '/case-b2b-horeca',
+  path: '/case-b2b-horeca',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseCifrovoyAvatarRoute = CaseCifrovoyAvatarRouteImport.update({
+  id: '/case-cifrovoy-avatar',
+  path: '/case-cifrovoy-avatar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CaseSaytChastnogoSpecialistaRoute =
@@ -67,44 +75,54 @@ const CaseSaytChastnogoSpecialistaRoute =
     path: '/case-sayt-chastnogo-specialista',
     getParentRoute: () => rootRouteImport,
   } as any)
-const CaseCifrovoyAvatarRoute = CaseCifrovoyAvatarRouteImport.update({
-  id: '/case-cifrovoy-avatar',
-  path: '/case-cifrovoy-avatar',
+const CaseSaytGostevyeDomikiRoute = CaseSaytGostevyeDomikiRouteImport.update({
+  id: '/case-sayt-gostevye-domiki',
+  path: '/case-sayt-gostevye-domiki',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseB2bHorecaRoute = CaseB2bHorecaRouteImport.update({
-  id: '/case-b2b-horeca',
-  path: '/case-b2b-horeca',
+const CaseSaytLichnogoBrendaRoute = CaseSaytLichnogoBrendaRouteImport.update({
+  id: '/case-sayt-lichnogo-brenda',
+  path: '/case-sayt-lichnogo-brenda',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseAiVideoIzFotoRoute = CaseAiVideoIzFotoRouteImport.update({
-  id: '/case-ai-video-iz-foto',
-  path: '/case-ai-video-iz-foto',
+const IiAgentyDlyaBiznesaRoute = IiAgentyDlyaBiznesaRouteImport.update({
+  id: '/ii-agenty-dlya-biznesa',
+  path: '/ii-agenty-dlya-biznesa',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseAiTelegramBotRoute = CaseAiTelegramBotRouteImport.update({
-  id: '/case-ai-telegram-bot',
-  path: '/case-ai-telegram-bot',
+const IiAssistentDlyaBiznesaRoute = IiAssistentDlyaBiznesaRouteImport.update({
+  id: '/ii-assistent-dlya-biznesa',
+  path: '/ii-assistent-dlya-biznesa',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AvtomatizaciyaBiznesaAiRoute = AvtomatizaciyaBiznesaAiRouteImport.update({
-  id: '/avtomatizaciya-biznesa-ai',
-  path: '/avtomatizaciya-biznesa-ai',
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AiVideoDlyaBiznesaRoute = AiVideoDlyaBiznesaRouteImport.update({
-  id: '/ai-video-dlya-biznesa',
-  path: '/ai-video-dlya-biznesa',
+const SaytyDlyaBiznesaRoute = SaytyDlyaBiznesaRouteImport.update({
+  id: '/sayty-dlya-biznesa',
+  path: '/sayty-dlya-biznesa',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AiKreativyDlyaBiznesaRoute = AiKreativyDlyaBiznesaRouteImport.update({
-  id: '/ai-kreativy-dlya-biznesa',
-  path: '/ai-kreativy-dlya-biznesa',
+const TelegramBotyDlyaBiznesaRoute = TelegramBotyDlyaBiznesaRouteImport.update({
+  id: '/telegram-boty-dlya-biznesa',
+  path: '/telegram-boty-dlya-biznesa',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const UpakovkaProektaRoute = UpakovkaProektaRouteImport.update({
+  id: '/upakovka-proekta',
+  path: '/upakovka-proekta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GaidyIndexRoute = GaidyIndexRouteImport.update({
+  id: '/gaidy/',
+  path: '/gaidy/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GaidyVnedrenieIiVBiznesRoute = GaidyVnedrenieIiVBiznesRouteImport.update({
+  id: '/gaidy/vnedrenie-ii-v-biznes',
+  path: '/gaidy/vnedrenie-ii-v-biznes',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -120,11 +138,14 @@ export interface FileRoutesByFullPath {
   '/case-sayt-chastnogo-specialista': typeof CaseSaytChastnogoSpecialistaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
   '/case-sayt-lichnogo-brenda': typeof CaseSaytLichnogoBrendaRoute
+  '/ii-agenty-dlya-biznesa': typeof IiAgentyDlyaBiznesaRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
   '/upakovka-proekta': typeof UpakovkaProektaRoute
+  '/gaidy/vnedrenie-ii-v-biznes': typeof GaidyVnedrenieIiVBiznesRoute
+  '/gaidy/': typeof GaidyIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -138,11 +159,14 @@ export interface FileRoutesByTo {
   '/case-sayt-chastnogo-specialista': typeof CaseSaytChastnogoSpecialistaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
   '/case-sayt-lichnogo-brenda': typeof CaseSaytLichnogoBrendaRoute
+  '/ii-agenty-dlya-biznesa': typeof IiAgentyDlyaBiznesaRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
   '/upakovka-proekta': typeof UpakovkaProektaRoute
+  '/gaidy/vnedrenie-ii-v-biznes': typeof GaidyVnedrenieIiVBiznesRoute
+  '/gaidy': typeof GaidyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -157,11 +181,14 @@ export interface FileRoutesById {
   '/case-sayt-chastnogo-specialista': typeof CaseSaytChastnogoSpecialistaRoute
   '/case-sayt-gostevye-domiki': typeof CaseSaytGostevyeDomikiRoute
   '/case-sayt-lichnogo-brenda': typeof CaseSaytLichnogoBrendaRoute
+  '/ii-agenty-dlya-biznesa': typeof IiAgentyDlyaBiznesaRoute
   '/ii-assistent-dlya-biznesa': typeof IiAssistentDlyaBiznesaRoute
   '/privacy': typeof PrivacyRoute
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
   '/upakovka-proekta': typeof UpakovkaProektaRoute
+  '/gaidy/vnedrenie-ii-v-biznes': typeof GaidyVnedrenieIiVBiznesRoute
+  '/gaidy/': typeof GaidyIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -177,11 +204,14 @@ export interface FileRouteTypes {
     | '/case-sayt-chastnogo-specialista'
     | '/case-sayt-gostevye-domiki'
     | '/case-sayt-lichnogo-brenda'
+    | '/ii-agenty-dlya-biznesa'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
     | '/telegram-boty-dlya-biznesa'
     | '/upakovka-proekta'
+    | '/gaidy/vnedrenie-ii-v-biznes'
+    | '/gaidy/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -195,11 +225,14 @@ export interface FileRouteTypes {
     | '/case-sayt-chastnogo-specialista'
     | '/case-sayt-gostevye-domiki'
     | '/case-sayt-lichnogo-brenda'
+    | '/ii-agenty-dlya-biznesa'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
     | '/telegram-boty-dlya-biznesa'
     | '/upakovka-proekta'
+    | '/gaidy/vnedrenie-ii-v-biznes'
+    | '/gaidy'
   id:
     | '__root__'
     | '/'
@@ -213,11 +246,14 @@ export interface FileRouteTypes {
     | '/case-sayt-chastnogo-specialista'
     | '/case-sayt-gostevye-domiki'
     | '/case-sayt-lichnogo-brenda'
+    | '/ii-agenty-dlya-biznesa'
     | '/ii-assistent-dlya-biznesa'
     | '/privacy'
     | '/sayty-dlya-biznesa'
     | '/telegram-boty-dlya-biznesa'
     | '/upakovka-proekta'
+    | '/gaidy/vnedrenie-ii-v-biznes'
+    | '/gaidy/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -232,111 +268,23 @@ export interface RootRouteChildren {
   CaseSaytChastnogoSpecialistaRoute: typeof CaseSaytChastnogoSpecialistaRoute
   CaseSaytGostevyeDomikiRoute: typeof CaseSaytGostevyeDomikiRoute
   CaseSaytLichnogoBrendaRoute: typeof CaseSaytLichnogoBrendaRoute
+  IiAgentyDlyaBiznesaRoute: typeof IiAgentyDlyaBiznesaRoute
   IiAssistentDlyaBiznesaRoute: typeof IiAssistentDlyaBiznesaRoute
   PrivacyRoute: typeof PrivacyRoute
   SaytyDlyaBiznesaRoute: typeof SaytyDlyaBiznesaRoute
   TelegramBotyDlyaBiznesaRoute: typeof TelegramBotyDlyaBiznesaRoute
   UpakovkaProektaRoute: typeof UpakovkaProektaRoute
+  GaidyVnedrenieIiVBiznesRoute: typeof GaidyVnedrenieIiVBiznesRoute
+  GaidyIndexRoute: typeof GaidyIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/upakovka-proekta': {
-      id: '/upakovka-proekta'
-      path: '/upakovka-proekta'
-      fullPath: '/upakovka-proekta'
-      preLoaderRoute: typeof UpakovkaProektaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/telegram-boty-dlya-biznesa': {
-      id: '/telegram-boty-dlya-biznesa'
-      path: '/telegram-boty-dlya-biznesa'
-      fullPath: '/telegram-boty-dlya-biznesa'
-      preLoaderRoute: typeof TelegramBotyDlyaBiznesaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sayty-dlya-biznesa': {
-      id: '/sayty-dlya-biznesa'
-      path: '/sayty-dlya-biznesa'
-      fullPath: '/sayty-dlya-biznesa'
-      preLoaderRoute: typeof SaytyDlyaBiznesaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ii-assistent-dlya-biznesa': {
-      id: '/ii-assistent-dlya-biznesa'
-      path: '/ii-assistent-dlya-biznesa'
-      fullPath: '/ii-assistent-dlya-biznesa'
-      preLoaderRoute: typeof IiAssistentDlyaBiznesaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/case-sayt-lichnogo-brenda': {
-      id: '/case-sayt-lichnogo-brenda'
-      path: '/case-sayt-lichnogo-brenda'
-      fullPath: '/case-sayt-lichnogo-brenda'
-      preLoaderRoute: typeof CaseSaytLichnogoBrendaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/case-sayt-gostevye-domiki': {
-      id: '/case-sayt-gostevye-domiki'
-      path: '/case-sayt-gostevye-domiki'
-      fullPath: '/case-sayt-gostevye-domiki'
-      preLoaderRoute: typeof CaseSaytGostevyeDomikiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/case-sayt-chastnogo-specialista': {
-      id: '/case-sayt-chastnogo-specialista'
-      path: '/case-sayt-chastnogo-specialista'
-      fullPath: '/case-sayt-chastnogo-specialista'
-      preLoaderRoute: typeof CaseSaytChastnogoSpecialistaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/case-cifrovoy-avatar': {
-      id: '/case-cifrovoy-avatar'
-      path: '/case-cifrovoy-avatar'
-      fullPath: '/case-cifrovoy-avatar'
-      preLoaderRoute: typeof CaseCifrovoyAvatarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/case-b2b-horeca': {
-      id: '/case-b2b-horeca'
-      path: '/case-b2b-horeca'
-      fullPath: '/case-b2b-horeca'
-      preLoaderRoute: typeof CaseB2bHorecaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/case-ai-video-iz-foto': {
-      id: '/case-ai-video-iz-foto'
-      path: '/case-ai-video-iz-foto'
-      fullPath: '/case-ai-video-iz-foto'
-      preLoaderRoute: typeof CaseAiVideoIzFotoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/case-ai-telegram-bot': {
-      id: '/case-ai-telegram-bot'
-      path: '/case-ai-telegram-bot'
-      fullPath: '/case-ai-telegram-bot'
-      preLoaderRoute: typeof CaseAiTelegramBotRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/avtomatizaciya-biznesa-ai': {
-      id: '/avtomatizaciya-biznesa-ai'
-      path: '/avtomatizaciya-biznesa-ai'
-      fullPath: '/avtomatizaciya-biznesa-ai'
-      preLoaderRoute: typeof AvtomatizaciyaBiznesaAiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ai-video-dlya-biznesa': {
-      id: '/ai-video-dlya-biznesa'
-      path: '/ai-video-dlya-biznesa'
-      fullPath: '/ai-video-dlya-biznesa'
-      preLoaderRoute: typeof AiVideoDlyaBiznesaRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ai-kreativy-dlya-biznesa': {
@@ -346,11 +294,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AiKreativyDlyaBiznesaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/ai-video-dlya-biznesa': {
+      id: '/ai-video-dlya-biznesa'
+      path: '/ai-video-dlya-biznesa'
+      fullPath: '/ai-video-dlya-biznesa'
+      preLoaderRoute: typeof AiVideoDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/avtomatizaciya-biznesa-ai': {
+      id: '/avtomatizaciya-biznesa-ai'
+      path: '/avtomatizaciya-biznesa-ai'
+      fullPath: '/avtomatizaciya-biznesa-ai'
+      preLoaderRoute: typeof AvtomatizaciyaBiznesaAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-ai-telegram-bot': {
+      id: '/case-ai-telegram-bot'
+      path: '/case-ai-telegram-bot'
+      fullPath: '/case-ai-telegram-bot'
+      preLoaderRoute: typeof CaseAiTelegramBotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-ai-video-iz-foto': {
+      id: '/case-ai-video-iz-foto'
+      path: '/case-ai-video-iz-foto'
+      fullPath: '/case-ai-video-iz-foto'
+      preLoaderRoute: typeof CaseAiVideoIzFotoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-b2b-horeca': {
+      id: '/case-b2b-horeca'
+      path: '/case-b2b-horeca'
+      fullPath: '/case-b2b-horeca'
+      preLoaderRoute: typeof CaseB2bHorecaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-cifrovoy-avatar': {
+      id: '/case-cifrovoy-avatar'
+      path: '/case-cifrovoy-avatar'
+      fullPath: '/case-cifrovoy-avatar'
+      preLoaderRoute: typeof CaseCifrovoyAvatarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-sayt-chastnogo-specialista': {
+      id: '/case-sayt-chastnogo-specialista'
+      path: '/case-sayt-chastnogo-specialista'
+      fullPath: '/case-sayt-chastnogo-specialista'
+      preLoaderRoute: typeof CaseSaytChastnogoSpecialistaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-sayt-gostevye-domiki': {
+      id: '/case-sayt-gostevye-domiki'
+      path: '/case-sayt-gostevye-domiki'
+      fullPath: '/case-sayt-gostevye-domiki'
+      preLoaderRoute: typeof CaseSaytGostevyeDomikiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-sayt-lichnogo-brenda': {
+      id: '/case-sayt-lichnogo-brenda'
+      path: '/case-sayt-lichnogo-brenda'
+      fullPath: '/case-sayt-lichnogo-brenda'
+      preLoaderRoute: typeof CaseSaytLichnogoBrendaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ii-agenty-dlya-biznesa': {
+      id: '/ii-agenty-dlya-biznesa'
+      path: '/ii-agenty-dlya-biznesa'
+      fullPath: '/ii-agenty-dlya-biznesa'
+      preLoaderRoute: typeof IiAgentyDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ii-assistent-dlya-biznesa': {
+      id: '/ii-assistent-dlya-biznesa'
+      path: '/ii-assistent-dlya-biznesa'
+      fullPath: '/ii-assistent-dlya-biznesa'
+      preLoaderRoute: typeof IiAssistentDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sayty-dlya-biznesa': {
+      id: '/sayty-dlya-biznesa'
+      path: '/sayty-dlya-biznesa'
+      fullPath: '/sayty-dlya-biznesa'
+      preLoaderRoute: typeof SaytyDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/telegram-boty-dlya-biznesa': {
+      id: '/telegram-boty-dlya-biznesa'
+      path: '/telegram-boty-dlya-biznesa'
+      fullPath: '/telegram-boty-dlya-biznesa'
+      preLoaderRoute: typeof TelegramBotyDlyaBiznesaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/upakovka-proekta': {
+      id: '/upakovka-proekta'
+      path: '/upakovka-proekta'
+      fullPath: '/upakovka-proekta'
+      preLoaderRoute: typeof UpakovkaProektaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gaidy/': {
+      id: '/gaidy/'
+      path: '/gaidy'
+      fullPath: '/gaidy/'
+      preLoaderRoute: typeof GaidyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gaidy/vnedrenie-ii-v-biznes': {
+      id: '/gaidy/vnedrenie-ii-v-biznes'
+      path: '/gaidy/vnedrenie-ii-v-biznes'
+      fullPath: '/gaidy/vnedrenie-ii-v-biznes'
+      preLoaderRoute: typeof GaidyVnedrenieIiVBiznesRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -368,11 +428,14 @@ const rootRouteChildren: RootRouteChildren = {
   CaseSaytChastnogoSpecialistaRoute: CaseSaytChastnogoSpecialistaRoute,
   CaseSaytGostevyeDomikiRoute: CaseSaytGostevyeDomikiRoute,
   CaseSaytLichnogoBrendaRoute: CaseSaytLichnogoBrendaRoute,
+  IiAgentyDlyaBiznesaRoute: IiAgentyDlyaBiznesaRoute,
   IiAssistentDlyaBiznesaRoute: IiAssistentDlyaBiznesaRoute,
   PrivacyRoute: PrivacyRoute,
   SaytyDlyaBiznesaRoute: SaytyDlyaBiznesaRoute,
   TelegramBotyDlyaBiznesaRoute: TelegramBotyDlyaBiznesaRoute,
   UpakovkaProektaRoute: UpakovkaProektaRoute,
+  GaidyVnedrenieIiVBiznesRoute: GaidyVnedrenieIiVBiznesRoute,
+  GaidyIndexRoute: GaidyIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
