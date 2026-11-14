@@ -292,6 +292,7 @@ function Home() {
       <About />
       <Certificates />
       <Help />
+      <Agents />
       <Services />
       <Portfolio />
       <Process />
@@ -465,6 +466,91 @@ function Help() {
         ))}
       </div>
     </Section>
+  );
+}
+
+// Блок одобрен Викторией 14.11.2026 (specs/2026-11-14-vikey-agenty/sajt-teksty.md, блок 2)
+const agentCards = [
+  {
+    title: "ИИ-ассистент",
+    sub: "разговаривает с людьми",
+    items: [
+      "отвечает клиентам по вашей базе: цены «от», сроки, порядок работы",
+      "записывает на встречу или замер и напоминает накануне",
+      "собирает заявки из разных мест в одну очередь, чтобы ни одна не потерялась ночью или в выходные",
+    ],
+  },
+  {
+    title: "ИИ-агент",
+    sub: "работает с данными",
+    items: [
+      "каждое утро присылает в Telegram сводку: новые заявки, кто без ответа, где горят сроки",
+      "готовит черновики писем и документов по вашему шаблону (решение остаётся за вами)",
+      "напоминает вам и сотрудникам, пока задача не закрыта: с клиентом не связались, обратную связь не дали",
+      "следит за сроками и предупреждает заранее, а не когда уже поздно",
+    ],
+  },
+];
+
+const agentSteps = [
+  "Выбираем одну задачу, которая отнимает больше всего времени",
+  "Собираю помощника под ваши таблицы и чаты",
+  "Проверяем на ваших данных и доводим. С первого раза может встать не идеально (таблицы у всех свои), но это правится",
+];
+
+function Agents() {
+  return (
+    <section id="agenty" className="border-t border-border">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
+        <div className="mb-2 text-xs font-medium uppercase tracking-widest text-neon">ИИ-агенты и ассистенты</div>
+        <h2 className="max-w-3xl text-3xl font-bold sm:text-4xl md:text-5xl">ИИ-помощник для вашего бизнеса</h2>
+        <p className="mt-5 max-w-3xl leading-relaxed text-muted-foreground">
+          Ассистент похож на администратора: отвечает клиентам по вашим правилам и записывает их. Агент похож на помощника, который сам собирает данные из таблиц, почты и календаря и приносит готовый результат
+        </p>
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          {agentCards.map((c) => (
+            <article key={c.title} className="rounded-2xl border border-border bg-card/50 p-6">
+              <h3 className="text-xl font-semibold">{c.title}</h3>
+              <div className="mt-1 text-sm text-neon">{c.sub}</div>
+              <ul className="mt-4 space-y-2">
+                {c.items.map((t) => (
+                  <li key={t} className="flex gap-2 text-sm leading-relaxed text-muted-foreground">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-neon" />
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+        <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+          <span className="font-semibold text-foreground">Что остаётся за вами:</span> итоговая цена, решения и живой разговор с клиентом
+        </p>
+        <h3 className="mt-10 text-xl font-semibold">Как собираем</h3>
+        <ol className="mt-4 grid gap-3 md:grid-cols-3">
+          {agentSteps.map((s, i) => (
+            <li key={s} className="flex gap-3 rounded-xl border border-border bg-card/50 p-4">
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-gradient-primary text-sm font-bold text-primary-foreground">{i + 1}</span>
+              <span className="pt-1 text-sm text-muted-foreground">{s}</span>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-8 max-w-3xl leading-relaxed text-foreground">
+          Когда утро начинается с чатов и таблиц, напишите, покажу демо, как это выглядит
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <a href="#calc" className="rounded-lg bg-gradient-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95">
+            Обсудить задачу
+          </a>
+          <a href="/ii-agenty-dlya-biznesa/" className="rounded-lg border border-border bg-card/40 px-5 py-3 text-sm font-semibold text-foreground transition hover:bg-card">
+            Подробнее про ИИ-агентов
+          </a>
+          <a href="/ii-assistent-dlya-biznesa/" className="rounded-lg border border-border bg-card/40 px-5 py-3 text-sm font-semibold text-foreground transition hover:bg-card">
+            Подробнее про ИИ-ассистента
+          </a>
+        </div>
+      </div>
+    </section>
   );
 }
 
