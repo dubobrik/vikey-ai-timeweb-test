@@ -1,0 +1,16 @@
+# Vikey AI
+
+> Студия Vikey AI, Виктория Шелих. ИИ-ассистенты и ИИ-агенты для бизнеса и частных специалистов, Telegram-боты, сайты и автоматизация. Подход «AI без риска»: сначала решаем, какие данные клиента остаются у него, потом автоматизируем. Автор пришла в ИИ из информационной безопасности.
+
+## Услуги
+- [ИИ-ассистент для бизнеса](https://chelovek-neiroset.ru/ii-assistent-dlya-biznesa/): база знаний, ответы клиентам, рабочие сценарии
+- [Автоматизация бизнеса с ИИ](https://chelovek-neiroset.ru/avtomatizaciya-biznesa-ai/): заявки, CRM, уведомления, данные, повторяющиеся задачи
+- [Telegram-боты для бизнеса](https://chelovek-neiroset.ru/telegram-boty-dlya-biznesa/): заявки, запись клиентов, оплаты, уведомления
+- [Сайты для бизнеса](https://chelovek-neiroset.ru/sayty-dlya-biznesa/): структура, мобильная версия, SEO-подготовка
+- [AI-видео для бизнеса](https://chelovek-neiroset.ru/ai-video-dlya-biznesa/)
+- [AI-креативы для бизнеса](https://chelovek-neiroset.ru/ai-kreativy-dlya-biznesa/)
+- [Упаковка проекта](https://chelovek-neiroset.ru/upakovka-proekta/)
+
+## Связь
+- Telegram-канал: https://t.me/vikey_ai
+- Личные сообщения: https://t.me/vikey_shell
