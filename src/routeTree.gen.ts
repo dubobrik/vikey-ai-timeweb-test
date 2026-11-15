@@ -27,6 +27,7 @@ import { Route as SaytyDlyaBiznesaRouteImport } from './routes/sayty-dlya-biznes
 import { Route as TelegramBotyDlyaBiznesaRouteImport } from './routes/telegram-boty-dlya-biznesa'
 import { Route as UpakovkaProektaRouteImport } from './routes/upakovka-proekta'
 import { Route as GaidyIndexRouteImport } from './routes/gaidy/index'
+import { Route as GaidyIiDlyaBuhgalteriiRouteImport } from './routes/gaidy/ii-dlya-buhgalterii'
 import { Route as GaidyVnedrenieIiVBiznesRouteImport } from './routes/gaidy/vnedrenie-ii-v-biznes'
 
 const IndexRoute = IndexRouteImport.update({
@@ -120,6 +121,11 @@ const GaidyIndexRoute = GaidyIndexRouteImport.update({
   path: '/gaidy/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GaidyIiDlyaBuhgalteriiRoute = GaidyIiDlyaBuhgalteriiRouteImport.update({
+  id: '/gaidy/ii-dlya-buhgalterii',
+  path: '/gaidy/ii-dlya-buhgalterii',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GaidyVnedrenieIiVBiznesRoute = GaidyVnedrenieIiVBiznesRouteImport.update({
   id: '/gaidy/vnedrenie-ii-v-biznes',
   path: '/gaidy/vnedrenie-ii-v-biznes',
@@ -144,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
   '/upakovka-proekta': typeof UpakovkaProektaRoute
+  '/gaidy/ii-dlya-buhgalterii': typeof GaidyIiDlyaBuhgalteriiRoute
   '/gaidy/vnedrenie-ii-v-biznes': typeof GaidyVnedrenieIiVBiznesRoute
   '/gaidy/': typeof GaidyIndexRoute
 }
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
   '/upakovka-proekta': typeof UpakovkaProektaRoute
+  '/gaidy/ii-dlya-buhgalterii': typeof GaidyIiDlyaBuhgalteriiRoute
   '/gaidy/vnedrenie-ii-v-biznes': typeof GaidyVnedrenieIiVBiznesRoute
   '/gaidy': typeof GaidyIndexRoute
 }
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/sayty-dlya-biznesa': typeof SaytyDlyaBiznesaRoute
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
   '/upakovka-proekta': typeof UpakovkaProektaRoute
+  '/gaidy/ii-dlya-buhgalterii': typeof GaidyIiDlyaBuhgalteriiRoute
   '/gaidy/vnedrenie-ii-v-biznes': typeof GaidyVnedrenieIiVBiznesRoute
   '/gaidy/': typeof GaidyIndexRoute
 }
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/sayty-dlya-biznesa'
     | '/telegram-boty-dlya-biznesa'
     | '/upakovka-proekta'
+    | '/gaidy/ii-dlya-buhgalterii'
     | '/gaidy/vnedrenie-ii-v-biznes'
     | '/gaidy/'
   fileRoutesByTo: FileRoutesByTo
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/sayty-dlya-biznesa'
     | '/telegram-boty-dlya-biznesa'
     | '/upakovka-proekta'
+    | '/gaidy/ii-dlya-buhgalterii'
     | '/gaidy/vnedrenie-ii-v-biznes'
     | '/gaidy'
   id:
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/sayty-dlya-biznesa'
     | '/telegram-boty-dlya-biznesa'
     | '/upakovka-proekta'
+    | '/gaidy/ii-dlya-buhgalterii'
     | '/gaidy/vnedrenie-ii-v-biznes'
     | '/gaidy/'
   fileRoutesById: FileRoutesById
@@ -274,6 +286,7 @@ export interface RootRouteChildren {
   SaytyDlyaBiznesaRoute: typeof SaytyDlyaBiznesaRoute
   TelegramBotyDlyaBiznesaRoute: typeof TelegramBotyDlyaBiznesaRoute
   UpakovkaProektaRoute: typeof UpakovkaProektaRoute
+  GaidyIiDlyaBuhgalteriiRoute: typeof GaidyIiDlyaBuhgalteriiRoute
   GaidyVnedrenieIiVBiznesRoute: typeof GaidyVnedrenieIiVBiznesRoute
   GaidyIndexRoute: typeof GaidyIndexRoute
 }
@@ -406,6 +419,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GaidyIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gaidy/ii-dlya-buhgalterii': {
+      id: '/gaidy/ii-dlya-buhgalterii'
+      path: '/gaidy/ii-dlya-buhgalterii'
+      fullPath: '/gaidy/ii-dlya-buhgalterii'
+      preLoaderRoute: typeof GaidyIiDlyaBuhgalteriiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gaidy/vnedrenie-ii-v-biznes': {
       id: '/gaidy/vnedrenie-ii-v-biznes'
       path: '/gaidy/vnedrenie-ii-v-biznes'
@@ -434,6 +454,7 @@ const rootRouteChildren: RootRouteChildren = {
   SaytyDlyaBiznesaRoute: SaytyDlyaBiznesaRoute,
   TelegramBotyDlyaBiznesaRoute: TelegramBotyDlyaBiznesaRoute,
   UpakovkaProektaRoute: UpakovkaProektaRoute,
+  GaidyIiDlyaBuhgalteriiRoute: GaidyIiDlyaBuhgalteriiRoute,
   GaidyVnedrenieIiVBiznesRoute: GaidyVnedrenieIiVBiznesRoute,
   GaidyIndexRoute: GaidyIndexRoute,
 }
