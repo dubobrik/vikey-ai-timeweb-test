@@ -28,6 +28,8 @@ import { Route as TelegramBotyDlyaBiznesaRouteImport } from './routes/telegram-b
 import { Route as UpakovkaProektaRouteImport } from './routes/upakovka-proekta'
 import { Route as GaidyIndexRouteImport } from './routes/gaidy/index'
 import { Route as GaidyIiDlyaBuhgalteriiRouteImport } from './routes/gaidy/ii-dlya-buhgalterii'
+import { Route as GaidyNeyrosetDlyaDogovorovRouteImport } from './routes/gaidy/neyroset-dlya-dogovorov'
+import { Route as GaidyOpenjarvisNaWindowsRouteImport } from './routes/gaidy/openjarvis-na-windows'
 import { Route as GaidyVnedrenieIiVBiznesRouteImport } from './routes/gaidy/vnedrenie-ii-v-biznes'
 
 const IndexRoute = IndexRouteImport.update({
@@ -126,6 +128,18 @@ const GaidyIiDlyaBuhgalteriiRoute = GaidyIiDlyaBuhgalteriiRouteImport.update({
   path: '/gaidy/ii-dlya-buhgalterii',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GaidyNeyrosetDlyaDogovorovRoute =
+  GaidyNeyrosetDlyaDogovorovRouteImport.update({
+    id: '/gaidy/neyroset-dlya-dogovorov',
+    path: '/gaidy/neyroset-dlya-dogovorov',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GaidyOpenjarvisNaWindowsRoute =
+  GaidyOpenjarvisNaWindowsRouteImport.update({
+    id: '/gaidy/openjarvis-na-windows',
+    path: '/gaidy/openjarvis-na-windows',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GaidyVnedrenieIiVBiznesRoute = GaidyVnedrenieIiVBiznesRouteImport.update({
   id: '/gaidy/vnedrenie-ii-v-biznes',
   path: '/gaidy/vnedrenie-ii-v-biznes',
@@ -151,6 +165,8 @@ export interface FileRoutesByFullPath {
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
   '/upakovka-proekta': typeof UpakovkaProektaRoute
   '/gaidy/ii-dlya-buhgalterii': typeof GaidyIiDlyaBuhgalteriiRoute
+  '/gaidy/neyroset-dlya-dogovorov': typeof GaidyNeyrosetDlyaDogovorovRoute
+  '/gaidy/openjarvis-na-windows': typeof GaidyOpenjarvisNaWindowsRoute
   '/gaidy/vnedrenie-ii-v-biznes': typeof GaidyVnedrenieIiVBiznesRoute
   '/gaidy/': typeof GaidyIndexRoute
 }
@@ -173,6 +189,8 @@ export interface FileRoutesByTo {
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
   '/upakovka-proekta': typeof UpakovkaProektaRoute
   '/gaidy/ii-dlya-buhgalterii': typeof GaidyIiDlyaBuhgalteriiRoute
+  '/gaidy/neyroset-dlya-dogovorov': typeof GaidyNeyrosetDlyaDogovorovRoute
+  '/gaidy/openjarvis-na-windows': typeof GaidyOpenjarvisNaWindowsRoute
   '/gaidy/vnedrenie-ii-v-biznes': typeof GaidyVnedrenieIiVBiznesRoute
   '/gaidy': typeof GaidyIndexRoute
 }
@@ -196,6 +214,8 @@ export interface FileRoutesById {
   '/telegram-boty-dlya-biznesa': typeof TelegramBotyDlyaBiznesaRoute
   '/upakovka-proekta': typeof UpakovkaProektaRoute
   '/gaidy/ii-dlya-buhgalterii': typeof GaidyIiDlyaBuhgalteriiRoute
+  '/gaidy/neyroset-dlya-dogovorov': typeof GaidyNeyrosetDlyaDogovorovRoute
+  '/gaidy/openjarvis-na-windows': typeof GaidyOpenjarvisNaWindowsRoute
   '/gaidy/vnedrenie-ii-v-biznes': typeof GaidyVnedrenieIiVBiznesRoute
   '/gaidy/': typeof GaidyIndexRoute
 }
@@ -220,6 +240,8 @@ export interface FileRouteTypes {
     | '/telegram-boty-dlya-biznesa'
     | '/upakovka-proekta'
     | '/gaidy/ii-dlya-buhgalterii'
+    | '/gaidy/neyroset-dlya-dogovorov'
+    | '/gaidy/openjarvis-na-windows'
     | '/gaidy/vnedrenie-ii-v-biznes'
     | '/gaidy/'
   fileRoutesByTo: FileRoutesByTo
@@ -242,6 +264,8 @@ export interface FileRouteTypes {
     | '/telegram-boty-dlya-biznesa'
     | '/upakovka-proekta'
     | '/gaidy/ii-dlya-buhgalterii'
+    | '/gaidy/neyroset-dlya-dogovorov'
+    | '/gaidy/openjarvis-na-windows'
     | '/gaidy/vnedrenie-ii-v-biznes'
     | '/gaidy'
   id:
@@ -264,6 +288,8 @@ export interface FileRouteTypes {
     | '/telegram-boty-dlya-biznesa'
     | '/upakovka-proekta'
     | '/gaidy/ii-dlya-buhgalterii'
+    | '/gaidy/neyroset-dlya-dogovorov'
+    | '/gaidy/openjarvis-na-windows'
     | '/gaidy/vnedrenie-ii-v-biznes'
     | '/gaidy/'
   fileRoutesById: FileRoutesById
@@ -287,6 +313,8 @@ export interface RootRouteChildren {
   TelegramBotyDlyaBiznesaRoute: typeof TelegramBotyDlyaBiznesaRoute
   UpakovkaProektaRoute: typeof UpakovkaProektaRoute
   GaidyIiDlyaBuhgalteriiRoute: typeof GaidyIiDlyaBuhgalteriiRoute
+  GaidyNeyrosetDlyaDogovorovRoute: typeof GaidyNeyrosetDlyaDogovorovRoute
+  GaidyOpenjarvisNaWindowsRoute: typeof GaidyOpenjarvisNaWindowsRoute
   GaidyVnedrenieIiVBiznesRoute: typeof GaidyVnedrenieIiVBiznesRoute
   GaidyIndexRoute: typeof GaidyIndexRoute
 }
@@ -426,6 +454,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GaidyIiDlyaBuhgalteriiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gaidy/neyroset-dlya-dogovorov': {
+      id: '/gaidy/neyroset-dlya-dogovorov'
+      path: '/gaidy/neyroset-dlya-dogovorov'
+      fullPath: '/gaidy/neyroset-dlya-dogovorov'
+      preLoaderRoute: typeof GaidyNeyrosetDlyaDogovorovRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gaidy/openjarvis-na-windows': {
+      id: '/gaidy/openjarvis-na-windows'
+      path: '/gaidy/openjarvis-na-windows'
+      fullPath: '/gaidy/openjarvis-na-windows'
+      preLoaderRoute: typeof GaidyOpenjarvisNaWindowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gaidy/vnedrenie-ii-v-biznes': {
       id: '/gaidy/vnedrenie-ii-v-biznes'
       path: '/gaidy/vnedrenie-ii-v-biznes'
@@ -455,6 +497,8 @@ const rootRouteChildren: RootRouteChildren = {
   TelegramBotyDlyaBiznesaRoute: TelegramBotyDlyaBiznesaRoute,
   UpakovkaProektaRoute: UpakovkaProektaRoute,
   GaidyIiDlyaBuhgalteriiRoute: GaidyIiDlyaBuhgalteriiRoute,
+  GaidyNeyrosetDlyaDogovorovRoute: GaidyNeyrosetDlyaDogovorovRoute,
+  GaidyOpenjarvisNaWindowsRoute: GaidyOpenjarvisNaWindowsRoute,
   GaidyVnedrenieIiVBiznesRoute: GaidyVnedrenieIiVBiznesRoute,
   GaidyIndexRoute: GaidyIndexRoute,
 }
