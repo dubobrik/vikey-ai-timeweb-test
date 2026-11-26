@@ -5,6 +5,8 @@ import { createFileRoute } from "@tanstack/react-router";
 const PAGE_URL = "https://chelovek-neiroset.ru/gaidy/openjarvis-na-windows/";
 const OG_IMAGE = "https://chelovek-neiroset.ru/gaidy/openjarvis/og.jpg";
 const IMG = "/gaidy/openjarvis/";
+// Полный адрес: относительную ссылку обходчик пререндера скачивает и перезаписывает PDF как текст (битый файл, 26.11)
+const PDF_URL = "https://chelovek-neiroset.ru/gaidy/openjarvis/OpenJarvis-instrukciya.pdf";
 const H1 = "Как установить OpenJarvis на Windows и не застрять на ошибках";
 const PAGE_TITLE = "Как установить OpenJarvis на Windows и не застрять на ошибках | Vikey AI";
 const PAGE_DESC =
@@ -402,7 +404,7 @@ compute_type = "int8"`}</Code>
             ]}
           />
           <p className={p}>
-            Ту же инструкцию одним файлом со всеми скринами можно <a href={IMG + "OpenJarvis-instrukciya.pdf"} {...ext} className={a}>скачать в PDF</a>. Её же я присылаю тем, кто пишет ДЖАРВИС в комментариях к моему ролику про OpenJarvis
+            Ту же инструкцию одним файлом со всеми скринами можно <a href={PDF_URL} {...ext} className={a}>скачать в PDF</a>. Её же я присылаю тем, кто пишет ДЖАРВИС в комментариях к моему ролику про OpenJarvis
           </p>
           <p className={p}>
             Кому он подходит: тем, у кого документы не должны уходить в интернет (юристы, клиники, бухгалтерия, производство с коммерческой тайной) и есть мощный компьютер, который может работать круглосуточно. С чего начинать, когда ИИ нужен всей компании, а не одному компьютеру, я разобрала в гайде <a href="/gaidy/vnedrenie-ii-v-biznes/" className={a}>«Внедрение ИИ в бизнес»</a>
