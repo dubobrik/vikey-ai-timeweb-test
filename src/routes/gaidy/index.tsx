@@ -10,7 +10,7 @@ const PAGE_DESC =
 const guides = [
   {
     href: "/gaidy/openjarvis-na-windows/",
-    title: "Как установить OpenJarvis на Windows и не застрять на ошибках",
+    title: "Как установить Open Jarvis на Windows и не застрять на ошибках",
     desc: "Пять программ и одна команда, окна первого запуска, ошибка Rust, какой нужен компьютер и что OpenJarvis не умеет из коробки. Памятка «окно или ошибка и что нажать» и PDF-инструкция",
     date: "26 ноября 2026",
   },

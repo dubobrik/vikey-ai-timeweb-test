@@ -7,10 +7,10 @@ const OG_IMAGE = "https://chelovek-neiroset.ru/gaidy/openjarvis/og.jpg";
 const IMG = "/gaidy/openjarvis/";
 // Полный адрес: относительную ссылку обходчик пререндера скачивает и перезаписывает PDF как текст (битый файл, 26.11)
 const PDF_URL = "https://chelovek-neiroset.ru/gaidy/openjarvis/OpenJarvis-instrukciya.pdf";
-const H1 = "Как установить OpenJarvis на Windows и не застрять на ошибках";
-const PAGE_TITLE = "Как установить OpenJarvis на Windows и не застрять на ошибках | Vikey AI";
+const H1 = "Как установить Open Jarvis на Windows и не застрять на ошибках";
+const PAGE_TITLE = "Open Jarvis (OpenJarvis) на Windows: установка и ошибки";
 const PAGE_DESC =
-  "Пошаговая установка OpenJarvis на Windows по моему прогону: какой нужен компьютер, 5 вспомогательных программ, окна первого запуска, ошибка Rust и что программа не умеет из коробки. PDF-инструкция в конце";
+  "Бесплатный ИИ-ассистент Джарвис на ПК: как поставить Open Jarvis на Windows, какие ошибки будут и как их обойти. Памятка и PDF-инструкция";
 const QUICK_ANSWER =
   "До установки откройте Диспетчер задач, вкладку «Производительность», пункт «Графический процессор» и посмотрите строку «Выделенная память». Меньше 8 ГБ - ассистент будет отвечать минутами и тормозить компьютер. Тогда ставьте ради пробы, а для работы нужен компьютер мощнее";
 const PUBLISHED = "2026-11-26";
@@ -38,6 +38,14 @@ const faq: [string, string][] = [
   [
     "Подключается ли OpenJarvis к WhatsApp и Telegram?",
     "Из коробки нет: WhatsApp только через официальный API Meta, а Telegram на Windows не принимает сообщения. Это можно доработать и подключить отдельно",
+  ],
+  [
+    "Где скачать Open Jarvis на GitHub?",
+    "На странице релизов github.com/open-jarvis/OpenJarvis/releases: у верхней версии с пометкой desktop в списке Assets лежит файл OpenJarvis_x64-setup.exe. Это только окно программы. Сам ассистент ставится командой в PowerShell, а перед ней нужны 5 вспомогательных программ",
+  ],
+  [
+    "Это тот же Джарвис, что голосовой помощник из роликов?",
+    "Не всегда. Джарвисом называют много разных программ и голосовых помощников. Open Jarvis - проект Стэнфордского университета с открытым кодом на GitHub (open-jarvis/OpenJarvis): он ставит нейросеть к вам на компьютер и работает без подписки. Если в ролике программу скачивают с другого сайта, это другой Джарвис",
   ],
 ];
 
@@ -94,7 +102,7 @@ const jsonLd = [
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Главная", item: "https://chelovek-neiroset.ru/" },
       { "@type": "ListItem", position: 2, name: "Гайды", item: "https://chelovek-neiroset.ru/gaidy/" },
-      { "@type": "ListItem", position: 3, name: "OpenJarvis на Windows", item: PAGE_URL },
+      { "@type": "ListItem", position: 3, name: "Open Jarvis на Windows", item: PAGE_URL },
     ],
   },
 ];
@@ -200,7 +208,7 @@ function GuideOpenJarvis() {
 
       <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 md:py-16">
         <nav aria-label="Хлебные крошки" className="text-xs text-muted-foreground">
-          <a href="/" className="hover:text-foreground">Главная</a> / <a href="/gaidy/" className="hover:text-foreground">Гайды</a> / <span>OpenJarvis на Windows</span>
+          <a href="/" className="hover:text-foreground">Главная</a> / <a href="/gaidy/" className="hover:text-foreground">Гайды</a> / <span>Open Jarvis на Windows</span>
         </nav>
 
         <article>
@@ -208,9 +216,9 @@ function GuideOpenJarvis() {
           <p className="mt-3 text-xs text-muted-foreground">Виктория Шелих · <time dateTime={PUBLISHED}>26 ноября 2026</time></p>
 
           <p id="otvet" className="mt-6 text-lg leading-relaxed">
-            OpenJarvis - бесплатный ИИ-ассистент от Стэнфордского университета: чат, как у ChatGPT, только нейросеть стоит у вас на компьютере. Аккаунт не нужен, документы никуда не уходят. Нужно больше 10 ГБ на диске
+            Open Jarvis (OpenJarvis) - бесплатный ИИ-ассистент от Стэнфорда, тот самый «Джарвис на ноутбук» из роликов: нейросеть стоит прямо у вас на компьютере. Аккаунт не нужен, документы никуда не уходят. Нужно больше 10 ГБ на диске
           </p>
-          <p className={p}>Сначала поставьте пять программ, каждую с официального сайта:</p>
+          <p className={p}>Поставьте пять программ с официальных сайтов:</p>
           <ol className="mt-3 list-decimal space-y-2 pl-6 leading-relaxed text-muted-foreground">
             <li>Python 3.12 с <a href="https://www.python.org/downloads/windows/" {...ext} className={a}>python.org/downloads/windows</a>, в установщике галочка «Add python.exe to PATH»</li>
             <li>Git с <a href="https://git-scm.com/download/win" {...ext} className={a}>git-scm.com/download/win</a>, во всех окнах «Next»</li>
@@ -245,7 +253,7 @@ function GuideOpenJarvis() {
           />
           <Shot src="s-03-ollama-akkaunt-ne-nuzhen.webp" alt="Окно Ollama после установки: нижняя ссылка «No thanks, I'll use Ollama locally»" w={811} h={721} narrow />
 
-          <h2 className={h2}>Шаг 2. Пока идёт установка: что будет в PowerShell</h2>
+          <h2 className={h2}>Шаг 2. Пока Open Jarvis ставится: что будет в PowerShell</h2>
           <p className={p}>
             В окне побегут строки с зелёными метками [ok]: Windows, Python, git, uv, скачивание проекта, зависимости, Ollama, нейросеть. Это занимает от 20 минут до пары часов, смотря какой интернет
           </p>
@@ -356,7 +364,7 @@ compute_type = "int8"`}</Code>
             Что важно знать заранее: агент работает, только пока компьютер включён и программа запущена. Сводка остаётся внутри программы, в Telegram сама не придёт. А в моём тесте маленькая нейросеть отнесла сообщение клиента с угрозой суда к спаму, так что на слабом компьютере сводку проверяйте глазами
           </p>
 
-          <h2 className={h2}>Чего он не умеет из коробки</h2>
+          <h2 className={h2}>Чего Open Jarvis не умеет из коробки</h2>
           <p className={p}>
             В программе 26 источников данных, но мессенджеров и российских сервисов среди них нет. Всё, что ниже, можно доработать и подключить к OpenJarvis отдельно, под ваши сервисы
           </p>
@@ -381,7 +389,7 @@ compute_type = "int8"`}</Code>
             <li>Сама нейросеть после установки работает без интернета и без VPN: чат, голосовой ввод и поиск по документам. Это и есть главный плюс программы</li>
           </ul>
 
-          <h2 className={h2}>Если не подошёл: как удалить</h2>
+          <h2 className={h2}>Если Open Jarvis не подошёл: как удалить</h2>
           <ol className="mt-4 list-decimal space-y-2 pl-6 leading-relaxed text-muted-foreground">
             <li>«Пуск», «Параметры», «Приложения»: удалите OpenJarvis, Ollama, Visual Studio Build Tools 2022, Visual Studio Installer и «Rustup: the Rust toolchain installer»</li>
             <li>Удалите папки C:\Users\ВАШЕ_ИМЯ\AppData\Local\OpenJarvis, C:\Users\ВАШЕ_ИМЯ\.openjarvis и C:\Users\ВАШЕ_ИМЯ\.ollama (в последней лежат нейросети, она самая тяжёлая)</li>
